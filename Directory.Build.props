@@ -1,0 +1,29 @@
+<Project>
+
+	<PropertyGroup Condition="'$(IsUnitTestProject)' == ''">
+		<IsUnitTestProject Condition="$(MSBuildProjectName.EndsWith('.FunctionalTests'))">True</IsUnitTestProject>
+		<IsUnitTestProject Condition="$(MSBuildProjectName.EndsWith('.Specification.Tests'))">False</IsUnitTestProject>
+	</PropertyGroup>
+
+	<Import
+	  Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), AspNetCoreSettings.props))\AspNetCoreSettings.props"
+	  Condition="'$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), AspNetCoreSettings.props))' != '' " />
+	
+	<PropertyGroup>
+		<MinClientVersion>3.6</MinClientVersion>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<WarningsNotAsErrors>nullable</WarningsNotAsErrors>
+		<NoWarn>;1701;1702;1705;NU5105</NoWarn>
+		<LangVersion>preview</LangVersion>
+		<DebugType>portable</DebugType>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(DeveloperBuild)' == 'true'">
+		<WarningsNotAsErrors>$(WarningsNotAsErrors);CS1591;SA1636</WarningsNotAsErrors>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<NoWarn>$(NoWarn.Replace(';1591', ''))</NoWarn>
+	</PropertyGroup>
+
+</Project>

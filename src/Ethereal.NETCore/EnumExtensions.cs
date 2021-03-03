@@ -1,0 +1,40 @@
+﻿// Copyright (c) Ethereal. All rights reserved.
+//
+
+using Ethereal.NETCore;
+using System.ComponentModel;
+using System.Globalization;
+using System.Reflection;
+
+namespace System
+{
+    /// <summary>
+    /// EnumExtensions
+    /// </summary>
+    public static class EnumExtensions
+    {
+        /// <summary>
+        /// GetValue
+        /// </summary>
+        public static int GetValue(this Enum value) =>
+            Convert.ToInt32(value);
+
+        /// <summary>
+        /// GetDescription
+        /// </summary>
+        public static string GetDescription(this Enum value) =>
+            value.GetAttributeOfType<DescriptionAttribute>()?.Description ?? string.Empty;
+
+        /// <summary>
+        /// GetDescription
+        /// </summary>
+        public static string? GetDescription(this Quarter quarter, CultureInfo? culture = default) =>
+            CoreStrings.ResourceManager.GetString(quarter.GetAttributeOfType<DescriptionAttribute>()?.Description ?? string.Empty, culture ?? CoreStrings.Culture);
+
+        /// <summary>
+        /// GetAttributeOfType
+        /// </summary>
+        public static T? GetAttributeOfType<T>(this Enum value) where T : Attribute =>
+            value.GetType().GetField(value.ToString())?.GetCustomAttribute<T>();
+    }
+}

@@ -1,0 +1,236 @@
+﻿// Copyright (c) Ethereal. All rights reserved.
+//
+
+using Ethereal.Utilities;
+using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Reflection;
+
+namespace Ethereal.EntityFrameworkCore
+{
+    /// <summary>
+    /// EtherealdbContextExtensions
+    /// </summary>
+    public static class EtherealDbContextExtensions
+    {
+        #region Update
+
+        /// <summary>
+        /// Updates the specified property when the update is true, or do not update
+        /// </summary>
+        public static EntityEntry<TEntity> Update<TEntity>(
+            [NotNull] this DbContext dbContext,
+            [NotNull] TEntity entity,
+            bool update,
+            [NotNull] params string[] properties) where TEntity : class
+        {
+            Check.NotNull(dbContext, nameof(dbContext));
+            Check.NotNull(entity, nameof(entity));
+            Check.NotNull(properties, nameof(properties));
+
+            var entry = dbContext.Entry(entity);
+            entry.State = update ? EntityState.Unchanged : EntityState.Modified;
+            foreach (var item in properties)
+            {
+                entry.Property(item).IsModified = update;
+            }
+            return entry;
+        }
+
+        /// <summary>
+        /// Updates the specified property when the update is true, or do not update
+        /// </summary>
+        public static EntityEntry<TEntity> Update<TEntity>(
+            [NotNull] this DbContext dbContext,
+            [NotNull] TEntity entity,
+            bool update,
+            [NotNull] IEnumerable<string> properties) where TEntity : class
+        {
+            Check.NotNull(dbContext, nameof(dbContext));
+            Check.NotNull(entity, nameof(entity));
+            Check.NotNull(properties, nameof(properties));
+
+            var entry = dbContext.Entry(entity);
+            entry.State = update ? EntityState.Unchanged : EntityState.Modified;
+            foreach (var item in properties)
+            {
+                entry.Property(item).IsModified = update;
+            }
+            return entry;
+        }
+
+        /// <summary>
+        /// Updates the specified property when the update is true, or do not update
+        /// </summary>
+        public static EntityEntry<TEntity> Update<TEntity>(
+            [NotNull] this DbContext dbContext,
+            [NotNull] TEntity entity,
+            bool update,
+            [NotNull] params Expression<Func<TEntity, object>>[] properties) where TEntity : class
+        {
+            Check.NotNull(dbContext, nameof(dbContext));
+            Check.NotNull(entity, nameof(entity));
+            Check.NotNull(properties, nameof(properties));
+
+            var entry = dbContext.Entry(entity);
+            entry.State = update ? EntityState.Unchanged : EntityState.Modified;
+            foreach (var item in properties)
+            {
+                entry.Property(item).IsModified = update;
+            }
+            return entry;
+        }
+
+        /// <summary>
+        /// Updates the specified property when the update is true, or do not update
+        /// </summary>
+        public static EntityEntry<TEntity> Update<TEntity, TProperty>(
+            [NotNull] this DbContext dbContext,
+            [NotNull] TEntity entity,
+            bool update,
+            [NotNull] params Expression<Func<TEntity, TProperty>>[] properties) where TEntity : class
+        {
+            Check.NotNull(dbContext, nameof(dbContext));
+            Check.NotNull(entity, nameof(entity));
+            Check.NotNull(properties, nameof(properties));
+
+            var entry = dbContext.Entry(entity);
+            entry.State = update ? EntityState.Unchanged : EntityState.Modified;
+            foreach (var item in properties)
+            {
+                entry.Property(item).IsModified = update;
+            }
+            return entry;
+        }
+
+        /// <summary>
+        /// Updates the specified property when the update is true, or do not update
+        /// </summary>
+        public static EntityEntry<TEntity> WithProperty<TEntity, TProperty>(
+            [NotNull] this EntityEntry<TEntity> entry,
+            bool update,
+            [NotNull] params Expression<Func<TEntity, TProperty>>[] properties) where TEntity : class
+        {
+            Check.NotNull(entry, nameof(entry));
+
+            foreach (var item in properties)
+            {
+                entry.Property(item).IsModified = update;
+            }
+            return entry;
+        }
+
+        #endregion
+
+        #region Delete
+
+        /// <summary>
+        /// Delete
+        /// </summary>
+        public static EntityEntry<TEntity> Delete<TEntity>(
+            [NotNull] this DbContext dbContext,
+            [NotNull] TEntity entity) where TEntity : class, new()
+        {
+            var entry = dbContext.Entry(entity);
+            entry.State = EntityState.Deleted;
+            return entry;
+        }
+
+        /// <summary>
+        /// Delete
+        /// </summary>
+        public static EntityEntry<TEntity> Delete<TEntity, TPrimaryKey>(
+            [NotNull] this DbContext dbContext,
+            [NotNull] TPrimaryKey id) where TEntity : class, new()
+        {
+            var entry = dbContext.Entry(new TEntity());
+            entry.Property("Id").CurrentValue = id;
+            entry.State = EntityState.Deleted;
+            return entry;
+        }
+
+        /// <summary>
+        /// Delete
+        /// </summary>
+        public static EntityEntry<TEntity> Delete<TEntity>(
+            [NotNull] this DbContext dbContext,
+            [NotNull] object id) where TEntity : class, new()
+        {
+            var entry = dbContext.Entry(new TEntity());
+            entry.Property("Id").CurrentValue = id;
+            entry.State = EntityState.Deleted;
+            return entry;
+        }
+
+        #endregion
+
+        #region SoftDelete
+
+        /// <summary>
+        /// SoftDelete
+        /// </summary>
+        /// <exception cref="InvalidOperationException"> SoftDeleteAttribute is not defined</exception>
+        public static EntityEntry<TEntity> SoftDelete<TEntity>(
+            [NotNull] this DbContext dbContext,
+            [NotNull] TEntity entity) where TEntity : class, new()
+        {
+            if (!Attribute.IsDefined(typeof(TEntity), typeof(SoftDeleteAttribute)))
+            {
+                throw new InvalidOperationException(CoreStrings.SoftDeleted_Invalid);
+            }
+            var entry = dbContext.Entry(entity);
+            var isDeleted = typeof(TEntity).GetCustomAttribute<SoftDeleteAttribute>()!.IsDeleted;
+            entry.Property(isDeleted).IsModified = true;
+            entry.Property(isDeleted).CurrentValue = true;
+            return entry;
+        }
+
+        /// <summary>
+        /// SoftDelete
+        /// </summary>
+        /// <exception cref="InvalidOperationException"> SoftDeleteAttribute is not defined</exception>
+        public static EntityEntry<TEntity> SoftDelete<TEntity, TPrimaryKey>(
+            [NotNull] this DbContext dbContext,
+            [NotNull] TPrimaryKey id) where TEntity : class, new()
+        {
+            if (!Attribute.IsDefined(typeof(TEntity), typeof(SoftDeleteAttribute)))
+            {
+                throw new InvalidOperationException(CoreStrings.SoftDeleted_Invalid);
+            }
+            var entry = dbContext.Entry(new TEntity());
+            entry.Property("Id").CurrentValue = id;
+            var isDeleted = typeof(TEntity).GetCustomAttribute<SoftDeleteAttribute>()!.IsDeleted;
+            entry.State = EntityState.Unchanged;
+            entry.Property(isDeleted).IsModified = true;
+            entry.Property(isDeleted).CurrentValue = true;
+            return entry;
+        }
+
+        /// <summary>
+        /// SoftDelete
+        /// </summary>
+        /// <exception cref="InvalidOperationException"> SoftDeleteAttribute is not defined</exception>
+        public static EntityEntry<TEntity> SoftDelete<TEntity>(
+            [NotNull] this DbContext dbContext,
+            [NotNull] object id) where TEntity : class, new()
+        {
+            if (!Attribute.IsDefined(typeof(TEntity), typeof(SoftDeleteAttribute)))
+            {
+                throw new InvalidOperationException(CoreStrings.SoftDeleted_Invalid);
+            }
+            var entry = dbContext.Entry(new TEntity());
+            entry.Property("Id").CurrentValue = id;
+            var isDeleted = typeof(TEntity).GetCustomAttribute<SoftDeleteAttribute>()!.IsDeleted;
+            entry.State = EntityState.Unchanged;
+            entry.Property(isDeleted).IsModified = true;
+            entry.Property(isDeleted).CurrentValue = true;
+            return entry;
+        }
+
+        #endregion
+    }
+}

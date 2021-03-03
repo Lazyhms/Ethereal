@@ -1,0 +1,12 @@
+{
+  "$schema": "https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/StyleCop.Analyzers/StyleCop.Analyzers/Settings/stylecop.schema.json",
+  "settings": {
+    "documentationRules": {
+      "companyName": "Ethereal",
+      "copyrightText": "Copyright (c) {companyName}. All rights reserved.\n",
+      "xmlHeader": false,
+      "documentInterfaces": false,
+      "documentInternalElements": false
+    }
+  }
+}

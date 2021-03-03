@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net5.0;netcoreapp3.1;</TargetFrameworks>
+		<AssemblyName>Ethereal.NETCore</AssemblyName>
+		<RootNamespace>System</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Include="..\Shared\*.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<AdditionalFiles Include="..\stylecop.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Update="Properties\CoreStrings.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>CoreStrings.Designer.cs</LastGenOutput>
+			<CustomToolNamespace>Ethereal.NETCore</CustomToolNamespace>
+		</EmbeddedResource>
+		<Compile Update="Properties\CoreStrings.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>CoreStrings.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
+	
+</Project>
