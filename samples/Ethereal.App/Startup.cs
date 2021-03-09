@@ -4,11 +4,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System.IO.Compression;
 using System.Linq;
 
 namespace Ethereal.App
@@ -77,6 +79,16 @@ namespace Ethereal.App
                 });
             });
 
+            services.AddResponseCompression(options =>
+            {
+                options.Providers.Add<BrotliCompressionProvider>();
+                options.Providers.Add<GzipCompressionProvider>();
+            });
+            services.Configure<BrotliCompressionProviderOptions>(options =>
+            {
+                options.Level = CompressionLevel.Fastest;
+            });
+
             services.RegisterAssemblyTypes(typeof(Startup).Assembly);
         }
 
@@ -101,6 +113,8 @@ namespace Ethereal.App
 
                 opts.SwaggerEndpoint(Configuration, "SwaggerDoc");
             });
+
+            app.UseResponseCompression();
 
             app.UseEndpoints(endpoints =>
             {

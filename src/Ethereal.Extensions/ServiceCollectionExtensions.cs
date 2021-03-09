@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 //
 
-using Ethereal.ComponentModel.DataAnnotations;
 using Ethereal.Extensions;
 using Ethereal.Utilities;
 using JetBrains.Annotations;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 

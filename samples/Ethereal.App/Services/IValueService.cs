@@ -1,6 +1,6 @@
 ﻿using Ethereal.App.Models;
-using Ethereal.ComponentModel.DataAnnotations;
 using Microsoft.Extensions.DependencyInjection;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace Ethereal.App.Services

@@ -2,9 +2,8 @@
 //
 
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
-namespace Ethereal.ComponentModel.DataAnnotations
+namespace System.ComponentModel.DataAnnotations
 {
     /// <summary>
     /// ServiceDescriptorAttribute
