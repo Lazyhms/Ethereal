@@ -21,9 +21,9 @@ namespace Microsoft.AspNetCore.Mvc
             jsonOptions.JsonSerializerOptions.AllowTrailingCommas = true;
             jsonOptions.JsonSerializerOptions.WriteIndented = true;
             jsonOptions.JsonSerializerOptions.Encoder = JavaScriptEncoder.Create(UnicodeRanges.All);
-            jsonOptions.JsonSerializerOptions.PropertyNamingPolicy = null;
+            jsonOptions.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
             jsonOptions.JsonSerializerOptions.ReadCommentHandling = JsonCommentHandling.Skip;
-            jsonOptions.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+            jsonOptions.JsonSerializerOptions.PropertyNameCaseInsensitive = false;
 #if NET5_0
             jsonOptions.JsonSerializerOptions.NumberHandling = JsonNumberHandling.AllowNamedFloatingPointLiterals;
 #endif
