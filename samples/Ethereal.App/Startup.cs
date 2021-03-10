@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
@@ -44,6 +45,7 @@ namespace Ethereal.App
             {
                 options.Filters.Add<HttpGlobalExceptionFilter>();
                 options.ModelBinderProviders.UseDefaultModelBinderProviders();
+                options.InputFormatters.Add(new TextPlainInputFormatter());
             }).AddJsonOptions(options =>
             {
                 options.UseDefaultJsonOptions();
