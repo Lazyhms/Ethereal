@@ -1,7 +1,9 @@
+using SixLabors.ImageSharp.Formats.Jpeg;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ImageSharp;
+using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -99,6 +101,8 @@ namespace Ethereal.Json.Tests
             await sharp.ResizeAsync("7946170535396804.jpg", "1.jpg");
 
             await sharp.MergeImageAsync("7946170535396804.jpg", "1.jpg", "2.jpg", 200, 300, 3);
+
+            return await sharp.MergeImageAsync(new MemoryStream(), "", 1, 1, new JpegEncoder());
         }
     }
 
