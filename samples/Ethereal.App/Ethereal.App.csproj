@@ -17,7 +17,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Ethereal.AspNetCore\Ethereal.AspNetCore.csproj" />
 		<ProjectReference Include="..\..\src\Ethereal.EFCore\Ethereal.EFCore.csproj" />
-		<ProjectReference Include="..\..\src\Ethereal.NETCore\Ethereal.NETCore.csproj" />
+		<ProjectReference Include="..\..\src\Ethereal\Ethereal.csproj" />
 		<ProjectReference Include="..\..\src\Ethereal.Swagger\Ethereal.Swagger.csproj" />
 	</ItemGroup>
 

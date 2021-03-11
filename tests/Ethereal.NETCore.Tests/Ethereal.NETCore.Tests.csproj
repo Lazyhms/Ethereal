@@ -20,7 +20,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\src\Ethereal.NETCore\Ethereal.NETCore.csproj" />
+	  <ProjectReference Include="..\..\src\Ethereal\Ethereal.csproj" />
 	</ItemGroup>
 
 </Project>
