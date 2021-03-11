@@ -19,8 +19,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Ethereal.Excel\Ethereal.Excel.csproj" />
-  </ItemGroup>
-
 </Project>

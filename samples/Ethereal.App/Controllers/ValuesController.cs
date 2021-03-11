@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace Ethereal.App.Controllers
 {
@@ -21,6 +22,16 @@ namespace Ethereal.App.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Post(Tests tests) => Ok(await ValueService.Insert(tests));
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> Post(Tests tests)
+        {
+            if (tests == null)
+            {
+                return NoContent();
+            }
+            return Ok(await ValueService.Insert(tests));
+        }
     }
 }
