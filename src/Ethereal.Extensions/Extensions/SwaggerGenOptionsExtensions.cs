@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 //
 
-using Ethereal.AspNetCore.SwaggerGen;
 using Ethereal.AspNetCore.SwaggerGen.Filters;
+using Ethereal.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -69,7 +69,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             options.AddSecurityDefinition("JwtBearer", new OpenApiSecurityScheme()
             {
-                Description = SwaggerStrings.OpenApiSecurityScheme_Description,
+                Description = CoreStrings.OpenApiSecurityScheme_Description,
                 Name = "Authorization",
                 In = ParameterLocation.Header,
                 Type = SecuritySchemeType.ApiKey,

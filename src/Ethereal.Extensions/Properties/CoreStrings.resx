@@ -120,4 +120,7 @@
   <data name="NotImplemented_Exception" xml:space="preserve">
     <value>No implementation of type {0} was found.</value>
   </data>
+  <data name="OpenApiSecurityScheme_Description" xml:space="preserve">
+    <value>Enter a token, such as Bearer {token}.</value>
+  </data>
 </root>

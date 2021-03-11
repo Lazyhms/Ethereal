@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Ethereal.App.Services
 {
-    [ServiceDescriptor(ServiceLifetime.Scoped)]
+    [LifetimeDescriptor(ServiceLifetime.Scoped)]
     public interface IValueService
     {
         Task<object> Insert(Tests tests);

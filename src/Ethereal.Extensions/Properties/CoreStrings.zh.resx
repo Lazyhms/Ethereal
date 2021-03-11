@@ -120,4 +120,7 @@
   <data name="NotImplemented_Exception" xml:space="preserve">
     <value>未找到类型 {0} 的实现.</value>
   </data>
+  <data name="OpenApiSecurityScheme_Description" xml:space="preserve">
+    <value>请输入令牌,例如 Bearer {token} .</value>
+  </data>
 </root>

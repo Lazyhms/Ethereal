@@ -20,6 +20,11 @@ namespace Ethereal.App.Controllers
         [HttpGet]
         public Task<IActionResult> Get() => throw new InvalidOperationException("das");
 
+        /// <summary>
+        /// Post测试
+        /// </summary>
+        /// <param name="tests"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]

@@ -9,12 +9,12 @@ namespace System.ComponentModel.DataAnnotations
     /// ServiceDescriptorAttribute
     /// </summary>
     [AttributeUsage(AttributeTargets.Interface, AllowMultiple = false)]
-    public sealed class ServiceDescriptorAttribute : Attribute
+    public sealed class LifetimeDescriptorAttribute : Attribute
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ServiceDescriptorAttribute"/> class.
+        /// Initializes a new instance of the <see cref="LifetimeDescriptorAttribute"/> class.
         /// </summary>
-        public ServiceDescriptorAttribute(ServiceLifetime serviceLifetime) => ServiceLifetime = serviceLifetime;
+        public LifetimeDescriptorAttribute(ServiceLifetime serviceLifetime) => ServiceLifetime = serviceLifetime;
 
         /// <summary>
         /// ServiceDescriptor

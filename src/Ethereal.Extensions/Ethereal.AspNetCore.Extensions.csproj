@@ -2,8 +2,9 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>net5.0;netcoreapp3.1;</TargetFrameworks>
-		<AssemblyName>Ethereal.Extensions</AssemblyName>
+		<AssemblyName>Ethereal.AspNetCore.Extensions</AssemblyName>
 		<RootNamespace>Microsoft.Extensions</RootNamespace>
+		<OpenApiGenerateDocuments>false</OpenApiGenerateDocuments>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -19,6 +20,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.0" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<EmbeddedResource Update="Properties\CoreStrings.resx">
 			<CustomToolNamespace>Ethereal.Extensions</CustomToolNamespace>
 			<LastGenOutput>CoreStrings.Designer.cs</LastGenOutput>
@@ -30,5 +35,5 @@
 			<AutoGen>True</AutoGen>
 		</Compile>
 	</ItemGroup>
-	
+
 </Project>

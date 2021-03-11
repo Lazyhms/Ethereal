@@ -68,5 +68,14 @@ namespace Ethereal.Extensions {
                 return ResourceManager.GetString("NotImplemented_Exception", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   查找类似 Enter a token, such as Bearer {token}. 的本地化字符串。
+        /// </summary>
+        internal static string OpenApiSecurityScheme_Description {
+            get {
+                return ResourceManager.GetString("OpenApiSecurityScheme_Description", resourceCulture);
+            }
+        }
     }
 }

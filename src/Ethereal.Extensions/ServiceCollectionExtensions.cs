@@ -53,7 +53,7 @@ namespace Microsoft.Extensions.DependencyInjection
             var serviceTypes = assembly.GetTypes();
             foreach (var serviceType in serviceTypes.Where(st => st.IsInterface))
             {
-                var serviceDescriptor = serviceType.GetCustomAttribute<ServiceDescriptorAttribute>();
+                var serviceDescriptor = serviceType.GetCustomAttribute<LifetimeDescriptorAttribute>();
                 if (serviceDescriptor is null)
                 {
                     continue;
