@@ -102,7 +102,7 @@ namespace Ethereal.Json.Tests
 
             await sharp.MergeImageAsync("7946170535396804.jpg", "1.jpg", "2.jpg", 200, 300, 3);
 
-            return await sharp.MergeImageAsync(new MemoryStream(), "", 1, 1, new JpegEncoder());
+            await sharp.MergeImageAsync(new MemoryStream(), "", 1, 1, new JpegEncoder());
         }
     }
 
