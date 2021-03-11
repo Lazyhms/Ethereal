@@ -20,9 +20,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\src\Ethereal.AspNetCore.Extensions\Ethereal.AspNetCore.Extensions.csproj" />
 		<ProjectReference Include="..\..\src\Ethereal.AspNetCore\Ethereal.AspNetCore.csproj" />
 		<ProjectReference Include="..\..\src\Ethereal.EFCore\Ethereal.EFCore.csproj" />
-		<ProjectReference Include="..\..\src\Ethereal.Extensions\Ethereal.AspNetCore.Extensions.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
