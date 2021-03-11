@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ethereal.NETCore.Tests", "t
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ethereal.AspNetCore.Tests", "tests\Ethereal.AspNetCore.Tests\Ethereal.AspNetCore.Tests.csproj", "{160718B7-128E-4986-9D41-0CF43E95D5A5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ethereal.AspNetCore.Extensions", "src\Ethereal.Extensions\Ethereal.AspNetCore.Extensions.csproj", "{36D34A48-A5D9-4933-88D3-BFE4E26F9AB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ethereal.AspNetCore.Extensions", "src\Ethereal.AspNetCore.Extensions\Ethereal.AspNetCore.Extensions.csproj", "{36D34A48-A5D9-4933-88D3-BFE4E26F9AB4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ethereal.App", "samples\Ethereal.App\Ethereal.App.csproj", "{60B565E4-85A8-4B72-B04B-CE6980D89886}"
 EndProject
