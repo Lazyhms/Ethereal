@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ImageSharp;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Ethereal.Json.Tests
@@ -87,6 +89,16 @@ namespace Ethereal.Json.Tests
             var t = dic.Union(dic1);
 
 
+        }
+
+        [Fact]
+        public async Task ImageSharp_TestsAsync()
+        {
+            var sharp = new ImageSharp();
+
+            await sharp.ResizeAsync("7946170535396804.jpg", "1.jpg");
+
+            await sharp.MergeImageAsync("7946170535396804.jpg", "1.jpg", "2.jpg", 200, 300, 3);
         }
     }
 

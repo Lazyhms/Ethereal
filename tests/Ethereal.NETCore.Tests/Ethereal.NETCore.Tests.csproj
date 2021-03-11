@@ -23,4 +23,10 @@
 	  <ProjectReference Include="..\..\src\Ethereal\Ethereal.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Update="7946170535396804.jpg">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
 </Project>

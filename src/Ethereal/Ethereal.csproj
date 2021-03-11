@@ -15,6 +15,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="SixLabors.ImageSharp" Version="1.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<EmbeddedResource Update="Properties\CoreStrings.resx">
 			<Generator>ResXFileCodeGenerator</Generator>
 			<LastGenOutput>CoreStrings.Designer.cs</LastGenOutput>
