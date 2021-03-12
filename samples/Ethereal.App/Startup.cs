@@ -1,3 +1,6 @@
+using Hangfire;
+using Hangfire.Dashboard;
+using Hangfire.MemoryStorage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -11,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System;
 using System.IO.Compression;
 using System.Linq;
 
@@ -18,9 +22,16 @@ namespace Ethereal.App
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration) => Configuration = configuration;
+        public Startup(
+            IConfiguration configuration,
+            IWebHostEnvironment webHostEnvironment)
+        {
+            Configuration = configuration;
+            WebHostEnvironment = webHostEnvironment;
+        }
 
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment WebHostEnvironment { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -92,6 +103,23 @@ namespace Ethereal.App
             });
 
             services.RegisterAssemblyTypes(typeof(Startup).Assembly);
+
+            services.AddHangfire(options =>
+            {
+                options.UseDashboardMetric(DashboardMetrics.ServerCount)
+                       .UseDashboardMetric(DashboardMetrics.EnqueuedAndQueueCount)
+                       .UseDashboardMetric(DashboardMetrics.RecurringJobCount)
+                       .UseDashboardMetric(DashboardMetrics.ScheduledCount)
+                       .UseDashboardMetric(DashboardMetrics.AwaitingCount)
+                       .UseDashboardMetric(DashboardMetrics.ProcessingCount)
+                       .UseDashboardMetric(DashboardMetrics.RetriesCount)
+                       .UseDashboardMetric(DashboardMetrics.SucceededCount)
+                       .UseDashboardMetric(DashboardMetrics.FailedCount)
+                       .UseDashboardMetric(DashboardMetrics.DeletedCount);
+
+                options.UseSerilogLogProvider();
+                options.UseMemoryStorage();
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory logger)
@@ -117,6 +145,18 @@ namespace Ethereal.App
             });
 
             app.UseResponseCompression();
+
+            app.UseHangfireServer(new BackgroundJobServerOptions
+            {
+                Queues = new[] { "test" },
+                WorkerCount = Environment.ProcessorCount,
+                ServerName = "Test",
+                SchedulePollingInterval = TimeSpan.FromSeconds(3),
+            });
+            app.UseHangfireDashboard(options: new DashboardOptions
+            {
+
+            });
 
             app.UseEndpoints(endpoints =>
             {
