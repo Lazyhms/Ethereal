@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 //
 
-using Ethereal.NETCore;
 using System.ComponentModel;
-using System.Globalization;
 using System.Reflection;
 
 namespace System
@@ -24,12 +22,6 @@ namespace System
         /// </summary>
         public static string GetDescription(this Enum value) =>
             value.GetAttributeOfType<DescriptionAttribute>()?.Description ?? string.Empty;
-
-        /// <summary>
-        /// GetDescription
-        /// </summary>
-        public static string? GetDescription(this Quarter quarter, CultureInfo? culture = default) =>
-            CoreStrings.ResourceManager.GetString(quarter.GetAttributeOfType<DescriptionAttribute>()?.Description ?? string.Empty, culture ?? CoreStrings.Culture);
 
         /// <summary>
         /// GetAttributeOfType

@@ -22,10 +22,6 @@ namespace Ethereal.Json.Tests
         {
             var th = DateTime.Now.Date.AddHours(13).AddMinutes(30).DateDiffMinute(DateTime.Now.Date.AddHours(18));
 
-            var dq = DateTime.Now.DateInQuarter();
-
-            var dqs = DateTime.Now.DateInQuarter().GetDescription();
-
             var ws = DateTime.Now.FirstDayOfWeek();
             var de = DateTime.Now.LastDayOfWeek();
 

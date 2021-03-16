@@ -13,7 +13,7 @@ namespace System
     public static class DictionaryExtensions
     {
         /// <summary>
-        /// D
+        /// Union
         /// </summary>
         public static IDictionary<TKey, TValue> Union<TKey, TValue>(
             [NotNull] this IDictionary<TKey, TValue> source,

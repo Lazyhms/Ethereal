@@ -1,66 +1,14 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 //
 
-using System.ComponentModel;
-
 namespace System
 {
-
-    /// <summary>
-    /// Quarter
-    /// </summary>
-    [Flags]
-    public enum Quarter
-    {
-        /// <summary>
-        /// First
-        /// </summary>
-        [Description("Quarter_First")]
-        First = 0x1,
-        /// <summary>
-        /// Second
-        /// </summary>
-        [Description("Quarter_Second")]
-        Second = 0x2,
-        /// <summary>
-        /// Thrid
-        /// </summary>
-        [Description("Quarter_Thrid")]
-        Thrid = 0x4,
-        /// <summary>
-        /// Fourth
-        /// </summary>
-        [Description("Quarter_Fourth")]
-        Fourth = 0x8
-    }
-
     /// <summary>
     /// DateTimeExtensions
     /// </summary>
     public static class DateTimeExtensions
     {
-        /// <summary>
-        /// DateInQuarter
-        /// </summary>
-        public static Quarter DateInQuarter(this DateTime source)
-        {
-            if (source.Month >= 1 && source.Month <= 3)
-            {
-                return Quarter.First;
-            }
-            else if (source.Month >= 4 && source.Month <= 6)
-            {
-                return Quarter.Second;
-            }
-            else if (source.Month >= 7 && source.Month <= 9)
-            {
-                return Quarter.Thrid;
-            }
-            {
-                return Quarter.Fourth;
-            }
-        }
-
+        #region DayOf
         /// <summary>
         /// FirstTimeOfToday
         /// </summary>
@@ -120,7 +68,9 @@ namespace System
         /// </summary>
         public static DateTime LastDayOfYear(this DateTime date) =>
             date.AddDays(1 - date.Day).AddMonths(1 - date.Month).Date.AddYears(1).AddSeconds(-1);
+        #endregion
 
+        #region Diff
         /// <summary>
         /// DateDiffMicrosecond
         /// </summary>
@@ -193,5 +143,6 @@ namespace System
         /// </summary>
         public static int DateDiffYear(this DateTime startDate, DateTime endDate)
             => endDate.Year - startDate.Year;
+        #endregion
     }
 }
