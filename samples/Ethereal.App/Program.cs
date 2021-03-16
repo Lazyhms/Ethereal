@@ -44,14 +44,15 @@ namespace Ethereal.App
                         logging.ClearProviders();
                     }).UseSerilog((context, configure) =>
                     {
-                        if (!context.Configuration.GetSection("Serilog").Exists())
-                        {
-                            configure
+                        configure
                                 .Enrich.FromLogContext()
                                 .Enrich.WithMachineName()
                                 .Enrich.WithEnvironmentUserName()
                                 .Enrich.WithThreadId()
-                                .Enrich.WithThreadName()
+                                .Enrich.WithThreadName();
+                        if (!context.Configuration.GetSection("Serilog").Exists())
+                        {
+                            configure
                                 .MinimumLevel.Override("Default", LogEventLevel.Warning)
                                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
                                 .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
@@ -63,19 +64,10 @@ namespace Ethereal.App
                         else
                         {
                             configure
-                                .Enrich.FromLogContext()
                                 .Enrich.WithProperty("Date", $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}")
                                 .Enrich.WithProperty("Path", AppContext.BaseDirectory)
                                 .ReadFrom.Configuration(context.Configuration);
                         }
-                    });
-                    webBuilder.ConfigureServices((context, services) =>
-                    {
-                        services.AddHttpContextAccessor();
-                    });
-                    webBuilder.Configure(configure =>
-                    {
-                        configure.UseSerilogRequestLogging();
                     });
                     webBuilder.UseStartup<Startup>();
                 });

@@ -4,6 +4,7 @@ using Hangfire.MemoryStorage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -14,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serilog;
 using System;
 using System.IO.Compression;
 using System.Linq;
@@ -51,6 +53,8 @@ namespace Ethereal.App
                                .AllowAnyMethod()
                                .AllowCredentials());
             });
+
+            services.AddHttpContextAccessor();
 
             services.AddControllers(options =>
             {
@@ -131,7 +135,18 @@ namespace Ethereal.App
 
             app.UseRouting();
 
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
+            app.UsePathBase(Configuration.GetValue<string>("PathBase") ?? string.Empty);
+
+            app.UseSerilogRequestLogging();
+
             app.UseCors("CorsPolicy");
+
+            app.UseResponseCompression();
 
             app.UseAuthentication();
             app.UseAuthorization();
@@ -143,8 +158,6 @@ namespace Ethereal.App
 
                 opts.SwaggerEndpoint(Configuration, "SwaggerDoc");
             });
-
-            app.UseResponseCompression();
 
             app.UseHangfireServer(new BackgroundJobServerOptions
             {
