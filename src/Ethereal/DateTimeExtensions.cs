@@ -8,6 +8,33 @@ namespace System
     /// </summary>
     public static class DateTimeExtensions
     {
+        #region StartAndEnd
+        /// <summary>
+        /// Start and end date of the day
+        /// </summary>
+        public static (DateTime start, DateTime end) TimeOfDay(this DateTime date) => (date.FirstTimeOfToday(), date.LastTimeOfToday());
+
+        /// <summary>
+        /// Start and end date of the week
+        /// </summary>
+        public static (DateTime start, DateTime end) DayOfWeek(this DateTime date) => (date.FirstDayOfWeek(), date.LastDayOfWeek());
+
+        /// <summary>
+        /// Start and end date of the momth
+        /// </summary>
+        public static (DateTime start, DateTime end) DayOfMonth(this DateTime date) => (date.FirstDayOfMonth(), date.LastDayOfMonth());
+
+        /// <summary>
+        /// Start and end date of the quarter
+        /// </summary>
+        public static (DateTime start, DateTime end) DayOfQuarter(this DateTime date) => (date.FirstDayOfQuarter(), date.LastDayOfQuarter());
+
+        /// <summary>
+        /// Start and end date of the year
+        /// </summary>
+        public static (DateTime start, DateTime end) DayOfYear(this DateTime date) => (date.FirstDayOfYear(), date.LastDayOfYear());
+        #endregion
+
         #region DayOf
         /// <summary>
         /// FirstTimeOfToday
