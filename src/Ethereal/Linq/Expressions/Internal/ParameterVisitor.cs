@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 using System.Collections.ObjectModel;
 
@@ -16,6 +15,5 @@ namespace System.Linq.Expressions.Internal
 
         protected override Expression VisitParameter(ParameterExpression parameter) =>
             _parameters.FirstOrDefault(s => s.Type == parameter.Type) ?? parameter;
-
     }
 }

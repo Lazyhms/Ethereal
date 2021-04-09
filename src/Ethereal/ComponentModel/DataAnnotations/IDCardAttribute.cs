@@ -1,18 +1,17 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 using Ethereal.NETCore;
 
 namespace System.ComponentModel.DataAnnotations
 {
     /// <summary>
-    /// Validate IDCard 
+    /// Validate IDCard
     /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
     public sealed class IDCardAttribute : DataTypeAttribute
     {
-        private readonly int[] _weight = new[] { 7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2 };
         private readonly char[] _validate = new[] { '1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2' };
+        private readonly int[] _weight = new[] { 7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2 };
 
         /// <summary>
         /// Initializes a new instance of the <see cref="IDCardAttribute"/> class.

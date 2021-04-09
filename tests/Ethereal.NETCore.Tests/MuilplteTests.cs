@@ -35,6 +35,46 @@ namespace Ethereal.Json.Tests
             var ye = DateTime.Now.LastDayOfYear();
         }
 
+        [Fact]
+        public async Task ImageSharp_TestsAsync()
+        {
+            var sharp = new ImageSharp();
+
+            await sharp.ResizeAsync("7946170535396804.jpg", "1.jpg");
+
+            await sharp.MergeImageAsync("7946170535396804.jpg", "1.jpg", "2.jpg", 200, 300, 3);
+
+            await sharp.MergeImageAsync(new MemoryStream(), "", 1, 1, new JpegEncoder());
+        }
+
+        [Fact]
+        public void Json_Tests()
+        {
+            var options = new JsonSerializerOptions
+            {
+                NumberHandling = JsonNumberHandling.AllowNamedFloatingPointLiterals
+            };
+            options.Converters.UseDefaultConverter();
+            var j = JsonSerializer.Serialize(new T { }, options);
+            var t = JsonSerializer.Deserialize<T>(j, options);
+        }
+
+        [Fact]
+        public void KeyValuePair()
+        {
+            var dic = new Dictionary<string, int>() { { "11", 112 } };
+            var dic1 = new Dictionary<string, int>() { { "11", 1122 } };
+            var t = dic.Union(dic1);
+        }
+
+        [Fact]
+        public void LeftJoin_Test()
+        {
+            var posts = new[] { new { PostId = 1, PostTitle = "12333", }, new { PostId = 2, PostTitle = "12333", }, };
+            var postTags = new[] { new { PostId = 1, Tag = "HHH" } };
+
+            var result = posts.LeftJoin(postTags, p => p.PostId, pt => pt.PostId, (p, pt) => new { p.PostId, p.PostTitle, pt?.Tag }).ToArray();
+        }
 
         [Fact]
         public void Linq_Tests()
@@ -51,54 +91,11 @@ namespace Ethereal.Json.Tests
         }
 
         [Fact]
-        public void LeftJoin_Test()
-        {
-            var posts = new[] { new { PostId = 1, PostTitle = "12333", }, new { PostId = 2, PostTitle = "12333", }, };
-            var postTags = new[] { new { PostId = 1, Tag = "HHH" } };
-
-            var result = posts.LeftJoin(postTags, p => p.PostId, pt => pt.PostId, (p, pt) => new { p.PostId, p.PostTitle, pt?.Tag }).ToArray();
-        }
-
-        [Fact]
-        public void Json_Tests()
-        {
-            var options = new JsonSerializerOptions
-            {
-                NumberHandling = JsonNumberHandling.AllowNamedFloatingPointLiterals
-            };
-            options.Converters.UseDefaultConverter();
-            var j = JsonSerializer.Serialize(new T { }, options);
-            var t = JsonSerializer.Deserialize<T>(j, options);
-        }
-
-        [Fact]
         public void Vaild_Tests()
         {
             var t = new T() { MyProperty2 = "3213231991071033115", MyProperty3 = "913201004258014876" };
             var validationResults = new List<ValidationResult>();
             var ttt1 = Validator.TryValidateObject(t, new ValidationContext(t), validationResults, true);
-        }
-
-        [Fact]
-        public void KeyValuePair()
-        {
-            var dic = new Dictionary<string, int>() { { "11", 112 } };
-            var dic1 = new Dictionary<string, int>() { { "11", 1122 } };
-            var t = dic.Union(dic1);
-
-
-        }
-
-        [Fact]
-        public async Task ImageSharp_TestsAsync()
-        {
-            var sharp = new ImageSharp();
-
-            await sharp.ResizeAsync("7946170535396804.jpg", "1.jpg");
-
-            await sharp.MergeImageAsync("7946170535396804.jpg", "1.jpg", "2.jpg", 200, 300, 3);
-
-            await sharp.MergeImageAsync(new MemoryStream(), "", 1, 1, new JpegEncoder());
         }
     }
 

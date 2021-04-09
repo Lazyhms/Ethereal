@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 using Ethereal.Extensions;
 using Ethereal.Utilities;
@@ -70,12 +69,15 @@ namespace Microsoft.Extensions.DependencyInjection
                         case ServiceLifetime.Singleton:
                             services.AddSingleton(serviceType, implementationType!);
                             break;
+
                         case ServiceLifetime.Transient:
                             services.AddTransient(serviceType, implementationType!);
                             break;
+
                         case ServiceLifetime.Scoped:
                             services.AddScoped(serviceType, implementationType!);
                             break;
+
                         default:
                             break;
                     }

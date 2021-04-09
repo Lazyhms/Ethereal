@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 using System.ComponentModel;
 using System.Reflection;
@@ -12,10 +11,10 @@ namespace System
     public static class EnumExtensions
     {
         /// <summary>
-        /// GetValue
+        /// GetAttributeOfType
         /// </summary>
-        public static int GetValue(this Enum value) =>
-            Convert.ToInt32(value);
+        public static T? GetAttributeOfType<T>(this Enum value) where T : Attribute =>
+            value.GetType().GetField(value.ToString())?.GetCustomAttribute<T>();
 
         /// <summary>
         /// GetDescription
@@ -24,9 +23,9 @@ namespace System
             value.GetAttributeOfType<DescriptionAttribute>()?.Description ?? string.Empty;
 
         /// <summary>
-        /// GetAttributeOfType
+        /// GetValue
         /// </summary>
-        public static T? GetAttributeOfType<T>(this Enum value) where T : Attribute =>
-            value.GetType().GetField(value.ToString())?.GetCustomAttribute<T>();
+        public static int GetValue(this Enum value) =>
+            Convert.ToInt32(value);
     }
 }

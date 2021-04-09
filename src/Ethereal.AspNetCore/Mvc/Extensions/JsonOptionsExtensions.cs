@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 using System.Text.Encodings.Web;
 using System.Text.Json;

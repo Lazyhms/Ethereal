@@ -12,7 +12,6 @@ namespace Ethereal.App.Controllers
     public class TestController : ControllerBase
     {
         /// <summary>
-        /// 
         /// </summary>
         [HttpPost]
         [Consumes("text/plain")]
@@ -23,7 +22,6 @@ namespace Ethereal.App.Controllers
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <returns></returns>
         private string Analyzer(string str)
@@ -48,18 +46,18 @@ namespace Ethereal.App.Controllers
 
         private string AnalyzerType(string typeName, string notnull)
         {
-            var notnullChar = notnull.IndexOf("Y", StringComparison.OrdinalIgnoreCase) >= 0 ||
-                              notnull.IndexOf("是", StringComparison.OrdinalIgnoreCase) >= 0
+            var notnullChar = notnull.Contains("Y", StringComparison.OrdinalIgnoreCase) ||
+                              notnull.Contains("是", StringComparison.OrdinalIgnoreCase)
                               ? ' ' : '?';
-            if (typeName.IndexOf("char", StringComparison.OrdinalIgnoreCase) >= 0)
+            if (typeName.Contains("char", StringComparison.OrdinalIgnoreCase))
             {
                 return "string";
             }
-            else if (typeName.IndexOf("guid", StringComparison.OrdinalIgnoreCase) >= 0)
+            else if (typeName.Contains("guid", StringComparison.OrdinalIgnoreCase))
             {
                 return $"Guid{notnullChar}";
             }
-            else if (typeName.IndexOf("datetime", StringComparison.OrdinalIgnoreCase) >= 0)
+            else if (typeName.Contains("datetime", StringComparison.OrdinalIgnoreCase))
             {
                 return $"DateTime{notnullChar}";
             }

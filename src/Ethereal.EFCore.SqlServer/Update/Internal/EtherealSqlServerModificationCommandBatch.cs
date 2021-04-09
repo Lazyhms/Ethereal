@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +20,8 @@ namespace Ethereal.EntityFrameworkCore.SqlServer.Update.Internal
         private readonly List<ModificationCommand> _bulkDeleteCommands = new List<ModificationCommand>();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EtherealSqlServerModificationCommandBatch"/> class.
+        /// Initializes a new instance of the <see
+        /// cref="EtherealSqlServerModificationCommandBatch"/> class.
         /// </summary>
         public EtherealSqlServerModificationCommandBatch([NotNull] ModificationCommandBatchFactoryDependencies dependencies, int? maxBatchSize) : base(dependencies, maxBatchSize)
         {
@@ -33,29 +33,6 @@ namespace Ethereal.EntityFrameworkCore.SqlServer.Update.Internal
         /// <inheritdoc/>
         protected override string GetCommandText()
                    => base.GetCommandText() + GetBulkDeleteCommandText(ModificationCommands.Count);
-
-        private string GetBulkDeleteCommandText(int lastIndex)
-        {
-            if (_bulkDeleteCommands.Count == 0)
-            {
-                return string.Empty;
-            }
-
-            var stringBuilder = new StringBuilder();
-            var resultSetMapping = UpdateSqlGenerator.AppendBulkDeletedOperation(
-                stringBuilder, _bulkDeleteCommands, lastIndex - _bulkDeleteCommands.Count);
-            for (var i = lastIndex - _bulkDeleteCommands.Count; i < lastIndex; i++)
-            {
-                CommandResultSet[i] = resultSetMapping;
-            }
-
-            if (resultSetMapping != ResultSetMapping.NoResultSet)
-            {
-                CommandResultSet[lastIndex - 1] = ResultSetMapping.LastInResultSet;
-            }
-
-            return stringBuilder.ToString();
-        }
 
         /// <inheritdoc/>
         protected override void UpdateCachedCommandText(int commandPosition)
@@ -91,5 +68,28 @@ namespace Ethereal.EntityFrameworkCore.SqlServer.Update.Internal
                     secondCommand.ColumnModifications.Where(o => o.IsWrite).Select(o => o.ColumnName))
                 && firstCommand.ColumnModifications.Where(o => o.IsRead).Select(o => o.ColumnName).SequenceEqual(
                     secondCommand.ColumnModifications.Where(o => o.IsRead).Select(o => o.ColumnName));
+
+        private string GetBulkDeleteCommandText(int lastIndex)
+        {
+            if (_bulkDeleteCommands.Count == 0)
+            {
+                return string.Empty;
+            }
+
+            var stringBuilder = new StringBuilder();
+            var resultSetMapping = UpdateSqlGenerator.AppendBulkDeletedOperation(
+                stringBuilder, _bulkDeleteCommands, lastIndex - _bulkDeleteCommands.Count);
+            for (var i = lastIndex - _bulkDeleteCommands.Count; i < lastIndex; i++)
+            {
+                CommandResultSet[i] = resultSetMapping;
+            }
+
+            if (resultSetMapping != ResultSetMapping.NoResultSet)
+            {
+                CommandResultSet[lastIndex - 1] = ResultSetMapping.LastInResultSet;
+            }
+
+            return stringBuilder.ToString();
+        }
     }
 }

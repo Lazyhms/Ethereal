@@ -1,10 +1,10 @@
 ﻿using Ethereal.App.Models;
 using Ethereal.App.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
 namespace Ethereal.App.Controllers
 {

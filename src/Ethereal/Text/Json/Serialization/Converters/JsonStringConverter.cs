@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 namespace System.Text.Json.Serialization
 {
@@ -9,8 +8,10 @@ namespace System.Text.Json.Serialization
     public sealed class JsonStringConverter : JsonConverter<string?>
     {
 #if NET5_0
+
         /// <inheritdoc/>
         public override bool HandleNull => true;
+
 #endif
 
         /// <inheritdoc/>

@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 using System;
 using System.Collections.Generic;
@@ -17,23 +16,6 @@ namespace Ethereal.EntityFrameworkCore
         /// </summary>
         public static IPagedList<T> Empty<T>() => EmptyPagedList<T>.Value;
 
-        private class EmptyPagedList<T>
-        {
-            public static readonly IPagedList<T> Value = new PagedList<T>()
-            {
-                PageIndex = 1,
-                PageSize = 0,
-                PageCount = 1,
-                TotalCount = 0
-            };
-        }
-
-        /// <summary>
-        /// override ToString method
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string? ToString() => base.ToString();
-
         /// <summary>
         /// override Equals method
         /// </summary>
@@ -45,6 +27,23 @@ namespace Ethereal.EntityFrameworkCore
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
+
+        /// <summary>
+        /// override ToString method
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override string? ToString() => base.ToString();
+
+        private class EmptyPagedList<T>
+        {
+            public static readonly IPagedList<T> Value = new PagedList<T>()
+            {
+                PageIndex = 1,
+                PageSize = 0,
+                PageCount = 1,
+                TotalCount = 0
+            };
+        }
     }
 
     /// <summary>
@@ -54,18 +53,18 @@ namespace Ethereal.EntityFrameworkCore
     public class PagedList<TEntity> : IPagedList<TEntity>
     {
         /// <inheritdoc/>
+        public int PageCount { get; set; }
+
+        /// <inheritdoc/>
+        public IList<TEntity> PageData { get; set; } = Array.Empty<TEntity>();
+
+        /// <inheritdoc/>
         public int PageIndex { get; set; }
 
         /// <inheritdoc/>
         public int PageSize { get; set; }
 
         /// <inheritdoc/>
-        public int PageCount { get; set; }
-
-        /// <inheritdoc/>
         public int TotalCount { get; set; }
-
-        /// <inheritdoc/>
-        public IList<TEntity> PageData { get; set; } = Array.Empty<TEntity>();
     }
 }

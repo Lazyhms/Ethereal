@@ -1,18 +1,26 @@
 // Copyright (c) Ethereal. All rights reserved.
-//
 
 using System;
 
 namespace JetBrains.Annotations
 {
-    [AttributeUsage(
-        AttributeTargets.Method
-        | AttributeTargets.Parameter
-        | AttributeTargets.Property
-        | AttributeTargets.Delegate
-        | AttributeTargets.Field)]
-    internal sealed class NotNullAttribute : Attribute
+    [Flags]
+    internal enum ImplicitUseKindFlags
     {
+        Default = Access | Assign | InstantiatedWithFixedConstructorSignature,
+        Access = 1,
+        Assign = 2,
+        InstantiatedWithFixedConstructorSignature = 4,
+        InstantiatedNoFixedConstructorSignature = 8
+    }
+
+    [Flags]
+    internal enum ImplicitUseTargetFlags
+    {
+        Default = Itself,
+        Itself = 1,
+        Members = 2,
+        WithMembers = Itself | Members
     }
 
     [AttributeUsage(
@@ -25,23 +33,9 @@ namespace JetBrains.Annotations
     {
     }
 
-    [AttributeUsage(AttributeTargets.Parameter)]
-    internal sealed class InvokerParameterNameAttribute : Attribute
-    {
-    }
-
-    [AttributeUsage(AttributeTargets.Parameter)]
-    internal sealed class NoEnumerationAttribute : Attribute
-    {
-    }
-
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     internal sealed class ContractAnnotationAttribute : Attribute
     {
-        public string Contract { get; }
-
-        public bool ForceFullStates { get; }
-
         public ContractAnnotationAttribute([NotNull] string contract)
             : this(contract, false)
         {
@@ -52,6 +46,40 @@ namespace JetBrains.Annotations
             Contract = contract;
             ForceFullStates = forceFullStates;
         }
+
+        public string Contract { get; }
+
+        public bool ForceFullStates { get; }
+    }
+
+    [AttributeUsage(AttributeTargets.Parameter)]
+    internal sealed class InvokerParameterNameAttribute : Attribute
+    {
+    }
+
+    [AttributeUsage(AttributeTargets.Parameter)]
+    internal sealed class NoEnumerationAttribute : Attribute
+    {
+    }
+
+    [AttributeUsage(
+                                AttributeTargets.Method
+        | AttributeTargets.Parameter
+        | AttributeTargets.Property
+        | AttributeTargets.Delegate
+        | AttributeTargets.Field)]
+    internal sealed class NotNullAttribute : Attribute
+    {
+    }
+
+    [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Method | AttributeTargets.Property | AttributeTargets.Delegate)]
+    internal sealed class StringFormatMethodAttribute : Attribute
+    {
+        public StringFormatMethodAttribute([NotNull] string formatParameterName)
+            => FormatParameterName = formatParameterName;
+
+        [NotNull]
+        public string FormatParameterName { get; }
     }
 
     [AttributeUsage(AttributeTargets.All)]
@@ -80,36 +108,7 @@ namespace JetBrains.Annotations
             TargetFlags = targetFlags;
         }
 
-        public ImplicitUseKindFlags UseKindFlags { get; }
         public ImplicitUseTargetFlags TargetFlags { get; }
-    }
-
-    [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Method | AttributeTargets.Property | AttributeTargets.Delegate)]
-    internal sealed class StringFormatMethodAttribute : Attribute
-    {
-        public StringFormatMethodAttribute([NotNull] string formatParameterName)
-            => FormatParameterName = formatParameterName;
-
-        [NotNull]
-        public string FormatParameterName { get; }
-    }
-
-    [Flags]
-    internal enum ImplicitUseKindFlags
-    {
-        Default = Access | Assign | InstantiatedWithFixedConstructorSignature,
-        Access = 1,
-        Assign = 2,
-        InstantiatedWithFixedConstructorSignature = 4,
-        InstantiatedNoFixedConstructorSignature = 8
-    }
-
-    [Flags]
-    internal enum ImplicitUseTargetFlags
-    {
-        Default = Itself,
-        Itself = 1,
-        Members = 2,
-        WithMembers = Itself | Members
+        public ImplicitUseKindFlags UseKindFlags { get; }
     }
 }

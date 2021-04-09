@@ -8,24 +8,10 @@ namespace Ethereal.NETCore.Tests
     public interface Tree<T, TK> where T : class
                                  where TK : struct
     {
+        public IList<Tree<T, TK>> Children { get; set; }
         public TK Id { get; set; }
 
         public TK ParentId { get; set; }
-
-        public IList<Tree<T, TK>> Children { get; set; }
-    }
-
-    public class Stu : Tree<Stu, int>
-    {
-        [Required]
-        public int Id { get; set; }
-
-        public int ParentId { get; set; }
-
-        [Required, IDCard]
-        public string? IDCard { get; set; }
-
-        public IList<Tree<Stu, int>> Children { get; set; } = new List<Tree<Stu, int>>();
     }
 
     public static class Ext
@@ -45,6 +31,19 @@ namespace Ethereal.NETCore.Tests
         }
     }
 
+    public class Stu : Tree<Stu, int>
+    {
+        public IList<Tree<Stu, int>> Children { get; set; } = new List<Tree<Stu, int>>();
+
+        [Required]
+        public int Id { get; set; }
+
+        [Required, IDCard]
+        public string? IDCard { get; set; }
+
+        public int ParentId { get; set; }
+    }
+
     public class Test
     {
         [Fact]
@@ -58,6 +57,5 @@ namespace Ethereal.NETCore.Tests
 
             var t = stus.Tree().ToList();
         }
-
     }
 }

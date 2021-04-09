@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 using System;
 
@@ -15,6 +14,7 @@ namespace Microsoft.AspNetCore.Mvc.ModelBinding
         /// SupportSeconds
         /// </summary>
         SupportSeconds = 0x1,
+
         /// <summary>
         /// SupportMilliseconds
         /// </summary>

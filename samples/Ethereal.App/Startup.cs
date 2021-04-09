@@ -35,6 +35,56 @@ namespace Ethereal.App
         public IConfiguration Configuration { get; }
         public IWebHostEnvironment WebHostEnvironment { get; }
 
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory logger)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+            app.UseRouting();
+
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
+            app.UsePathBase(Configuration.GetValue<string>("PathBase") ?? string.Empty);
+
+            app.UseSerilogRequestLogging();
+
+            app.UseCors("CorsPolicy");
+
+            app.UseResponseCompression();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(opts =>
+            {
+                opts.RoutePrefix = string.Empty;
+
+                opts.SwaggerEndpoint(Configuration, "SwaggerDoc");
+            });
+
+            app.UseHangfireServer(new BackgroundJobServerOptions
+            {
+                Queues = new[] { "test" },
+                WorkerCount = Environment.ProcessorCount,
+                ServerName = "Test",
+                SchedulePollingInterval = TimeSpan.FromSeconds(3),
+            });
+            app.UseHangfireDashboard(options: new DashboardOptions
+            {
+            });
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers().RequireAuthorization();
+            });
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRouting(options =>
@@ -92,7 +142,6 @@ namespace Ethereal.App
                 options.UseEthereal();
                 options.UseSqlServer(Configuration.GetConnectionString("ConnectionStrings"), serverOptions =>
                 {
-
                 });
             });
 
@@ -123,57 +172,6 @@ namespace Ethereal.App
 
                 options.UseSerilogLogProvider();
                 options.UseMemoryStorage();
-            });
-        }
-
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory logger)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseRouting();
-
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
-            {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            });
-
-            app.UsePathBase(Configuration.GetValue<string>("PathBase") ?? string.Empty);
-
-            app.UseSerilogRequestLogging();
-
-            app.UseCors("CorsPolicy");
-
-            app.UseResponseCompression();
-
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.UseSwagger();
-            app.UseSwaggerUI(opts =>
-            {
-                opts.RoutePrefix = string.Empty;
-
-                opts.SwaggerEndpoint(Configuration, "SwaggerDoc");
-            });
-
-            app.UseHangfireServer(new BackgroundJobServerOptions
-            {
-                Queues = new[] { "test" },
-                WorkerCount = Environment.ProcessorCount,
-                ServerName = "Test",
-                SchedulePollingInterval = TimeSpan.FromSeconds(3),
-            });
-            app.UseHangfireDashboard(options: new DashboardOptions
-            {
-
-            });
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers().RequireAuthorization();
             });
         }
     }

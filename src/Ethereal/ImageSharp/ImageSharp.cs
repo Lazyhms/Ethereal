@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Advanced;
@@ -15,46 +14,6 @@ namespace System.ImageSharp
     /// </summary>
     public class ImageSharp
     {
-        /// <summary>
-        /// Resize
-        /// </summary>
-        public async Task ResizeAsync(string inputPath, string outputPath, int scaling = 3)
-        {
-            using var image = Image.Load(inputPath);
-            image.Mutate(m => m.Resize(image.Height / scaling, image.Width / scaling));
-            await image.SaveAsync(outputPath);
-        }
-
-        /// <summary>
-        /// Resize
-        /// </summary>
-        public async Task ResizeAsync(Stream inputStream, string outputPath, int scaling = 3)
-        {
-            using var image = Image.Load(inputStream);
-            image.Mutate(m => m.Resize(image.Height / scaling, image.Width / scaling));
-            await image.SaveAsync(outputPath);
-        }
-
-        /// <summary>
-        /// Resize
-        /// </summary>
-        public async Task ResizeAsync(string inputPath, string outputPath, int height, int width)
-        {
-            using var image = Image.Load(inputPath);
-            image.Mutate(m => m.Resize(height, width));
-            await image.SaveAsync(outputPath);
-        }
-
-        /// <summary>
-        /// Resize
-        /// </summary>
-        public async Task ResizeAsync(Stream inputStream, string outputPath, int height, int width)
-        {
-            using var image = Image.Load(inputStream);
-            image.Mutate(m => m.Resize(height, width));
-            await image.SaveAsync(outputPath);
-        }
-
         /// <summary>
         /// MergeImage
         /// </summary>
@@ -101,13 +60,7 @@ namespace System.ImageSharp
 
         /// <summary>
         /// <para>MergeImage</para>
-        /// <code>
-        /// <para>var imageEncoder = new JpegEncoder();</para>
-        /// <para>var imageEncoder = new PngEncoder();</para>
-        /// <para>var imageEncoder = new GifEncoder();</para>
-        /// <para>var imageEncoder = new BmpEncoder();</para>
-        /// <para>var imageEncoder = new TgaEncoder();</para>
-        /// </code>
+        /// <code><para>var imageEncoder = new JpegEncoder();</para><para>var imageEncoder = new PngEncoder();</para><para>var imageEncoder = new GifEncoder();</para><para>var imageEncoder = new BmpEncoder();</para><para>var imageEncoder = new TgaEncoder();</para></code>
         /// </summary>
         public async Task<Stream> MergeImageAsync(Stream inputStream, string mergePath, int x, int y, IImageEncoder imageEncoder)
         {
@@ -171,13 +124,7 @@ namespace System.ImageSharp
 
         /// <summary>
         /// <para>MergeImage</para>
-        /// <code>
-        /// <para>var imageEncoder = new JpegEncoder();</para>
-        /// <para>var imageEncoder = new PngEncoder();</para>
-        /// <para>var imageEncoder = new GifEncoder();</para>
-        /// <para>var imageEncoder = new BmpEncoder();</para>
-        /// <para>var imageEncoder = new TgaEncoder();</para>
-        /// </code>
+        /// <code><para>var imageEncoder = new JpegEncoder();</para><para>var imageEncoder = new PngEncoder();</para><para>var imageEncoder = new GifEncoder();</para><para>var imageEncoder = new BmpEncoder();</para><para>var imageEncoder = new TgaEncoder();</para></code>
         /// </summary>
         public async Task<Stream> MergeImageAsync(Stream inputStream, string mergePath, int x, int y, int scaling, IImageEncoder imageEncoder)
         {
@@ -242,13 +189,7 @@ namespace System.ImageSharp
 
         /// <summary>
         /// <para>MergeImage</para>
-        /// <code>
-        /// <para>var imageEncoder = new JpegEncoder();</para>
-        /// <para>var imageEncoder = new PngEncoder();</para>
-        /// <para>var imageEncoder = new GifEncoder();</para>
-        /// <para>var imageEncoder = new BmpEncoder();</para>
-        /// <para>var imageEncoder = new TgaEncoder();</para>
-        /// </code>
+        /// <code><para>var imageEncoder = new JpegEncoder();</para><para>var imageEncoder = new PngEncoder();</para><para>var imageEncoder = new GifEncoder();</para><para>var imageEncoder = new BmpEncoder();</para><para>var imageEncoder = new TgaEncoder();</para></code>
         /// </summary>
         public async Task<Stream> MergeImageAsync(Stream inputStream, string mergePath, int x, int y, int height, int width, IImageEncoder imageEncoder)
         {
@@ -262,6 +203,46 @@ namespace System.ImageSharp
             });
             await image.SaveAsync(stream, imageEncoder);
             return stream;
+        }
+
+        /// <summary>
+        /// Resize
+        /// </summary>
+        public async Task ResizeAsync(string inputPath, string outputPath, int scaling = 3)
+        {
+            using var image = Image.Load(inputPath);
+            image.Mutate(m => m.Resize(image.Height / scaling, image.Width / scaling));
+            await image.SaveAsync(outputPath);
+        }
+
+        /// <summary>
+        /// Resize
+        /// </summary>
+        public async Task ResizeAsync(Stream inputStream, string outputPath, int scaling = 3)
+        {
+            using var image = Image.Load(inputStream);
+            image.Mutate(m => m.Resize(image.Height / scaling, image.Width / scaling));
+            await image.SaveAsync(outputPath);
+        }
+
+        /// <summary>
+        /// Resize
+        /// </summary>
+        public async Task ResizeAsync(string inputPath, string outputPath, int height, int width)
+        {
+            using var image = Image.Load(inputPath);
+            image.Mutate(m => m.Resize(height, width));
+            await image.SaveAsync(outputPath);
+        }
+
+        /// <summary>
+        /// Resize
+        /// </summary>
+        public async Task ResizeAsync(Stream inputStream, string outputPath, int height, int width)
+        {
+            using var image = Image.Load(inputStream);
+            image.Mutate(m => m.Resize(height, width));
+            await image.SaveAsync(outputPath);
         }
     }
 }

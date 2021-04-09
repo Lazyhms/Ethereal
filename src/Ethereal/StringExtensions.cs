@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 using JetBrains.Annotations;
 using System.Linq;
@@ -40,6 +39,5 @@ namespace System
 
             return decimal.Divide(intersect, union);
         }
-
     }
 }

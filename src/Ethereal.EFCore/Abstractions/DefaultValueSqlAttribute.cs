@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 using JetBrains.Annotations;
 using System;
@@ -7,7 +6,8 @@ using System;
 namespace Ethereal.EntityFrameworkCore
 {
     /// <summary>
-    /// Marks a property or field with a default value sql which will be included in the SQL sent to the database .
+    /// Marks a property or field with a default value sql which will be included in the SQL sent to
+    /// the database .
     /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     public sealed class DefaultValueSqlAttribute : Attribute

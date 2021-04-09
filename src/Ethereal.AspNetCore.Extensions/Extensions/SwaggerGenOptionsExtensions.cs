@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 using Ethereal.AspNetCore.SwaggerGen.Filters;
 using Ethereal.Extensions;
@@ -17,6 +16,79 @@ namespace Microsoft.Extensions.DependencyInjection
     /// </summary>
     public static class SwaggerGenOptionsExtensions
     {
+        /// <summary>
+        /// AddJwtGlobalSecurityRequirement
+        /// </summary>
+        public static SwaggerGenOptions AddJwtGlobalSecurityRequirement(this SwaggerGenOptions options)
+        {
+            options.AddSecurityRequirement(new OpenApiSecurityRequirement
+             {
+                 {
+                     new OpenApiSecurityScheme
+                     {
+                         Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "JwtBearer"}
+                     },
+                     Array.Empty<string>()
+                 }
+             });
+            return options;
+        }
+
+        /// <summary>
+        /// AddJwtSecurityDefinition
+        /// </summary>
+        public static SwaggerGenOptions AddJwtSecurityDefinition(this SwaggerGenOptions options)
+        {
+            options.AddSecurityDefinition("JwtBearer", new OpenApiSecurityScheme()
+            {
+                Description = CoreStrings.OpenApiSecurityScheme_Description,
+                Name = "Authorization",
+                In = ParameterLocation.Header,
+                Type = SecuritySchemeType.ApiKey,
+                BearerFormat = "JWT",
+                Scheme = "JwtBearer"
+            });
+            return options;
+        }
+
+        /// <summary>
+        /// AddJwtSecurityRequirement
+        /// </summary>
+        public static SwaggerGenOptions AddJwtSecurityRequirement(this SwaggerGenOptions options)
+        {
+            options.OperationFilter<JwtSecurityOperationFilter>();
+            return options;
+        }
+
+        /// <summary>
+        /// DocInclusionGroupName
+        /// </summary>
+        public static SwaggerGenOptions DocInclusionGroupName(this SwaggerGenOptions options, string defaultGroupName)
+        {
+            options.DocInclusionPredicate((docName, apiDesc) =>
+            {
+                if (string.IsNullOrEmpty(apiDesc.GroupName))
+                {
+                    apiDesc.GroupName = defaultGroupName;
+                }
+                return docName.Equals(apiDesc.GroupName);
+            });
+            return options;
+        }
+
+        /// <summary>
+        /// Default IncludeXmlComments
+        /// </summary>
+        public static SwaggerGenOptions IncludeXmlComments(this SwaggerGenOptions options, string? direcotoryPath = default, SearchOption? searchOption = default)
+        {
+            var xmlFiles = Directory.GetFiles(string.IsNullOrEmpty(direcotoryPath) ? AppContext.BaseDirectory : direcotoryPath, "*.xml", searchOption ?? SearchOption.TopDirectoryOnly);
+            Array.ForEach(xmlFiles, xml =>
+            {
+                options.IncludeXmlComments(xml, true);
+            });
+            return options;
+        }
+
         /// <summary>
         /// SwaggerDoc
         /// </summary>
@@ -43,79 +115,6 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             var docs = configuration.Bind<Dictionary<string, OpenApiInfo>>(key);
             options.SwaggerGeneratorOptions.SwaggerDocs = docs;
-            return options;
-        }
-
-        /// <summary>
-        /// DocInclusionGroupName
-        /// </summary>
-        public static SwaggerGenOptions DocInclusionGroupName(this SwaggerGenOptions options, string defaultGroupName)
-        {
-            options.DocInclusionPredicate((docName, apiDesc) =>
-            {
-                if (string.IsNullOrEmpty(apiDesc.GroupName))
-                {
-                    apiDesc.GroupName = defaultGroupName;
-                }
-                return docName.Equals(apiDesc.GroupName);
-            });
-            return options;
-        }
-
-        /// <summary>
-        /// AddJwtSecurityDefinition
-        /// </summary>
-        public static SwaggerGenOptions AddJwtSecurityDefinition(this SwaggerGenOptions options)
-        {
-            options.AddSecurityDefinition("JwtBearer", new OpenApiSecurityScheme()
-            {
-                Description = CoreStrings.OpenApiSecurityScheme_Description,
-                Name = "Authorization",
-                In = ParameterLocation.Header,
-                Type = SecuritySchemeType.ApiKey,
-                BearerFormat = "JWT",
-                Scheme = "JwtBearer"
-            });
-            return options;
-        }
-
-        /// <summary>
-        /// AddJwtGlobalSecurityRequirement
-        /// </summary>
-        public static SwaggerGenOptions AddJwtGlobalSecurityRequirement(this SwaggerGenOptions options)
-        {
-            options.AddSecurityRequirement(new OpenApiSecurityRequirement
-             {
-                 {
-                     new OpenApiSecurityScheme
-                     {
-                         Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "JwtBearer"}
-                     },
-                     Array.Empty<string>()
-                 }
-             });
-            return options;
-        }
-
-        /// <summary>
-        /// AddJwtSecurityRequirement
-        /// </summary>
-        public static SwaggerGenOptions AddJwtSecurityRequirement(this SwaggerGenOptions options)
-        {
-            options.OperationFilter<JwtSecurityOperationFilter>();
-            return options;
-        }
-
-        /// <summary>
-        /// Default IncludeXmlComments
-        /// </summary>
-        public static SwaggerGenOptions IncludeXmlComments(this SwaggerGenOptions options, string? direcotoryPath = default, SearchOption? searchOption = default)
-        {
-            var xmlFiles = Directory.GetFiles(string.IsNullOrEmpty(direcotoryPath) ? AppContext.BaseDirectory : direcotoryPath, "*.xml", searchOption ?? SearchOption.TopDirectoryOnly);
-            Array.ForEach(xmlFiles, xml =>
-            {
-                options.IncludeXmlComments(xml, true);
-            });
             return options;
         }
     }

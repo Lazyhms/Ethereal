@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 namespace System.Text.Json.Serialization
 {
@@ -9,11 +8,6 @@ namespace System.Text.Json.Serialization
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
     public class JsonGuidConverterAttribute : JsonConverterAttribute
     {
-        /// <summary>
-        /// GuidConverterOptions
-        /// </summary>
-        public GuidConverterOptions? GuidConverterOptions { get; set; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonGuidConverterAttribute"/> class.
         /// </summary>
@@ -26,6 +20,11 @@ namespace System.Text.Json.Serialization
         /// </summary>
         public JsonGuidConverterAttribute(GuidConverterOptions? guidConverterOptions)
             => GuidConverterOptions = guidConverterOptions;
+
+        /// <summary>
+        /// GuidConverterOptions
+        /// </summary>
+        public GuidConverterOptions? GuidConverterOptions { get; set; }
 
         /// <inheritdoc/>
         public override JsonConverter? CreateConverter(Type typeToConvert)

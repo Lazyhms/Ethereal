@@ -26,7 +26,13 @@ namespace Ethereal.AspNetCore.Tests
             await binder.BindModelAsync(bindingContext);
         }
 
-        private IModelBinder GetBinder(DateTimeStyles? dateTimeStyles = null) => new GuidModelBinder(null);
+        [Fact]
+        public void Valiad()
+        {
+            var t = new T { MyProperty = new FormFile(null, 10, 1000000000000, "dada", "abc.txt") { } };
+            var validationResults = new List<ValidationResult>();
+            var ttt1 = Validator.TryValidateObject(t, new ValidationContext(t), validationResults, true);
+        }
 
         private static DefaultModelBindingContext GetBindingContext(Type modelType = null)
         {
@@ -40,14 +46,7 @@ namespace Ethereal.AspNetCore.Tests
             };
         }
 
-        [Fact]
-        public void Valiad()
-        {
-            var t = new T { MyProperty = new FormFile(null, 10, 1000000000000, "dada", "abc.txt") { } };
-            var validationResults = new List<ValidationResult>();
-            var ttt1 = Validator.TryValidateObject(t, new ValidationContext(t), validationResults, true);
-        }
-
+        private IModelBinder GetBinder(DateTimeStyles? dateTimeStyles = null) => new GuidModelBinder(null);
     }
 
     internal class T

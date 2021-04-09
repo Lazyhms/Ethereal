@@ -3,7 +3,7 @@
   "settings": {
     "documentationRules": {
       "companyName": "Ethereal",
-      "copyrightText": "Copyright (c) {companyName}. All rights reserved.\n",
+      "copyrightText": "Copyright (c) {companyName}. All rights reserved.",
       "xmlHeader": false,
       "documentInterfaces": false,
       "documentInternalElements": false

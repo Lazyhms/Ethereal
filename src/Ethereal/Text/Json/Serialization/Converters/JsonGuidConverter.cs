@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 namespace System.Text.Json.Serialization
 {
@@ -41,18 +40,23 @@ namespace System.Text.Json.Serialization
                 case GuidConverterOptions.N:
                     writer.WriteStringValue(value.ToString("N"));
                     break;
+
                 case GuidConverterOptions.D:
                     writer.WriteStringValue(value.ToString("D"));
                     break;
+
                 case GuidConverterOptions.B:
                     writer.WriteStringValue(value.ToString("B"));
                     break;
+
                 case GuidConverterOptions.P:
                     writer.WriteStringValue(value.ToString("P"));
                     break;
+
                 case GuidConverterOptions.X:
                     writer.WriteStringValue(value.ToString("X"));
                     break;
+
                 default:
                     writer.WriteStringValue(value);
                     break;

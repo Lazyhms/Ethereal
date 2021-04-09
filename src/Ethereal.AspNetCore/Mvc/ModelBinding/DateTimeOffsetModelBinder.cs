@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 using Ethereal.Utilities;
 using Microsoft.Extensions.Logging;
@@ -79,9 +78,11 @@ namespace Microsoft.AspNetCore.Mvc.ModelBinding
                             case DateTimeOffsetBinderOptions.SupportSeconds:
                                 model = DateTimeOffset.FromUnixTimeSeconds(timestamp);
                                 break;
+
                             case DateTimeOffsetBinderOptions.SupportMilliseconds:
                                 model = DateTimeOffset.FromUnixTimeMilliseconds(timestamp);
                                 break;
+
                             default:
                                 model = null;
                                 break;

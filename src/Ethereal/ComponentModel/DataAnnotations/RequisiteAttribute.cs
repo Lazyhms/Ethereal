@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 using Ethereal.NETCore;
 
@@ -14,7 +13,7 @@ namespace System.ComponentModel.DataAnnotations
         /// <summary>
         /// Initializes a new instance of the <see cref="RequisiteAttribute"/> class.
         /// </summary>
-        public RequisiteAttribute() 
+        public RequisiteAttribute()
             => ErrorMessage = CoreStrings.RequiredAttribute_Invalid;
     }
 }

@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
@@ -10,14 +9,14 @@ namespace Microsoft.AspNetCore.Mvc
 {
     internal static class MvcCoreLoggerExtensions
     {
+        private static readonly Action<ILogger, Type, string, Exception?> _attemptingToBindModel;
         private static readonly Action<ILogger, string?, Type, string?, Exception?> _attemptingToBindParameterModel;
         private static readonly Action<ILogger, Type?, string?, Type, string?, Exception?> _attemptingToBindPropertyModel;
-        private static readonly Action<ILogger, Type, string, Exception?> _attemptingToBindModel;
+        private static readonly Action<ILogger, Type, string, Exception?> _doneAttemptingToBindModel;
         private static readonly Action<ILogger, string?, Type, Exception?> _doneAttemptingToBindParameterModel;
         private static readonly Action<ILogger, Type?, string?, Type?, Exception?> _doneAttemptingToBindPropertyModel;
-        private static readonly Action<ILogger, Type, string, Exception?> _doneAttemptingToBindModel;
-        private static readonly Action<ILogger, string, Type?, string?, Type?, Exception?> _foundNoValueForPropertyInRequest;
         private static readonly Action<ILogger, string, string?, Type, Exception?> _foundNoValueForParameterInRequest;
+        private static readonly Action<ILogger, string, Type?, string?, Type?, Exception?> _foundNoValueForPropertyInRequest;
         private static readonly Action<ILogger, string, Type, Exception?> _foundNoValueInRequest;
 
         static MvcCoreLoggerExtensions()
@@ -78,6 +77,7 @@ namespace Microsoft.AspNetCore.Mvc
                         bindingContext.ModelName,
                         null);
                     break;
+
                 case ModelMetadataKind.Property:
                     _attemptingToBindPropertyModel(
                         logger,
@@ -87,6 +87,7 @@ namespace Microsoft.AspNetCore.Mvc
                         bindingContext.ModelName,
                         null);
                     break;
+
                 case ModelMetadataKind.Type:
                     _attemptingToBindModel(logger, bindingContext.ModelType, bindingContext.ModelName, null);
                     break;
@@ -110,6 +111,7 @@ namespace Microsoft.AspNetCore.Mvc
                         modelMetadata.ModelType,
                         null);
                     break;
+
                 case ModelMetadataKind.Property:
                     _doneAttemptingToBindPropertyModel(
                         logger,
@@ -118,6 +120,7 @@ namespace Microsoft.AspNetCore.Mvc
                         modelMetadata.ModelType,
                         null);
                     break;
+
                 case ModelMetadataKind.Type:
                     _doneAttemptingToBindModel(logger, bindingContext.ModelType, bindingContext.ModelName, null);
                     break;
@@ -142,6 +145,7 @@ namespace Microsoft.AspNetCore.Mvc
                         bindingContext.ModelType,
                         null);
                     break;
+
                 case ModelMetadataKind.Property:
                     _foundNoValueForPropertyInRequest(
                         logger,
@@ -151,6 +155,7 @@ namespace Microsoft.AspNetCore.Mvc
                         bindingContext.ModelType,
                         null);
                     break;
+
                 case ModelMetadataKind.Type:
                     _foundNoValueInRequest(
                         logger,

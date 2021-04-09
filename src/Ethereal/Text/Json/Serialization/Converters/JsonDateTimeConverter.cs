@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 namespace System.Text.Json.Serialization
 {
@@ -26,7 +25,6 @@ namespace System.Text.Json.Serialization
         /// <inheritdoc/>
         public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
             reader.GetDateTime();
-
 
         /// <inheritdoc/>
         public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)

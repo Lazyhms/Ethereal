@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 using System;
 using System.Text;
@@ -23,9 +22,6 @@ namespace Microsoft.AspNetCore.Mvc.Formatters
         }
 
         /// <inheritdoc/>
-        protected override bool CanReadType(Type type) => type == typeof(string);
-
-        /// <inheritdoc/>
         public override async Task<InputFormatterResult> ReadRequestBodyAsync(InputFormatterContext context, Encoding encoding)
         {
             string? data = null;
@@ -35,5 +31,8 @@ namespace Microsoft.AspNetCore.Mvc.Formatters
             }
             return InputFormatterResult.Success(data);
         }
+
+        /// <inheritdoc/>
+        protected override bool CanReadType(Type type) => type == typeof(string);
     }
 }

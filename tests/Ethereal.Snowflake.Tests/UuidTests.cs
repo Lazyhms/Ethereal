@@ -11,14 +11,6 @@ namespace Ethereal.Snowflake.Tests
         private readonly System.Snowflake idworker = new System.Snowflake(1, 1);
 
         [Fact]
-        public async Task SingleTest()
-        {
-            var _ = idworker.Generate();
-
-            await Task.CompletedTask;
-        }
-
-        [Fact]
         public async Task MulitlpTestAsync()
         {
             var threadNum = 10;
@@ -43,6 +35,14 @@ namespace Ethereal.Snowflake.Tests
 
             Assert.Equal(bags.Count, threadNum * idNum);
             Assert.Equal(bags.Distinct().Count(), threadNum * idNum);
+
+            await Task.CompletedTask;
+        }
+
+        [Fact]
+        public async Task SingleTest()
+        {
+            var _ = idworker.Generate();
 
             await Task.CompletedTask;
         }

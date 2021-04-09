@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 using Ethereal.NETCore;
 using Ethereal.Utilities;
@@ -16,57 +15,6 @@ namespace System.Linq
         #region Distinct,Union,Except,Intersect,Contains
 
         /// <summary>
-        /// Distinct
-        /// </summary>
-        public static IEnumerable<TSource> Distinct<TSource>(
-            [NotNull] this IEnumerable<TSource> source,
-            [NotNull] Func<TSource?, TSource?, bool> selector) where TSource : class
-        {
-            Check.NotNull(source, nameof(source));
-
-            return source.Distinct(new DynamicEqualityComparer<TSource>(selector));
-        }
-
-        /// <summary>
-        /// Union
-        /// </summary>
-        public static IEnumerable<TSource> Union<TSource>(
-            [NotNull] this IEnumerable<TSource> first,
-            [CanBeNull] IEnumerable<TSource> second,
-            [NotNull] Func<TSource?, TSource?, bool> selector) where TSource : class
-        {
-            Check.NotNull(first, nameof(first));
-
-            return first.Union(second, new DynamicEqualityComparer<TSource>(selector));
-        }
-
-        /// <summary>
-        /// Except
-        /// </summary>
-        public static IEnumerable<TSource> Except<TSource>(
-            [NotNull] this IEnumerable<TSource> first,
-            [CanBeNull] IEnumerable<TSource> second,
-            [NotNull] Func<TSource?, TSource?, bool> selector) where TSource : class
-        {
-            Check.NotNull(first, nameof(first));
-
-            return first.Except(second, new DynamicEqualityComparer<TSource>(selector));
-        }
-
-        /// <summary>
-        /// Intersect
-        /// </summary>
-        public static IEnumerable<TSource> Intersect<TSource>(
-            [NotNull] this IEnumerable<TSource> first,
-            [CanBeNull] IEnumerable<TSource> second,
-            [NotNull] Func<TSource?, TSource?, bool> selector) where TSource : class
-        {
-            Check.NotNull(first, nameof(first));
-
-            return first.Intersect(second, new DynamicEqualityComparer<TSource>(selector));
-        }
-
-        /// <summary>
         /// Contains
         /// </summary>
         public static bool Contains<TSource>(
@@ -79,15 +27,29 @@ namespace System.Linq
             return source.Contains(item, new DynamicEqualityComparer<TSource>(selector));
         }
 
-        private sealed class DynamicEqualityComparer<T> : IEqualityComparer<T> where T : class
+        /// <summary>
+        /// Contains
+        /// </summary>
+        public static bool Contains<TSource, TKey>(
+            [NotNull] this IEnumerable<TSource> source,
+            [CanBeNull] TSource item,
+            [NotNull] Func<TSource?, TKey?> selector) where TSource : class
         {
-            private readonly Func<T?, T?, bool> _func;
+            Check.NotNull(source, nameof(source));
 
-            public DynamicEqualityComparer(Func<T?, T?, bool> func) => _func = func;
+            return source.Contains(item, new DynamicEqualityComparer<TSource, TKey>(selector));
+        }
 
-            public bool Equals(T? x, T? y) => _func(x, y);
+        /// <summary>
+        /// Distinct
+        /// </summary>
+        public static IEnumerable<TSource> Distinct<TSource>(
+            [NotNull] this IEnumerable<TSource> source,
+            [NotNull] Func<TSource?, TSource?, bool> selector) where TSource : class
+        {
+            Check.NotNull(source, nameof(source));
 
-            public int GetHashCode(T? obj) => 0;
+            return source.Distinct(new DynamicEqualityComparer<TSource>(selector));
         }
 
         /// <summary>
@@ -103,16 +65,16 @@ namespace System.Linq
         }
 
         /// <summary>
-        /// Union
+        /// Except
         /// </summary>
-        public static IEnumerable<TSource> Union<TSource, TKey>(
+        public static IEnumerable<TSource> Except<TSource>(
             [NotNull] this IEnumerable<TSource> first,
             [CanBeNull] IEnumerable<TSource> second,
-            [NotNull] Func<TSource?, TKey?> selector) where TSource : class
+            [NotNull] Func<TSource?, TSource?, bool> selector) where TSource : class
         {
             Check.NotNull(first, nameof(first));
 
-            return first.Union(second, new DynamicEqualityComparer<TSource, TKey>(selector));
+            return first.Except(second, new DynamicEqualityComparer<TSource>(selector));
         }
 
         /// <summary>
@@ -131,6 +93,19 @@ namespace System.Linq
         /// <summary>
         /// Intersect
         /// </summary>
+        public static IEnumerable<TSource> Intersect<TSource>(
+            [NotNull] this IEnumerable<TSource> first,
+            [CanBeNull] IEnumerable<TSource> second,
+            [NotNull] Func<TSource?, TSource?, bool> selector) where TSource : class
+        {
+            Check.NotNull(first, nameof(first));
+
+            return first.Intersect(second, new DynamicEqualityComparer<TSource>(selector));
+        }
+
+        /// <summary>
+        /// Intersect
+        /// </summary>
         public static IEnumerable<TSource> Intersect<TSource, TKey>(
             [NotNull] this IEnumerable<TSource> first,
             [CanBeNull] IEnumerable<TSource> second,
@@ -142,16 +117,40 @@ namespace System.Linq
         }
 
         /// <summary>
-        /// Contains
+        /// Union
         /// </summary>
-        public static bool Contains<TSource, TKey>(
-            [NotNull] this IEnumerable<TSource> source,
-            [CanBeNull] TSource item,
+        public static IEnumerable<TSource> Union<TSource>(
+            [NotNull] this IEnumerable<TSource> first,
+            [CanBeNull] IEnumerable<TSource> second,
+            [NotNull] Func<TSource?, TSource?, bool> selector) where TSource : class
+        {
+            Check.NotNull(first, nameof(first));
+
+            return first.Union(second, new DynamicEqualityComparer<TSource>(selector));
+        }
+
+        /// <summary>
+        /// Union
+        /// </summary>
+        public static IEnumerable<TSource> Union<TSource, TKey>(
+            [NotNull] this IEnumerable<TSource> first,
+            [CanBeNull] IEnumerable<TSource> second,
             [NotNull] Func<TSource?, TKey?> selector) where TSource : class
         {
-            Check.NotNull(source, nameof(source));
+            Check.NotNull(first, nameof(first));
 
-            return source.Contains(item, new DynamicEqualityComparer<TSource, TKey>(selector));
+            return first.Union(second, new DynamicEqualityComparer<TSource, TKey>(selector));
+        }
+
+        private sealed class DynamicEqualityComparer<T> : IEqualityComparer<T> where T : class
+        {
+            private readonly Func<T?, T?, bool> _func;
+
+            public DynamicEqualityComparer(Func<T?, T?, bool> func) => _func = func;
+
+            public bool Equals(T? x, T? y) => _func(x, y);
+
+            public int GetHashCode(T? obj) => 0;
         }
 
         private sealed class DynamicEqualityComparer<TS, TK> : IEqualityComparer<TS> where TS : class
@@ -165,7 +164,7 @@ namespace System.Linq
             public int GetHashCode(TS? obj) => 0;
         }
 
-        #endregion
+        #endregion Distinct,Union,Except,Intersect,Contains
 
         #region Where
 
@@ -257,7 +256,7 @@ namespace System.Linq
             return condition ? source.Where(truePredicate) : source.Where(falsePredicate);
         }
 
-        #endregion
+        #endregion Where
 
         #region Pagination
 
@@ -318,21 +317,6 @@ namespace System.Linq
         /// <summary>
         /// PagedList
         /// </summary>
-        public static IPagedList<TEntity> PaginationByByDescending<TEntity, TKey>(
-            [NotNull] this IEnumerable<TEntity> source,
-            [NotNull] Func<TEntity, TKey> selector,
-            int pageIndex,
-            int pageSize) where TEntity : class
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(selector, nameof(selector));
-
-            return source.OrderByDescending(selector).Pagination(pageIndex, pageSize);
-        }
-
-        /// <summary>
-        /// PagedList
-        /// </summary>
         public static IPagedList<TEntity> PaginationBy<TEntity, TKey>(
             [NotNull] this IEnumerable<TEntity> source,
             [NotNull] Func<TEntity, bool> predicate,
@@ -352,6 +336,21 @@ namespace System.Linq
         /// </summary>
         public static IPagedList<TEntity> PaginationByByDescending<TEntity, TKey>(
             [NotNull] this IEnumerable<TEntity> source,
+            [NotNull] Func<TEntity, TKey> selector,
+            int pageIndex,
+            int pageSize) where TEntity : class
+        {
+            Check.NotNull(source, nameof(source));
+            Check.NotNull(selector, nameof(selector));
+
+            return source.OrderByDescending(selector).Pagination(pageIndex, pageSize);
+        }
+
+        /// <summary>
+        /// PagedList
+        /// </summary>
+        public static IPagedList<TEntity> PaginationByByDescending<TEntity, TKey>(
+            [NotNull] this IEnumerable<TEntity> source,
             [NotNull] Func<TEntity, bool> predicate,
             [NotNull] Func<TEntity, TKey> keySelector,
             int pageIndex,
@@ -364,7 +363,7 @@ namespace System.Linq
             return source.Where(predicate).OrderByDescending(keySelector).Pagination(pageIndex, pageSize);
         }
 
-        #endregion
+        #endregion Pagination
 
         #region Replace
 
@@ -465,7 +464,7 @@ namespace System.Linq
             }
         }
 
-        #endregion
+        #endregion Replace
 
         #region LeftJoin
 
@@ -492,7 +491,7 @@ namespace System.Linq
             }).SelectMany(joinResult => joinResult.inners.Select(innerObj => resultSelector(joinResult.outerObj, innerObj)));
         }
 
-        #endregion
+        #endregion LeftJoin
 
         #region Join
 
@@ -522,7 +521,6 @@ namespace System.Linq
             return string.Join(separator, source);
         }
 
-        #endregion
-
+        #endregion Join
     }
 }

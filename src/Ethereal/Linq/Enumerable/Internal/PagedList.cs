@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 using System.Collections.Generic;
 
@@ -33,18 +32,18 @@ namespace System.Linq
     public class PagedList<TEntity> : IPagedList<TEntity>
     {
         /// <inheritdoc/>
+        public int PageCount { get; set; }
+
+        /// <inheritdoc/>
+        public IList<TEntity> PageData { get; set; } = Array.Empty<TEntity>();
+
+        /// <inheritdoc/>
         public int PageIndex { get; set; }
 
         /// <inheritdoc/>
         public int PageSize { get; set; }
 
         /// <inheritdoc/>
-        public int PageCount { get; set; }
-
-        /// <inheritdoc/>
         public int TotalCount { get; set; }
-
-        /// <inheritdoc/>
-        public IList<TEntity> PageData { get; set; } = Array.Empty<TEntity>();
     }
 }

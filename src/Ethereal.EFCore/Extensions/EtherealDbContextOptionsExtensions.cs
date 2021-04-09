@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 using Ethereal.EntityFrameworkCore.Infrastructure;
 using Ethereal.Utilities;
@@ -33,12 +32,6 @@ namespace Microsoft.EntityFrameworkCore
         }
 
         /// <summary>
-        /// GetOrCreateExtension
-        /// </summary>
-        private static EtherealOptionsExtension GetOrCreateExtension(DbContextOptionsBuilder optionsBuilder)
-         => optionsBuilder.Options.FindExtension<EtherealOptionsExtension>() ?? new EtherealOptionsExtension();
-
-        /// <summary>
         /// ConfigureWarnings
         /// </summary>
         private static void ConfigureWarnings(DbContextOptionsBuilder optionsBuilder)
@@ -47,5 +40,11 @@ namespace Microsoft.EntityFrameworkCore
             //coreOptionsExtension = coreOptionsExtension.WithWarningsConfiguration(coreOptionsExtension.WarningsConfiguration.TryWithExplicit(RelationalEventId.AmbientTransactionWarning, WarningBehavior.Throw));
             ((IDbContextOptionsBuilderInfrastructure)optionsBuilder).AddOrUpdateExtension(coreOptionsExtension);
         }
+
+        /// <summary>
+        /// GetOrCreateExtension
+        /// </summary>
+        private static EtherealOptionsExtension GetOrCreateExtension(DbContextOptionsBuilder optionsBuilder)
+         => optionsBuilder.Options.FindExtension<EtherealOptionsExtension>() ?? new EtherealOptionsExtension();
     }
 }

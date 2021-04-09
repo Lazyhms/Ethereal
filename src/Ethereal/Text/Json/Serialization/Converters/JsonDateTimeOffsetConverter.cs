@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 namespace System.Text.Json.Serialization
 {
@@ -61,12 +60,15 @@ namespace System.Text.Json.Serialization
                 case DateTimeOffsetConverterOptions.AllowString:
                     writer.WriteStringValue(value.ToString(_dateFormatString));
                     break;
+
                 case DateTimeOffsetConverterOptions.AllowSeconds:
                     writer.WriteNumberValue(value.ToUnixTimeSeconds());
                     break;
+
                 case DateTimeOffsetConverterOptions.AllowMilliseconds:
                     writer.WriteNumberValue(value.ToUnixTimeMilliseconds());
                     break;
+
                 default:
                     writer.WriteStringValue(value);
                     break;

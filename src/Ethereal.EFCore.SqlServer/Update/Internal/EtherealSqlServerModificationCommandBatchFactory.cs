@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 using Ethereal.Utilities;
 using JetBrains.Annotations;
@@ -21,7 +20,8 @@ namespace Ethereal.EntityFrameworkCore.SqlServer.Update.Internal
         private readonly IDbContextOptions _options;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EtherealSqlServerModificationCommandBatchFactory"/> class.
+        /// Initializes a new instance of the <see
+        /// cref="EtherealSqlServerModificationCommandBatchFactory"/> class.
         /// </summary>
         public EtherealSqlServerModificationCommandBatchFactory(
             [NotNull] ModificationCommandBatchFactoryDependencies dependencies,

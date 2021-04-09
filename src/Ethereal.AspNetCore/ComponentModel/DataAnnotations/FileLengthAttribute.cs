@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 using Ethereal.AspNetCore;
 using Microsoft.AspNetCore.Http;

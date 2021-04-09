@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 using Ethereal.Utilities;
 using System;
@@ -7,7 +6,8 @@ using System;
 namespace Ethereal.EntityFrameworkCore
 {
     /// <summary>
-    /// Marks a property or field with a sequence value which will be included in the SQL sent to the database .
+    /// Marks a property or field with a sequence value which will be included in the SQL sent to
+    /// the database .
     /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     public sealed class SequenceValueAttribute : Attribute
@@ -23,13 +23,13 @@ namespace Ethereal.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Schema
-        /// </summary>
-        public string? Schema { get; set; }
-
-        /// <summary>
         /// Name
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Schema
+        /// </summary>
+        public string? Schema { get; set; }
     }
 }

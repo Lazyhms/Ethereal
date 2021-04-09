@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 using Ethereal.EntityFrameworkCore.Infrastructure.Internal;
 using JetBrains.Annotations;
@@ -18,14 +17,7 @@ namespace Ethereal.EntityFrameworkCore.Infrastructure
         /// </summary>
         public EtherealDbContextOptionsBuilder([NotNull] DbContextOptionsBuilder optionsBuilder) : base(optionsBuilder)
         {
-
         }
-
-        /// <summary>
-        /// override ToString method
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string? ToString() => base.ToString();
 
         /// <summary>
         /// override Equals method
@@ -38,5 +30,11 @@ namespace Ethereal.EntityFrameworkCore.Infrastructure
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
+
+        /// <summary>
+        /// override ToString method
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override string? ToString() => base.ToString();
     }
 }

@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 using Ethereal.Utilities;
 using JetBrains.Annotations;
@@ -124,7 +123,7 @@ namespace Ethereal.EntityFrameworkCore
             return entry;
         }
 
-        #endregion
+        #endregion Update
 
         #region Delete
 
@@ -166,14 +165,14 @@ namespace Ethereal.EntityFrameworkCore
             return entry;
         }
 
-        #endregion
+        #endregion Delete
 
         #region SoftDelete
 
         /// <summary>
         /// SoftDelete
         /// </summary>
-        /// <exception cref="InvalidOperationException"> SoftDeleteAttribute is not defined</exception>
+        /// <exception cref="InvalidOperationException">SoftDeleteAttribute is not defined</exception>
         public static EntityEntry<TEntity> SoftDelete<TEntity>(
             [NotNull] this DbSet<TEntity> dbSet,
             [NotNull] TEntity entity) where TEntity : class, new()
@@ -192,7 +191,7 @@ namespace Ethereal.EntityFrameworkCore
         /// <summary>
         /// SoftDelete
         /// </summary>
-        /// <exception cref="InvalidOperationException"> SoftDeleteAttribute is not defined</exception>
+        /// <exception cref="InvalidOperationException">SoftDeleteAttribute is not defined</exception>
         public static EntityEntry<TEntity> SoftDelete<TEntity, TPrimaryKey>(
             [NotNull] this DbSet<TEntity> dbSet,
             [NotNull] TPrimaryKey id) where TEntity : class, new()
@@ -213,7 +212,7 @@ namespace Ethereal.EntityFrameworkCore
         /// <summary>
         /// SoftDelete
         /// </summary>
-        /// <exception cref="InvalidOperationException"> SoftDeleteAttribute is not defined</exception>
+        /// <exception cref="InvalidOperationException">SoftDeleteAttribute is not defined</exception>
         public static EntityEntry<TEntity> SoftDelete<TEntity>(
             [NotNull] this DbSet<TEntity> dbSet,
             [NotNull] object id) where TEntity : class, new()
@@ -231,6 +230,6 @@ namespace Ethereal.EntityFrameworkCore
             return entry;
         }
 
-        #endregion
+        #endregion SoftDelete
     }
 }

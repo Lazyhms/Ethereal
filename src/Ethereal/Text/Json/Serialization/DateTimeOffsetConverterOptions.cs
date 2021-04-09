@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 namespace System.Text.Json.Serialization
 {
@@ -13,10 +12,12 @@ namespace System.Text.Json.Serialization
         /// None
         /// </summary>
         AllowString = 0x1,
+
         /// <summary>
         /// AllowSeconds
         /// </summary>
         AllowSeconds = 0x2,
+
         /// <summary>
         /// AllowMilliseconds
         /// </summary>

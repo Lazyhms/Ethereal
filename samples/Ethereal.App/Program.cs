@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
@@ -13,22 +12,6 @@ namespace Ethereal.App
 {
     public class Program
     {
-        public static async Task Main(string[] args)
-        {
-            try
-            {
-                await CreateHostBuilder(args).Build().RunAsync();
-            }
-            catch (Exception ex)
-            {
-                Log.Fatal(ex, "{Date}: Host terminated unexpectedly");
-            }
-            finally
-            {
-                Log.CloseAndFlush();
-            }
-        }
-
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
@@ -71,5 +54,21 @@ namespace Ethereal.App
                     });
                     webBuilder.UseStartup<Startup>();
                 });
+
+        public static async Task Main(string[] args)
+        {
+            try
+            {
+                await CreateHostBuilder(args).Build().RunAsync();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "{Date}: Host terminated unexpectedly");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
+        }
     }
 }

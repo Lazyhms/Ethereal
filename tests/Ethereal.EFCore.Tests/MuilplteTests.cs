@@ -12,6 +12,13 @@ namespace Ethereal.EFCore.Tests
     public class MuilplteTests
     {
         [Fact]
+        public async Task Bewteen_Tests()
+        {
+            using var context = GetDbContext();
+            var t1 = await context.Stus.Where(s => s.Score > 0 && s.Created.Between(DateTime.Now.AddDays(-1), DateTime.Now.AddDays(-1))).ToListAsync();
+        }
+
+        [Fact]
         public async Task DbContextExtension_TestAsync()
         {
             var context = GetDbContext();
@@ -56,23 +63,6 @@ namespace Ethereal.EFCore.Tests
 
             context.Delete(stu1);
             await context.SaveChangesAsync();
-
-        }
-
-        [Fact]
-        public async Task WhereExtension_Tests()
-        {
-            using var context = GetDbContext();
-
-            var t1 = await context.Stus.Where(1 == 1, s => s.Name.Equals("1")).ToListAsync();
-            var t2 = await context.Stus.Where(1 == 2, s => s.Name.Equals("1")).ToListAsync();
-        }
-
-        [Fact]
-        public async Task Bewteen_Tests()
-        {
-            using var context = GetDbContext();
-            var t1 = await context.Stus.Where(s => s.Score > 0 && s.Created.Between(DateTime.Now.AddDays(-1), DateTime.Now.AddDays(-1))).ToListAsync();
         }
 
         [Fact]
@@ -83,6 +73,15 @@ namespace Ethereal.EFCore.Tests
             var t1 = await context.Stus.PaginationAsync(1, 10);
             var t2 = await context.Stus.PaginationByAsync(s => s.Created, 1, 10);
             var t3 = await context.Stus.PaginationByDescendingAsync(s => s.Name.Contains("1"), o => o.Created, 1, 10);
+        }
+
+        [Fact]
+        public async Task WhereExtension_Tests()
+        {
+            using var context = GetDbContext();
+
+            var t1 = await context.Stus.Where(1 == 1, s => s.Name.Equals("1")).ToListAsync();
+            var t2 = await context.Stus.Where(1 == 2, s => s.Name.Equals("1")).ToListAsync();
         }
 
         private AppDbContextTest GetDbContext()

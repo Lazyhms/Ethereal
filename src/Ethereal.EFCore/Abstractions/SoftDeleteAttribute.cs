@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 using Ethereal.Utilities;
 using System;
@@ -24,13 +23,13 @@ namespace Ethereal.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Used to identify whether the column is soft deleted
-        /// </summary>
-        public string IsDeleted { get; set; }
-
-        /// <summary>
         /// Comment for the column
         /// </summary>
         public string Comment { get; set; }
+
+        /// <summary>
+        /// Used to identify whether the column is soft deleted
+        /// </summary>
+        public string IsDeleted { get; set; }
     }
 }

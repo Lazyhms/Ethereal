@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 namespace System.Text.Json.Serialization
 {
@@ -9,11 +8,6 @@ namespace System.Text.Json.Serialization
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
     public class JsonDateTimeOffsetConverterAttribute : JsonConverterAttribute
     {
-        /// <summary>
-        /// DateFormatString
-        /// </summary>
-        public string? DateFormatString { get; set; }
-
         /// <summary>
         /// DateTimeOffsetConverterOptions
         /// </summary>
@@ -35,8 +29,13 @@ namespace System.Text.Json.Serialization
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonDateTimeOffsetConverterAttribute"/> class.
         /// </summary>
-        public JsonDateTimeOffsetConverterAttribute(DateTimeOffsetConverterOptions dateTimeOffsetConverterOptions) 
+        public JsonDateTimeOffsetConverterAttribute(DateTimeOffsetConverterOptions dateTimeOffsetConverterOptions)
             => DateTimeOffsetConverterOptions = dateTimeOffsetConverterOptions;
+
+        /// <summary>
+        /// DateFormatString
+        /// </summary>
+        public string? DateFormatString { get; set; }
 
         /// <inheritdoc/>
         public override JsonConverter? CreateConverter(Type typeToConvert)

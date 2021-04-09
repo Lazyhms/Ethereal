@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -13,7 +12,8 @@ namespace Microsoft.EntityFrameworkCore.Query.Internal
     public class EtherealDateTimeMethodCallTranslatorPlugin : IMethodCallTranslatorPlugin
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="EtherealDateTimeMethodCallTranslatorPlugin"/> class.
+        /// Initializes a new instance of the <see
+        /// cref="EtherealDateTimeMethodCallTranslatorPlugin"/> class.
         /// </summary>
         public EtherealDateTimeMethodCallTranslatorPlugin(
             [NotNull] ISqlExpressionFactory sqlExpressionFactory,

@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 using Ethereal.Utilities;
 using JetBrains.Annotations;
@@ -17,7 +16,6 @@ namespace Ethereal.EntityFrameworkCore
     /// </summary>
     public static class EtherealEFCoreQueryableExtensions
     {
-
         #region Pagination
 
         /// <summary>
@@ -57,70 +55,6 @@ namespace Ethereal.EntityFrameworkCore
                 PageSize = pageSize,
                 TotalCount = count
             };
-        }
-
-        /// <summary>
-        /// PagedList
-        /// </summary>
-        public static IPagedList<TEntity> PaginationBy<TEntity, TKey>(
-            [NotNull] this IQueryable<TEntity> source,
-            [NotNull] Expression<Func<TEntity, TKey>> keySelector,
-            int pageIndex,
-            int pageSize) where TEntity : class
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(keySelector, nameof(keySelector));
-
-            return source.OrderBy(keySelector).Pagination(pageIndex, pageSize);
-        }
-
-        /// <summary>
-        /// PagedList
-        /// </summary>
-        public static IPagedList<TEntity> PaginationByDescending<TEntity, TKey>(
-            [NotNull] this IQueryable<TEntity> source,
-            [NotNull] Expression<Func<TEntity, TKey>> keySelector,
-            int pageIndex,
-            int pageSize) where TEntity : class
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(keySelector, nameof(keySelector));
-
-            return source.OrderByDescending(keySelector).Pagination(pageIndex, pageSize);
-        }
-
-        /// <summary>
-        /// PagedList
-        /// </summary>
-        public static IPagedList<TEntity> PaginationBy<TEntity, TKey>(
-            [NotNull] this IQueryable<TEntity> source,
-            [NotNull] Expression<Func<TEntity, bool>> predicate,
-            [NotNull] Expression<Func<TEntity, TKey>> keySelector,
-            int pageIndex,
-            int pageSize) where TEntity : class
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(predicate, nameof(predicate));
-            Check.NotNull(keySelector, nameof(keySelector));
-
-            return source.Where(predicate).OrderBy(keySelector).Pagination(pageIndex, pageSize);
-        }
-
-        /// <summary>
-        /// PagedList
-        /// </summary>
-        public static IPagedList<TEntity> PaginationByDescending<TEntity, TKey>(
-            [NotNull] this IQueryable<TEntity> source,
-            [NotNull] Expression<Func<TEntity, bool>> predicate,
-            [NotNull] Expression<Func<TEntity, TKey>> keySelector,
-            int pageIndex,
-            int pageSize) where TEntity : class
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(predicate, nameof(predicate));
-            Check.NotNull(keySelector, nameof(keySelector));
-
-            return source.Where(predicate).OrderByDescending(keySelector).Pagination(pageIndex, pageSize);
         }
 
         /// <summary>
@@ -164,6 +98,38 @@ namespace Ethereal.EntityFrameworkCore
         }
 
         /// <summary>
+        /// PagedList
+        /// </summary>
+        public static IPagedList<TEntity> PaginationBy<TEntity, TKey>(
+            [NotNull] this IQueryable<TEntity> source,
+            [NotNull] Expression<Func<TEntity, TKey>> keySelector,
+            int pageIndex,
+            int pageSize) where TEntity : class
+        {
+            Check.NotNull(source, nameof(source));
+            Check.NotNull(keySelector, nameof(keySelector));
+
+            return source.OrderBy(keySelector).Pagination(pageIndex, pageSize);
+        }
+
+        /// <summary>
+        /// PagedList
+        /// </summary>
+        public static IPagedList<TEntity> PaginationBy<TEntity, TKey>(
+            [NotNull] this IQueryable<TEntity> source,
+            [NotNull] Expression<Func<TEntity, bool>> predicate,
+            [NotNull] Expression<Func<TEntity, TKey>> keySelector,
+            int pageIndex,
+            int pageSize) where TEntity : class
+        {
+            Check.NotNull(source, nameof(source));
+            Check.NotNull(predicate, nameof(predicate));
+            Check.NotNull(keySelector, nameof(keySelector));
+
+            return source.Where(predicate).OrderBy(keySelector).Pagination(pageIndex, pageSize);
+        }
+
+        /// <summary>
         /// PaginationAsync
         /// </summary>
         public static async Task<IPagedList<TEntity>> PaginationByAsync<TEntity, TKey>(
@@ -177,22 +143,6 @@ namespace Ethereal.EntityFrameworkCore
             Check.NotNull(keySelector, nameof(keySelector));
 
             return await source.OrderBy(keySelector).PaginationAsync(pageIndex, pageSize, cancellationToken);
-        }
-
-        /// <summary>
-        /// PaginationAsync
-        /// </summary>
-        public static async Task<IPagedList<TEntity>> PaginationByDescendingAsync<TEntity, TKey>(
-            [NotNull] this IQueryable<TEntity> source,
-            [NotNull] Expression<Func<TEntity, TKey>> keySelector,
-            int pageIndex,
-            int pageSize,
-            CancellationToken cancellationToken = default) where TEntity : class
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(keySelector, nameof(keySelector));
-
-            return await source.OrderByDescending(keySelector).PaginationAsync(pageIndex, pageSize, cancellationToken);
         }
 
         /// <summary>
@@ -214,6 +164,54 @@ namespace Ethereal.EntityFrameworkCore
         }
 
         /// <summary>
+        /// PagedList
+        /// </summary>
+        public static IPagedList<TEntity> PaginationByDescending<TEntity, TKey>(
+            [NotNull] this IQueryable<TEntity> source,
+            [NotNull] Expression<Func<TEntity, TKey>> keySelector,
+            int pageIndex,
+            int pageSize) where TEntity : class
+        {
+            Check.NotNull(source, nameof(source));
+            Check.NotNull(keySelector, nameof(keySelector));
+
+            return source.OrderByDescending(keySelector).Pagination(pageIndex, pageSize);
+        }
+
+        /// <summary>
+        /// PagedList
+        /// </summary>
+        public static IPagedList<TEntity> PaginationByDescending<TEntity, TKey>(
+            [NotNull] this IQueryable<TEntity> source,
+            [NotNull] Expression<Func<TEntity, bool>> predicate,
+            [NotNull] Expression<Func<TEntity, TKey>> keySelector,
+            int pageIndex,
+            int pageSize) where TEntity : class
+        {
+            Check.NotNull(source, nameof(source));
+            Check.NotNull(predicate, nameof(predicate));
+            Check.NotNull(keySelector, nameof(keySelector));
+
+            return source.Where(predicate).OrderByDescending(keySelector).Pagination(pageIndex, pageSize);
+        }
+
+        /// <summary>
+        /// PaginationAsync
+        /// </summary>
+        public static async Task<IPagedList<TEntity>> PaginationByDescendingAsync<TEntity, TKey>(
+            [NotNull] this IQueryable<TEntity> source,
+            [NotNull] Expression<Func<TEntity, TKey>> keySelector,
+            int pageIndex,
+            int pageSize,
+            CancellationToken cancellationToken = default) where TEntity : class
+        {
+            Check.NotNull(source, nameof(source));
+            Check.NotNull(keySelector, nameof(keySelector));
+
+            return await source.OrderByDescending(keySelector).PaginationAsync(pageIndex, pageSize, cancellationToken);
+        }
+
+        /// <summary>
         /// PaginationAsync
         /// </summary>
         public static async Task<IPagedList<TEntity>> PaginationByDescendingAsync<TEntity, TKey>(
@@ -231,7 +229,7 @@ namespace Ethereal.EntityFrameworkCore
             return await source.Where(predicate).OrderByDescending(keySelector).PaginationAsync(pageIndex, pageSize, cancellationToken);
         }
 
-        #endregion
+        #endregion Pagination
 
         #region Where
 
@@ -323,6 +321,6 @@ namespace Ethereal.EntityFrameworkCore
             return condition ? source.Where(truePredicate) : source.Where(falsePredicate);
         }
 
-        #endregion
+        #endregion Where
     }
 }

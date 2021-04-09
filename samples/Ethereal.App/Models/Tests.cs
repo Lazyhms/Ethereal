@@ -12,24 +12,24 @@ namespace Ethereal.App.Models
         //[Requisite]
         public DateTime? Create { get; set; }
 
-        [ModelBinder()]
-        public DateTimeOffset? Timestamp { get; set; }
+        [FileLength(1)]
+        public IFormFile File { get; set; }
+
+        [FileExtensions]
+        public string FileExtensions { get; set; }
 
         public Guid Id { get; set; }
 
         [IDCard]
         public string IDCard { get; set; }
 
-        [SocialCreditCode]
-        public string SocialCreditCode { get; set; }
-
-        [FileExtensions]
-        public string FileExtensions { get; set; }
-
         [Required(ErrorMessage = "字段是必须的")]
         public IEnumerable<int> IEnumerableLength { get; set; }
 
-        [FileLength(1)]
-        public IFormFile File { get; set; }
+        [SocialCreditCode]
+        public string SocialCreditCode { get; set; }
+
+        [ModelBinder()]
+        public DateTimeOffset? Timestamp { get; set; }
     }
 }

@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 using Ethereal.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
@@ -49,9 +48,8 @@ namespace Microsoft.AspNetCore.Mvc.Filters
 
         private class JsonErrorResponse
         {
-            public string[]? Messages { get; set; }
-
             public object? DeveloperMessage { get; set; }
+            public string[]? Messages { get; set; }
         }
     }
 }

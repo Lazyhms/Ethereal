@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 namespace System
 {
@@ -8,13 +7,13 @@ namespace System
     /// </summary>
     public sealed class Snowflake
     {
-        private readonly object _obj = new object();
         private readonly long _dataCenterId;
         private readonly long _machingId;
+        private readonly object _obj = new object();
         private readonly long _timestamp;
 
-        private long _sequence = 0L;
         private long _lastTimestamp = -1L;
+        private long _sequence = 0L;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Snowflake"/> struct.
@@ -37,7 +36,7 @@ namespace System
         }
 
         /// <summary>
-        /// Generate numerical value 
+        /// Generate numerical value
         /// </summary>
         public long Generate()
         {
@@ -71,6 +70,8 @@ namespace System
             }
         }
 
+        private long CurrentTimestamp() => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+
         private long NextTimestamp(long lastTimestamp)
         {
             var timestamp = CurrentTimestamp();
@@ -80,7 +81,5 @@ namespace System
             }
             return timestamp;
         }
-
-        private long CurrentTimestamp() => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
     }
 }

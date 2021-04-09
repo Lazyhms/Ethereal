@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -22,7 +21,6 @@ namespace Ethereal.EntityFrameworkCore.Infrastructure
         {
         }
 
-
         /// <summary>
         /// Initializes a new instance of the <see cref="EtherealOptionsExtension"/> class.
         /// </summary>
@@ -33,19 +31,18 @@ namespace Ethereal.EntityFrameworkCore.Infrastructure
         /// <inheritdoc/>
         public DbContextOptionsExtensionInfo Info => _info ??= new ExtensionInfo(this);
 
-        /// <summary>
-        /// clone
-        /// </summary>
-        protected EtherealOptionsExtension Clone() => new(this);
-
         /// <inheritdoc/>
         public void ApplyServices(IServiceCollection services) => services.AddEntityFrameworkCoreRelationalServices();
 
         /// <inheritdoc/>
         public void Validate(IDbContextOptions options)
         {
-
         }
+
+        /// <summary>
+        /// clone
+        /// </summary>
+        protected EtherealOptionsExtension Clone() => new(this);
 
         private sealed class ExtensionInfo : DbContextOptionsExtensionInfo
         {

@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
-//
 
 namespace System.Text.Json.Serialization
 {
@@ -10,18 +9,18 @@ namespace System.Text.Json.Serialization
     public class JsonDateTimeConverterAttribute : JsonConverterAttribute
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="JsonDateTimeConverterAttribute"/> class.
+        /// </summary>
+        public JsonDateTimeConverterAttribute(string? dateFormatString)
+            => DateFormatString = dateFormatString;
+
+        /// <summary>
         /// DateFormatString
         /// </summary>
         public string? DateFormatString { get; set; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="JsonDateTimeConverterAttribute"/> class.
-        /// </summary>
-        public JsonDateTimeConverterAttribute(string? dateFormatString) 
-            => DateFormatString = dateFormatString;
-
         /// <inheritdoc/>
-        public override JsonConverter? CreateConverter(Type typeToConvert) 
+        public override JsonConverter? CreateConverter(Type typeToConvert)
             => new JsonDateTimeConverter(DateFormatString);
     }
 }
