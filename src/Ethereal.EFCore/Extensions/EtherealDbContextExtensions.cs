@@ -1,7 +1,5 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using Ethereal.Utilities;
-using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
@@ -22,10 +20,10 @@ namespace Ethereal.EntityFrameworkCore
         /// Updates the specified property when the update is true, or do not update
         /// </summary>
         public static EntityEntry<TEntity> Update<TEntity>(
-            [NotNull] this DbContext dbContext,
-            [NotNull] TEntity entity,
+            this DbContext dbContext,
+            TEntity entity,
             bool update,
-            [NotNull] params string[] properties) where TEntity : class
+            params string[] properties) where TEntity : class
         {
             Check.NotNull(dbContext, nameof(dbContext));
             Check.NotNull(entity, nameof(entity));
@@ -44,10 +42,10 @@ namespace Ethereal.EntityFrameworkCore
         /// Updates the specified property when the update is true, or do not update
         /// </summary>
         public static EntityEntry<TEntity> Update<TEntity>(
-            [NotNull] this DbContext dbContext,
-            [NotNull] TEntity entity,
+            this DbContext dbContext,
+            TEntity entity,
             bool update,
-            [NotNull] IEnumerable<string> properties) where TEntity : class
+            IEnumerable<string> properties) where TEntity : class
         {
             Check.NotNull(dbContext, nameof(dbContext));
             Check.NotNull(entity, nameof(entity));
@@ -66,10 +64,10 @@ namespace Ethereal.EntityFrameworkCore
         /// Updates the specified property when the update is true, or do not update
         /// </summary>
         public static EntityEntry<TEntity> Update<TEntity>(
-            [NotNull] this DbContext dbContext,
-            [NotNull] TEntity entity,
+            this DbContext dbContext,
+            TEntity entity,
             bool update,
-            [NotNull] params Expression<Func<TEntity, object>>[] properties) where TEntity : class
+            params Expression<Func<TEntity, object>>[] properties) where TEntity : class
         {
             Check.NotNull(dbContext, nameof(dbContext));
             Check.NotNull(entity, nameof(entity));
@@ -88,10 +86,10 @@ namespace Ethereal.EntityFrameworkCore
         /// Updates the specified property when the update is true, or do not update
         /// </summary>
         public static EntityEntry<TEntity> Update<TEntity, TProperty>(
-            [NotNull] this DbContext dbContext,
-            [NotNull] TEntity entity,
+            this DbContext dbContext,
+            TEntity entity,
             bool update,
-            [NotNull] params Expression<Func<TEntity, TProperty>>[] properties) where TEntity : class
+            params Expression<Func<TEntity, TProperty>>[] properties) where TEntity : class
         {
             Check.NotNull(dbContext, nameof(dbContext));
             Check.NotNull(entity, nameof(entity));
@@ -110,9 +108,9 @@ namespace Ethereal.EntityFrameworkCore
         /// Updates the specified property when the update is true, or do not update
         /// </summary>
         public static EntityEntry<TEntity> WithProperty<TEntity, TProperty>(
-            [NotNull] this EntityEntry<TEntity> entry,
+            this EntityEntry<TEntity> entry,
             bool update,
-            [NotNull] params Expression<Func<TEntity, TProperty>>[] properties) where TEntity : class
+            params Expression<Func<TEntity, TProperty>>[] properties) where TEntity : class
         {
             Check.NotNull(entry, nameof(entry));
 
@@ -131,8 +129,8 @@ namespace Ethereal.EntityFrameworkCore
         /// Delete
         /// </summary>
         public static EntityEntry<TEntity> Delete<TEntity>(
-            [NotNull] this DbContext dbContext,
-            [NotNull] TEntity entity) where TEntity : class, new()
+            this DbContext dbContext,
+            TEntity entity) where TEntity : class, new()
         {
             var entry = dbContext.Entry(entity);
             entry.State = EntityState.Deleted;
@@ -143,8 +141,8 @@ namespace Ethereal.EntityFrameworkCore
         /// Delete
         /// </summary>
         public static EntityEntry<TEntity> Delete<TEntity, TPrimaryKey>(
-            [NotNull] this DbContext dbContext,
-            [NotNull] TPrimaryKey id) where TEntity : class, new()
+            this DbContext dbContext,
+            TPrimaryKey id) where TEntity : class, new()
         {
             var entry = dbContext.Entry(new TEntity());
             entry.Property("Id").CurrentValue = id;
@@ -156,8 +154,8 @@ namespace Ethereal.EntityFrameworkCore
         /// Delete
         /// </summary>
         public static EntityEntry<TEntity> Delete<TEntity>(
-            [NotNull] this DbContext dbContext,
-            [NotNull] object id) where TEntity : class, new()
+            this DbContext dbContext,
+            object id) where TEntity : class, new()
         {
             var entry = dbContext.Entry(new TEntity());
             entry.Property("Id").CurrentValue = id;
@@ -174,8 +172,8 @@ namespace Ethereal.EntityFrameworkCore
         /// </summary>
         /// <exception cref="InvalidOperationException">SoftDeleteAttribute is not defined</exception>
         public static EntityEntry<TEntity> SoftDelete<TEntity>(
-            [NotNull] this DbContext dbContext,
-            [NotNull] TEntity entity) where TEntity : class, new()
+            this DbContext dbContext,
+            TEntity entity) where TEntity : class, new()
         {
             if (!Attribute.IsDefined(typeof(TEntity), typeof(SoftDeleteAttribute)))
             {
@@ -193,8 +191,8 @@ namespace Ethereal.EntityFrameworkCore
         /// </summary>
         /// <exception cref="InvalidOperationException">SoftDeleteAttribute is not defined</exception>
         public static EntityEntry<TEntity> SoftDelete<TEntity, TPrimaryKey>(
-            [NotNull] this DbContext dbContext,
-            [NotNull] TPrimaryKey id) where TEntity : class, new()
+            this DbContext dbContext,
+            TPrimaryKey id) where TEntity : class, new()
         {
             if (!Attribute.IsDefined(typeof(TEntity), typeof(SoftDeleteAttribute)))
             {
@@ -214,8 +212,8 @@ namespace Ethereal.EntityFrameworkCore
         /// </summary>
         /// <exception cref="InvalidOperationException">SoftDeleteAttribute is not defined</exception>
         public static EntityEntry<TEntity> SoftDelete<TEntity>(
-            [NotNull] this DbContext dbContext,
-            [NotNull] object id) where TEntity : class, new()
+            this DbContext dbContext,
+            object id) where TEntity : class, new()
         {
             if (!Attribute.IsDefined(typeof(TEntity), typeof(SoftDeleteAttribute)))
             {

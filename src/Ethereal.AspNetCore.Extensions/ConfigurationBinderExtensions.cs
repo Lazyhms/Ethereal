@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using Ethereal.Utilities;
-using JetBrains.Annotations;
+using System;
 
 namespace Microsoft.Extensions.Configuration
 {
@@ -14,7 +13,7 @@ namespace Microsoft.Extensions.Configuration
         /// Bind
         /// </summary>
         public static T Bind<T>(
-            [NotNull] this IConfiguration configuration) where T : class, new()
+            this IConfiguration configuration) where T : class, new()
         {
             Check.NotNull(configuration, nameof(configuration));
 
@@ -27,7 +26,7 @@ namespace Microsoft.Extensions.Configuration
         /// Bind
         /// </summary>
         public static T Bind<T>(
-            [NotNull] this IConfiguration configuration,
+            this IConfiguration configuration,
             string key) where T : class, new()
         {
             Check.NotNull(configuration, nameof(configuration));

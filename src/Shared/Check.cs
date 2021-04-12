@@ -1,21 +1,20 @@
 // Copyright (c) Ethereal. All rights reserved.
 
 using JetBrains.Annotations;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using CA = System.Diagnostics.CodeAnalysis;
 
 #nullable enable
 
-namespace Ethereal.Utilities
+namespace System
 {
     [DebuggerStepThrough]
     internal static class Check
     {
         [Conditional("DEBUG")]
-        public static void DebugAssert([CA.DoesNotReturnIf(false)] bool condition, string message)
+        public static void DebugAssert([DoesNotReturnIf(false)] bool condition, string message)
         {
             if (!condition)
             {
@@ -24,8 +23,8 @@ namespace Ethereal.Utilities
         }
 
         public static IReadOnlyList<string> HasNoEmptyElements(
-            [CA.NotNull] IReadOnlyList<string>? value,
-            [InvokerParameterName][NotNull] string parameterName)
+              IReadOnlyList<string>? value,
+            [InvokerParameterName] string parameterName)
         {
             NotNull(value, parameterName);
 
@@ -40,7 +39,7 @@ namespace Ethereal.Utilities
         }
 
         public static IReadOnlyList<T> HasNoNulls<T>(
-            [CA.NotNull] IReadOnlyList<T>? value, [InvokerParameterName][NotNull] string parameterName)
+              IReadOnlyList<T>? value, [InvokerParameterName] string parameterName)
             where T : class
         {
             NotNull(value, parameterName);
@@ -57,7 +56,7 @@ namespace Ethereal.Utilities
 
         [ContractAnnotation("value:null => halt")]
         public static IReadOnlyList<T> NotEmpty<T>(
-            [CA.NotNull] IReadOnlyList<T>? value, [InvokerParameterName][NotNull] string parameterName)
+              IReadOnlyList<T>? value, [InvokerParameterName] string parameterName)
         {
             NotNull(value, parameterName);
 
@@ -72,17 +71,19 @@ namespace Ethereal.Utilities
         }
 
         [ContractAnnotation("value:null => halt")]
-        public static string NotEmpty([CA.NotNull] string? value, [InvokerParameterName][NotNull] string parameterName)
+        public static string NotEmpty(string? value, [InvokerParameterName] string parameterName)
         {
             if (value is null)
             {
                 NotEmpty(parameterName, nameof(parameterName));
+
                 throw new ArgumentNullException(parameterName);
             }
 
             if (value.Trim().Length == 0)
             {
                 NotEmpty(parameterName, nameof(parameterName));
+
                 throw new ArgumentException($"The string argument '{parameterName}' cannot be empty.");
             }
 
@@ -90,7 +91,8 @@ namespace Ethereal.Utilities
         }
 
         [ContractAnnotation("value:null => halt")]
-        public static T NotNull<T>([NoEnumeration, CA.AllowNull, CA.NotNull] T value, [InvokerParameterName][NotNull] string parameterName)
+        [return: NotNull]
+        public static T NotNull<T>([NoEnumeration, AllowNull, NotNull] T value, [InvokerParameterName] string parameterName)
         {
             if (value is null)
             {
@@ -102,10 +104,9 @@ namespace Ethereal.Utilities
             return value;
         }
 
-        public static string? NullButNotEmpty(string? value, [InvokerParameterName][NotNull] string parameterName)
+        public static string? NullButNotEmpty(string? value, [InvokerParameterName] string parameterName)
         {
-            if (!(value is null)
-                && value.Length == 0)
+            if (value is not null && value.Length == 0)
             {
                 NotEmpty(parameterName, nameof(parameterName));
 

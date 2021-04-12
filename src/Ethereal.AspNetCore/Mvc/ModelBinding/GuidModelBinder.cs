@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using Ethereal.Utilities;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;

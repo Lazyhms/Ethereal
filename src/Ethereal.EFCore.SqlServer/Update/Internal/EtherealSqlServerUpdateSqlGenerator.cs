@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.SqlServer.Update.Internal;
 using Microsoft.EntityFrameworkCore.Update;
 using System.Collections.Generic;
@@ -17,11 +16,11 @@ namespace Ethereal.EntityFrameworkCore.SqlServer.Update.Internal
         /// <summary>
         /// Initializes a new instance of the <see cref="EtherealSqlServerUpdateSqlGenerator"/> class.
         /// </summary>
-        public EtherealSqlServerUpdateSqlGenerator([NotNull] UpdateSqlGeneratorDependencies dependencies) : base(dependencies)
+        public EtherealSqlServerUpdateSqlGenerator(UpdateSqlGeneratorDependencies dependencies) : base(dependencies)
         {
         }
 
         /// <inheritdoc/>
-        public ResultSetMapping AppendBulkDeletedOperation([NotNull] StringBuilder commandStringBuilder, [NotNull] IReadOnlyList<ModificationCommand> modificationCommands, int commandPosition) => ResultSetMapping.NoResultSet;
+        public ResultSetMapping AppendBulkDeletedOperation(StringBuilder commandStringBuilder, IReadOnlyList<ModificationCommand> modificationCommands, int commandPosition) => ResultSetMapping.NoResultSet;
     }
 }

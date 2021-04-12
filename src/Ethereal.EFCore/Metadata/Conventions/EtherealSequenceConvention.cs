@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
@@ -16,15 +15,15 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
         /// <summary>
         /// Initializes a new instance of the <see cref="EtherealSequenceConvention"/> class.
         /// </summary>
-        public EtherealSequenceConvention([NotNull] ProviderConventionSetBuilderDependencies dependencies) : base(dependencies)
+        public EtherealSequenceConvention(ProviderConventionSetBuilderDependencies dependencies) : base(dependencies)
         {
         }
 
         /// <inheritdoc/>
         protected override void ProcessEntityTypeAdded(
-            [NotNull] IConventionEntityTypeBuilder entityTypeBuilder,
-            [NotNull] SequenceAttribute attribute,
-            [NotNull] IConventionContext<IConventionEntityTypeBuilder> context)
+            IConventionEntityTypeBuilder entityTypeBuilder,
+            SequenceAttribute attribute,
+            IConventionContext<IConventionEntityTypeBuilder> context)
         {
             var sequenceBuilder = entityTypeBuilder.ModelBuilder.HasSequence(attribute.Name, attribute.Schema, true);
 

@@ -1,7 +1,5 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using Ethereal.Utilities;
-using JetBrains.Annotations;
 using System.Collections.Generic;
 
 namespace System
@@ -15,8 +13,8 @@ namespace System
         /// TryAddOrUpdate
         /// </summary>
         public static IDictionary<TKey, TValue> TryAddOrUpdate<TKey, TValue>(
-           [NotNull] this IDictionary<TKey, TValue> source,
-           [NotNull] TKey key,
+           this IDictionary<TKey, TValue> source,
+           TKey key,
            TValue value) where TKey : notnull
         {
             Check.NotNull(source, nameof(source));
@@ -33,8 +31,8 @@ namespace System
         /// TryAddOrUpdate
         /// </summary>
         public static IDictionary<TKey, TValue> TryAddOrUpdate<TKey, TValue>(
-           [NotNull] this IDictionary<TKey, TValue> source,
-           [NotNull] KeyValuePair<TKey, TValue> item) where TKey : notnull
+           this IDictionary<TKey, TValue> source,
+           KeyValuePair<TKey, TValue> item) where TKey : notnull
         {
             Check.NotNull(source, nameof(source));
             Check.NotNull(item, nameof(item));
@@ -50,8 +48,8 @@ namespace System
         /// TryUpdate
         /// </summary>
         public static IDictionary<TKey, TValue> TryUpdate<TKey, TValue>(
-           [NotNull] this IDictionary<TKey, TValue> source,
-           [NotNull] TKey key,
+           this IDictionary<TKey, TValue> source,
+           TKey key,
            TValue value) where TKey : notnull
         {
             Check.NotNull(source, nameof(source));
@@ -68,8 +66,8 @@ namespace System
         /// TryUpdate
         /// </summary>
         public static IDictionary<TKey, TValue> TryUpdate<TKey, TValue>(
-           [NotNull] this IDictionary<TKey, TValue> source,
-           [NotNull] KeyValuePair<TKey, TValue> item) where TKey : notnull
+           this IDictionary<TKey, TValue> source,
+           KeyValuePair<TKey, TValue> item) where TKey : notnull
         {
             Check.NotNull(source, nameof(source));
             Check.NotNull(item, nameof(item));
@@ -85,8 +83,8 @@ namespace System
         /// Union
         /// </summary>
         public static IDictionary<TKey, TValue> Union<TKey, TValue>(
-            [NotNull] this IDictionary<TKey, TValue> source,
-            [NotNull] IDictionary<TKey, TValue> target) where TKey : notnull
+            this IDictionary<TKey, TValue> source,
+            IDictionary<TKey, TValue> target) where TKey : notnull
         {
             Check.NotNull(source, nameof(source));
             Check.NotNull(target, nameof(target));
@@ -102,8 +100,8 @@ namespace System
         /// Update
         /// </summary>
         public static IDictionary<TKey, TValue> Update<TKey, TValue>(
-           [NotNull] this IDictionary<TKey, TValue> source,
-           [NotNull] TKey key,
+           this IDictionary<TKey, TValue> source,
+           TKey key,
            TValue value) where TKey : notnull
         {
             Check.NotNull(source, nameof(source));
@@ -117,8 +115,8 @@ namespace System
         /// Update
         /// </summary>
         public static IDictionary<TKey, TValue> Update<TKey, TValue>(
-           [NotNull] this IDictionary<TKey, TValue> source,
-           [NotNull] KeyValuePair<TKey, TValue> item) where TKey : notnull
+           this IDictionary<TKey, TValue> source,
+           KeyValuePair<TKey, TValue> item) where TKey : notnull
         {
             Check.NotNull(source, nameof(source));
             Check.NotNull(item, nameof(item));

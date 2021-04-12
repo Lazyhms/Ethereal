@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer.Update.Internal;
 using Microsoft.EntityFrameworkCore.Update;
@@ -23,7 +22,7 @@ namespace Ethereal.EntityFrameworkCore.SqlServer.Update.Internal
         /// Initializes a new instance of the <see
         /// cref="EtherealSqlServerModificationCommandBatch"/> class.
         /// </summary>
-        public EtherealSqlServerModificationCommandBatch([NotNull] ModificationCommandBatchFactoryDependencies dependencies, int? maxBatchSize) : base(dependencies, maxBatchSize)
+        public EtherealSqlServerModificationCommandBatch(ModificationCommandBatchFactoryDependencies dependencies, int? maxBatchSize) : base(dependencies, maxBatchSize)
         {
         }
 

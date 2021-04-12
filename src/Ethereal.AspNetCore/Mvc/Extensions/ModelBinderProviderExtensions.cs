@@ -1,8 +1,7 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using Ethereal.Utilities;
-using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,7 +16,7 @@ namespace Microsoft.AspNetCore.Mvc.ModelBinding
         /// UseDefaultModelBinderProviders
         /// </summary>
         public static IList<IModelBinderProvider> UseDefaultModelBinderProviders(
-            [NotNull] this IList<IModelBinderProvider> modelBinderProviders)
+            this IList<IModelBinderProvider> modelBinderProviders)
         {
             Check.NotNull(modelBinderProviders, nameof(modelBinderProviders));
 
@@ -31,8 +30,8 @@ namespace Microsoft.AspNetCore.Mvc.ModelBinding
         /// WithModelBinderProvider
         /// </summary>
         public static IList<IModelBinderProvider> WithModelBinderProvider<T>(
-            [NotNull] this IList<IModelBinderProvider> modelBinderProviders,
-            [NotNull] T modelBinderProvider) where T : IModelBinderProvider
+            this IList<IModelBinderProvider> modelBinderProviders,
+            T modelBinderProvider) where T : IModelBinderProvider
         {
             Check.NotNull(modelBinderProviders, nameof(modelBinderProviders));
             Check.NotNull(modelBinderProvider, nameof(modelBinderProvider));

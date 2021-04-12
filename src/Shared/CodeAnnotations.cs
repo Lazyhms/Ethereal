@@ -2,6 +2,8 @@
 
 using System;
 
+#nullable enable
+
 namespace JetBrains.Annotations
 {
     [Flags]
@@ -23,25 +25,15 @@ namespace JetBrains.Annotations
         WithMembers = Itself | Members
     }
 
-    [AttributeUsage(
-        AttributeTargets.Method
-        | AttributeTargets.Parameter
-        | AttributeTargets.Property
-        | AttributeTargets.Delegate
-        | AttributeTargets.Field)]
-    internal sealed class CanBeNullAttribute : Attribute
-    {
-    }
-
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     internal sealed class ContractAnnotationAttribute : Attribute
     {
-        public ContractAnnotationAttribute([NotNull] string contract)
+        public ContractAnnotationAttribute(string contract)
             : this(contract, false)
         {
         }
 
-        public ContractAnnotationAttribute([NotNull] string contract, bool forceFullStates)
+        public ContractAnnotationAttribute(string contract, bool forceFullStates)
         {
             Contract = contract;
             ForceFullStates = forceFullStates;
@@ -62,23 +54,12 @@ namespace JetBrains.Annotations
     {
     }
 
-    [AttributeUsage(
-                                AttributeTargets.Method
-        | AttributeTargets.Parameter
-        | AttributeTargets.Property
-        | AttributeTargets.Delegate
-        | AttributeTargets.Field)]
-    internal sealed class NotNullAttribute : Attribute
-    {
-    }
-
     [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Method | AttributeTargets.Property | AttributeTargets.Delegate)]
     internal sealed class StringFormatMethodAttribute : Attribute
     {
-        public StringFormatMethodAttribute([NotNull] string formatParameterName)
+        public StringFormatMethodAttribute(string formatParameterName)
             => FormatParameterName = formatParameterName;
 
-        [NotNull]
         public string FormatParameterName { get; }
     }
 

@@ -1,7 +1,5 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using Ethereal.Utilities;
-using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -22,7 +20,7 @@ namespace Ethereal.EntityFrameworkCore
         /// Pagination
         /// </summary>
         public static IPagedList<TEntity> Pagination<TEntity>(
-            [NotNull] this IQueryable<TEntity> source,
+            this IQueryable<TEntity> source,
             int pageIndex,
             int pageSize) where TEntity : class
         {
@@ -61,7 +59,7 @@ namespace Ethereal.EntityFrameworkCore
         /// PaginationAsync
         /// </summary>
         public static async Task<IPagedList<TEntity>> PaginationAsync<TEntity>(
-           [NotNull] this IQueryable<TEntity> source,
+           this IQueryable<TEntity> source,
            int pageIndex,
            int pageSize,
            CancellationToken cancellationToken = default) where TEntity : class
@@ -101,8 +99,8 @@ namespace Ethereal.EntityFrameworkCore
         /// PagedList
         /// </summary>
         public static IPagedList<TEntity> PaginationBy<TEntity, TKey>(
-            [NotNull] this IQueryable<TEntity> source,
-            [NotNull] Expression<Func<TEntity, TKey>> keySelector,
+            this IQueryable<TEntity> source,
+            Expression<Func<TEntity, TKey>> keySelector,
             int pageIndex,
             int pageSize) where TEntity : class
         {
@@ -116,9 +114,9 @@ namespace Ethereal.EntityFrameworkCore
         /// PagedList
         /// </summary>
         public static IPagedList<TEntity> PaginationBy<TEntity, TKey>(
-            [NotNull] this IQueryable<TEntity> source,
-            [NotNull] Expression<Func<TEntity, bool>> predicate,
-            [NotNull] Expression<Func<TEntity, TKey>> keySelector,
+            this IQueryable<TEntity> source,
+            Expression<Func<TEntity, bool>> predicate,
+            Expression<Func<TEntity, TKey>> keySelector,
             int pageIndex,
             int pageSize) where TEntity : class
         {
@@ -133,8 +131,8 @@ namespace Ethereal.EntityFrameworkCore
         /// PaginationAsync
         /// </summary>
         public static async Task<IPagedList<TEntity>> PaginationByAsync<TEntity, TKey>(
-            [NotNull] this IQueryable<TEntity> source,
-            [NotNull] Expression<Func<TEntity, TKey>> keySelector,
+            this IQueryable<TEntity> source,
+            Expression<Func<TEntity, TKey>> keySelector,
             int pageIndex,
             int pageSize,
             CancellationToken cancellationToken = default) where TEntity : class
@@ -149,9 +147,9 @@ namespace Ethereal.EntityFrameworkCore
         /// PaginationAsync
         /// </summary>
         public static async Task<IPagedList<TEntity>> PaginationByAsync<TEntity, TKey>(
-            [NotNull] this IQueryable<TEntity> source,
-            [NotNull] Expression<Func<TEntity, bool>> predicate,
-            [NotNull] Expression<Func<TEntity, TKey>> keySelector,
+            this IQueryable<TEntity> source,
+            Expression<Func<TEntity, bool>> predicate,
+            Expression<Func<TEntity, TKey>> keySelector,
             int pageIndex,
             int pageSize,
             CancellationToken cancellationToken = default) where TEntity : class
@@ -167,8 +165,8 @@ namespace Ethereal.EntityFrameworkCore
         /// PagedList
         /// </summary>
         public static IPagedList<TEntity> PaginationByDescending<TEntity, TKey>(
-            [NotNull] this IQueryable<TEntity> source,
-            [NotNull] Expression<Func<TEntity, TKey>> keySelector,
+            this IQueryable<TEntity> source,
+            Expression<Func<TEntity, TKey>> keySelector,
             int pageIndex,
             int pageSize) where TEntity : class
         {
@@ -182,9 +180,9 @@ namespace Ethereal.EntityFrameworkCore
         /// PagedList
         /// </summary>
         public static IPagedList<TEntity> PaginationByDescending<TEntity, TKey>(
-            [NotNull] this IQueryable<TEntity> source,
-            [NotNull] Expression<Func<TEntity, bool>> predicate,
-            [NotNull] Expression<Func<TEntity, TKey>> keySelector,
+            this IQueryable<TEntity> source,
+            Expression<Func<TEntity, bool>> predicate,
+            Expression<Func<TEntity, TKey>> keySelector,
             int pageIndex,
             int pageSize) where TEntity : class
         {
@@ -199,8 +197,8 @@ namespace Ethereal.EntityFrameworkCore
         /// PaginationAsync
         /// </summary>
         public static async Task<IPagedList<TEntity>> PaginationByDescendingAsync<TEntity, TKey>(
-            [NotNull] this IQueryable<TEntity> source,
-            [NotNull] Expression<Func<TEntity, TKey>> keySelector,
+            this IQueryable<TEntity> source,
+            Expression<Func<TEntity, TKey>> keySelector,
             int pageIndex,
             int pageSize,
             CancellationToken cancellationToken = default) where TEntity : class
@@ -215,9 +213,9 @@ namespace Ethereal.EntityFrameworkCore
         /// PaginationAsync
         /// </summary>
         public static async Task<IPagedList<TEntity>> PaginationByDescendingAsync<TEntity, TKey>(
-            [NotNull] this IQueryable<TEntity> source,
-            [NotNull] Expression<Func<TEntity, bool>> predicate,
-            [NotNull] Expression<Func<TEntity, TKey>> keySelector,
+            this IQueryable<TEntity> source,
+            Expression<Func<TEntity, bool>> predicate,
+            Expression<Func<TEntity, TKey>> keySelector,
             int pageIndex,
             int pageSize,
             CancellationToken cancellationToken = default) where TEntity : class
@@ -237,9 +235,9 @@ namespace Ethereal.EntityFrameworkCore
         /// When the condition is true will use the predicate
         /// </summary>
         public static IQueryable<TSource> Where<TSource>(
-            [NotNull] this IQueryable<TSource> source,
+            this IQueryable<TSource> source,
             bool condition,
-            [NotNull] Expression<Func<TSource, bool>> predicate)
+            Expression<Func<TSource, bool>> predicate)
         {
             Check.NotNull(source, nameof(source));
             Check.NotNull(predicate, nameof(predicate));
@@ -251,8 +249,8 @@ namespace Ethereal.EntityFrameworkCore
         /// When the condition is true will use the predicate
         /// </summary>
         public static IQueryable<TSource> Where<TSource>(
-            [NotNull] this IQueryable<TSource> source,
-            [NotNull] Expression<Func<TSource, bool>> predicate,
+            this IQueryable<TSource> source,
+            Expression<Func<TSource, bool>> predicate,
             bool condition)
         {
             Check.NotNull(source, nameof(source));
@@ -265,10 +263,10 @@ namespace Ethereal.EntityFrameworkCore
         /// when the condition is true will use the predicate
         /// </summary>
         public static IQueryable<TSource> Where<TSource>(
-            [NotNull] this IQueryable<TSource> source,
+            this IQueryable<TSource> source,
             bool condition,
-            [NotNull] Expression<Func<TSource, bool>> truePredicate,
-            [NotNull] Expression<Func<TSource, bool>> falsePredicate)
+            Expression<Func<TSource, bool>> truePredicate,
+            Expression<Func<TSource, bool>> falsePredicate)
         {
             Check.NotNull(source, nameof(source));
             Check.NotNull(truePredicate, nameof(truePredicate));
@@ -281,9 +279,9 @@ namespace Ethereal.EntityFrameworkCore
         /// When the condition is true will use the predicate
         /// </summary>
         public static IQueryable<TSource> Where<TSource>(
-            [NotNull] this IQueryable<TSource> source,
+            this IQueryable<TSource> source,
             bool condition,
-            [NotNull] Expression<Func<TSource, int, bool>> predicate)
+            Expression<Func<TSource, int, bool>> predicate)
         {
             Check.NotNull(source, nameof(source));
             Check.NotNull(predicate, nameof(predicate));
@@ -295,8 +293,8 @@ namespace Ethereal.EntityFrameworkCore
         /// When the condition is true will use the predicate
         /// </summary>
         public static IQueryable<TSource> Where<TSource>(
-            [NotNull] this IQueryable<TSource> source,
-            [NotNull] Expression<Func<TSource, int, bool>> predicate,
+            this IQueryable<TSource> source,
+            Expression<Func<TSource, int, bool>> predicate,
             bool condition)
         {
             Check.NotNull(source, nameof(source));
@@ -309,10 +307,10 @@ namespace Ethereal.EntityFrameworkCore
         /// when the condition is true will use the predicate
         /// </summary>
         public static IQueryable<TSource> Where<TSource>(
-            [NotNull] this IQueryable<TSource> source,
+            this IQueryable<TSource> source,
             bool condition,
-            [NotNull] Expression<Func<TSource, int, bool>> truePredicate,
-            [NotNull] Expression<Func<TSource, int, bool>> falsePredicate)
+            Expression<Func<TSource, int, bool>> truePredicate,
+            Expression<Func<TSource, int, bool>> falsePredicate)
         {
             Check.NotNull(source, nameof(source));
             Check.NotNull(truePredicate, nameof(truePredicate));

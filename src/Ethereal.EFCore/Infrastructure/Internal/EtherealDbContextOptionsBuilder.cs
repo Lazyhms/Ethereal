@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
@@ -18,7 +17,7 @@ namespace Ethereal.EntityFrameworkCore.Infrastructure.Internal
         /// Initializes a new instance of the <see
         /// cref="EtherealDbContextOptionsBuilder{TExtension}"/> class.
         /// </summary>
-        public EtherealDbContextOptionsBuilder([NotNull] DbContextOptionsBuilder optionsBuilder) => OptionsBuilder = optionsBuilder;
+        public EtherealDbContextOptionsBuilder(DbContextOptionsBuilder optionsBuilder) => OptionsBuilder = optionsBuilder;
 
         DbContextOptionsBuilder IRelationalDbContextOptionsBuilderInfrastructure.OptionsBuilder => OptionsBuilder;
 
@@ -48,7 +47,7 @@ namespace Ethereal.EntityFrameworkCore.Infrastructure.Internal
         /// <summary>
         /// virtual WithOption method
         /// </summary>
-        protected virtual EtherealDbContextOptionsBuilder<TExtension> WithOption([NotNull] Func<TExtension, TExtension> setAction)
+        protected virtual EtherealDbContextOptionsBuilder<TExtension> WithOption(Func<TExtension, TExtension> setAction)
         {
             ((IDbContextOptionsBuilderInfrastructure)OptionsBuilder).AddOrUpdateExtension(
                 setAction(OptionsBuilder.Options.FindExtension<TExtension>() ?? new TExtension()));

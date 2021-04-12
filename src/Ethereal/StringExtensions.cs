@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using JetBrains.Annotations;
 using System.Linq;
 
 namespace System
@@ -14,8 +13,8 @@ namespace System
         /// Compare the similarity of two strings
         /// </summary>
         public static decimal Similarity(
-            [CanBeNull] this string source,
-            [CanBeNull] string compare)
+            this string source,
+            string compare)
         {
             if (source is null && compare is null)
             {

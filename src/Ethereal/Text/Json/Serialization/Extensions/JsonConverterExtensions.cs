@@ -1,7 +1,5 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using Ethereal.Utilities;
-using JetBrains.Annotations;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,7 +14,7 @@ namespace System.Text.Json.Serialization
         /// Default Conveters
         /// </summary>
         public static IList<JsonConverter> UseDefaultConverter(
-            [NotNull] this IList<JsonConverter> converters)
+            this IList<JsonConverter> converters)
         {
             Check.NotNull(converters, nameof(converters));
 
@@ -36,8 +34,8 @@ namespace System.Text.Json.Serialization
         /// JsonConverter
         /// </summary>
         public static IList<JsonConverter> WithConverter<T>(
-            [NotNull] this IList<JsonConverter> converters,
-            [NotNull] T jsonConverter) where T : JsonConverter
+            this IList<JsonConverter> converters,
+            T jsonConverter) where T : JsonConverter
         {
             Check.NotNull(converters, nameof(converters));
             Check.NotNull(jsonConverter, nameof(jsonConverter));

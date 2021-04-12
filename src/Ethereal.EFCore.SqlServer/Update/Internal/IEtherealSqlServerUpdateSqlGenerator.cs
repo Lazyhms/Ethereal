@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.SqlServer.Update.Internal;
 using Microsoft.EntityFrameworkCore.Update;
 using System.Collections.Generic;
@@ -18,8 +17,8 @@ namespace Ethereal.EntityFrameworkCore.SqlServer.Update.Internal
         /// AppendBulkDeletedOperation
         /// </summary>
         ResultSetMapping AppendBulkDeletedOperation(
-            [NotNull] StringBuilder commandStringBuilder,
-            [NotNull] IReadOnlyList<ModificationCommand> modificationCommands,
+            StringBuilder commandStringBuilder,
+            IReadOnlyList<ModificationCommand> modificationCommands,
             int commandPosition);
     }
 }

@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
 using Ethereal.EntityFrameworkCore.Infrastructure;
-using Ethereal.Utilities;
-using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 
@@ -17,8 +15,8 @@ namespace Microsoft.EntityFrameworkCore
         /// Extension use Ethereal
         /// </summary>
         public static DbContextOptionsBuilder UseEthereal(
-            [NotNull] this DbContextOptionsBuilder optionsBuilder,
-            [CanBeNull] Action<EtherealDbContextOptionsBuilder>? sqlServerOptionsAction = default)
+            this DbContextOptionsBuilder optionsBuilder,
+            Action<EtherealDbContextOptionsBuilder>? sqlServerOptionsAction = default)
         {
             Check.NotNull(optionsBuilder, nameof(optionsBuilder));
 

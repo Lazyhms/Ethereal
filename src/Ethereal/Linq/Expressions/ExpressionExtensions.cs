@@ -1,7 +1,5 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using Ethereal.Utilities;
-using JetBrains.Annotations;
 using System.Linq.Expressions.Internal;
 
 namespace System.Linq.Expressions
@@ -14,9 +12,9 @@ namespace System.Linq.Expressions
         /// <summary>
         /// AndAlso
         /// </summary>
-        public static Expression<Func<T, bool>> AndAlso<T>([
-            NotNull] this Expression<Func<T, bool>> first,
-            [NotNull] Expression<Func<T, bool>> second)
+        public static Expression<Func<T, bool>> AndAlso<T>(
+            this Expression<Func<T, bool>> first,
+            Expression<Func<T, bool>> second)
         {
             Check.NotNull(first, nameof(first));
             Check.NotNull(second, nameof(second));
@@ -28,8 +26,8 @@ namespace System.Linq.Expressions
         /// AndAlso
         /// </summary>
         public static Expression<Func<T, bool>> AndAlso<T>(
-            [NotNull] this Expression<Func<T, bool>> first,
-            bool condition, [NotNull]
+            this Expression<Func<T, bool>> first,
+            bool condition,
             Expression<Func<T, bool>> second)
         {
             Check.NotNull(first, nameof(first));
@@ -42,10 +40,10 @@ namespace System.Linq.Expressions
         /// AndAlso
         /// </summary>
         public static Expression<Func<T, bool>> AndAlso<T>(
-            [NotNull] this Expression<Func<T, bool>> first,
+            this Expression<Func<T, bool>> first,
             bool condition,
-            [NotNull] Expression<Func<T, bool>> second,
-            [NotNull] Expression<Func<T, bool>> third)
+            Expression<Func<T, bool>> second,
+            Expression<Func<T, bool>> third)
         {
             Check.NotNull(first, nameof(first));
             Check.NotNull(second, nameof(second));
@@ -58,8 +56,8 @@ namespace System.Linq.Expressions
         /// OrElse
         /// </summary>
         public static Expression<Func<T, bool>> OrElse<T>(
-            [NotNull] this Expression<Func<T, bool>> first,
-            [NotNull] Expression<Func<T, bool>> second)
+            this Expression<Func<T, bool>> first,
+            Expression<Func<T, bool>> second)
         {
             Check.NotNull(first, nameof(first));
             Check.NotNull(second, nameof(second));
@@ -71,9 +69,9 @@ namespace System.Linq.Expressions
         /// OrElse
         /// </summary>
         public static Expression<Func<T, bool>> OrElse<T>(
-            [NotNull] this Expression<Func<T, bool>> first,
+            this Expression<Func<T, bool>> first,
             bool condition,
-            [NotNull] Expression<Func<T, bool>> second)
+            Expression<Func<T, bool>> second)
         {
             Check.NotNull(first, nameof(first));
             Check.NotNull(second, nameof(second));
@@ -85,10 +83,10 @@ namespace System.Linq.Expressions
         /// OrElse
         /// </summary>
         public static Expression<Func<T, bool>> OrElse<T>(
-            [NotNull] this Expression<Func<T, bool>> first,
+            this Expression<Func<T, bool>> first,
             bool condition,
-            [NotNull] Expression<Func<T, bool>> second,
-            [NotNull] Expression<Func<T, bool>> third)
+            Expression<Func<T, bool>> second,
+            Expression<Func<T, bool>> third)
         {
             Check.NotNull(first, nameof(first));
             Check.NotNull(second, nameof(second));

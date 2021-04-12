@@ -1,11 +1,10 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using Ethereal.Utilities;
-using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
 using Microsoft.EntityFrameworkCore.SqlServer.Update.Internal;
 using Microsoft.EntityFrameworkCore.Update;
+using System;
 using System.Linq;
 
 namespace Ethereal.EntityFrameworkCore.SqlServer.Update.Internal
@@ -24,8 +23,8 @@ namespace Ethereal.EntityFrameworkCore.SqlServer.Update.Internal
         /// cref="EtherealSqlServerModificationCommandBatchFactory"/> class.
         /// </summary>
         public EtherealSqlServerModificationCommandBatchFactory(
-            [NotNull] ModificationCommandBatchFactoryDependencies dependencies,
-            [NotNull] IDbContextOptions options) : base(dependencies, options)
+            ModificationCommandBatchFactoryDependencies dependencies,
+            IDbContextOptions options) : base(dependencies, options)
         {
             Check.NotNull(dependencies, nameof(dependencies));
             Check.NotNull(options, nameof(options));

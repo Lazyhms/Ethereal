@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions.Infrastructure;
 
@@ -14,7 +13,7 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
         /// <summary>
         /// Initializes a new instance of the <see cref="EtherealConventionSetPlugin"/> class.
         /// </summary>
-        public EtherealConventionSetPlugin([NotNull] ProviderConventionSetBuilderDependencies dependencies) => Dependencies = dependencies;
+        public EtherealConventionSetPlugin(ProviderConventionSetBuilderDependencies dependencies) => Dependencies = dependencies;
 
         /// <summary>
         /// Dependencies

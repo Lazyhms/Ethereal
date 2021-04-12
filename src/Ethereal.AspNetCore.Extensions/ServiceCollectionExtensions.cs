@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
 using Ethereal.Extensions;
-using Ethereal.Utilities;
-using JetBrains.Annotations;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -19,8 +17,8 @@ namespace Microsoft.Extensions.DependencyInjection
         /// RegisterAssemblyTypes
         /// </summary>
         public static IServiceCollection RegisterAssemblyTypes(
-            [NotNull] this IServiceCollection services,
-            [NotNull] string assemblyName)
+            this IServiceCollection services,
+            string assemblyName)
         {
             Check.NotEmpty(assemblyName, nameof(assemblyName));
 
@@ -31,9 +29,9 @@ namespace Microsoft.Extensions.DependencyInjection
         /// RegisterAssemblyTypes
         /// </summary>
         public static IServiceCollection RegisterAssemblyTypes(
-            [NotNull] this IServiceCollection services,
-            [NotNull] string assemblyName,
-            [NotNull] string searchPattern)
+            this IServiceCollection services,
+            string assemblyName,
+            string searchPattern)
         {
             Check.NotEmpty(assemblyName, nameof(assemblyName));
 
@@ -44,8 +42,8 @@ namespace Microsoft.Extensions.DependencyInjection
         /// RegisterAssemblyTypes
         /// </summary>
         public static IServiceCollection RegisterAssemblyTypes(
-            [NotNull] this IServiceCollection services,
-            [NotNull] Assembly assembly)
+            this IServiceCollection services,
+            Assembly assembly)
         {
             Check.NotNull(assembly, nameof(assembly));
 

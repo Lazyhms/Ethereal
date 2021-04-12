@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
@@ -18,16 +17,16 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
         /// <summary>
         /// Initializes a new instance of the <see cref="EtherealColumnDefaultValueConvention"/> class.
         /// </summary>
-        public EtherealColumnDefaultValueConvention([NotNull] ProviderConventionSetBuilderDependencies dependencies) : base(dependencies)
+        public EtherealColumnDefaultValueConvention(ProviderConventionSetBuilderDependencies dependencies) : base(dependencies)
         {
         }
 
         /// <inheritdoc/>
         protected override void ProcessPropertyAdded(
-            [NotNull] IConventionPropertyBuilder propertyBuilder,
-            [NotNull] DefaultValueAttribute attribute,
-            [NotNull] MemberInfo clrMember,
-            [NotNull] IConventionContext context)
+            IConventionPropertyBuilder propertyBuilder,
+            DefaultValueAttribute attribute,
+            MemberInfo clrMember,
+            IConventionContext context)
         {
             if (propertyBuilder.CanSetDefaultValue(attribute.Value, true))
             {

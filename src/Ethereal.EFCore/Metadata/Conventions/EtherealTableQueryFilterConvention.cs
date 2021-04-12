@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
@@ -20,16 +19,16 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
         /// <summary>
         /// Initializes a new instance of the <see cref="EtherealTableQueryFilterConvention"/> class.
         /// </summary>
-        public EtherealTableQueryFilterConvention([NotNull] ProviderConventionSetBuilderDependencies dependencies) : base(dependencies)
+        public EtherealTableQueryFilterConvention(ProviderConventionSetBuilderDependencies dependencies) : base(dependencies)
         {
         }
 
         /// <inheritdoc/>
         protected override void ProcessPropertyAdded(
-            [NotNull] IConventionPropertyBuilder propertyBuilder,
-            [NotNull] QueryFilterAttribute attribute,
-            [NotNull] MemberInfo clrMember,
-            [NotNull] IConventionContext context)
+            IConventionPropertyBuilder propertyBuilder,
+            QueryFilterAttribute attribute,
+            MemberInfo clrMember,
+            IConventionContext context)
         {
             var clrEntityType = propertyBuilder.Metadata.DeclaringEntityType.ClrType;
             var clrType = clrMember switch

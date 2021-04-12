@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
 using Ethereal.EntityFrameworkCore.Infrastructure.Internal;
-using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 
@@ -15,7 +14,7 @@ namespace Ethereal.EntityFrameworkCore.Infrastructure
         /// <summary>
         /// Initializes a new instance of the <see cref="EtherealDbContextOptionsBuilder"/> class.
         /// </summary>
-        public EtherealDbContextOptionsBuilder([NotNull] DbContextOptionsBuilder optionsBuilder) : base(optionsBuilder)
+        public EtherealDbContextOptionsBuilder(DbContextOptionsBuilder optionsBuilder) : base(optionsBuilder)
         {
         }
 

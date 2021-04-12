@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
@@ -24,7 +23,7 @@ namespace Ethereal.EntityFrameworkCore.Infrastructure
         /// <summary>
         /// Initializes a new instance of the <see cref="EtherealOptionsExtension"/> class.
         /// </summary>
-        public EtherealOptionsExtension([NotNull] EtherealOptionsExtension copyFrom)
+        public EtherealOptionsExtension(EtherealOptionsExtension copyFrom)
         {
         }
 
@@ -58,7 +57,7 @@ namespace Ethereal.EntityFrameworkCore.Infrastructure
 
             public override long GetServiceProviderHashCode() => 0;
 
-            public override void PopulateDebugInfo([NotNull] IDictionary<string, string> debugInfo) => debugInfo["Ethereal"] = "0";
+            public override void PopulateDebugInfo(IDictionary<string, string> debugInfo) => debugInfo["Ethereal"] = "0";
         }
     }
 }

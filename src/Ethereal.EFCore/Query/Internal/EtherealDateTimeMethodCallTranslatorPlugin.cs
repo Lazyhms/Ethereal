@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Collections.Generic;
 
@@ -16,8 +15,8 @@ namespace Microsoft.EntityFrameworkCore.Query.Internal
         /// cref="EtherealDateTimeMethodCallTranslatorPlugin"/> class.
         /// </summary>
         public EtherealDateTimeMethodCallTranslatorPlugin(
-            [NotNull] ISqlExpressionFactory sqlExpressionFactory,
-            [NotNull] IRelationalTypeMappingSource typeMappingSource) =>
+            ISqlExpressionFactory sqlExpressionFactory,
+            IRelationalTypeMappingSource typeMappingSource) =>
             Translators = new IMethodCallTranslator[] {
                 new EtherealDateTimeMethodTranslator(sqlExpressionFactory,typeMappingSource)
             };

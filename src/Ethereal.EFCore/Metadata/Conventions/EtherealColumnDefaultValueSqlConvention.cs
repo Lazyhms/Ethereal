@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
@@ -17,16 +16,16 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
         /// <summary>
         /// Initializes a new instance of the <see cref="EtherealColumnDefaultValueSqlConvention"/> class.
         /// </summary>
-        public EtherealColumnDefaultValueSqlConvention([NotNull] ProviderConventionSetBuilderDependencies dependencies) : base(dependencies)
+        public EtherealColumnDefaultValueSqlConvention(ProviderConventionSetBuilderDependencies dependencies) : base(dependencies)
         {
         }
 
         /// <inheritdoc/>
         protected override void ProcessPropertyAdded(
-            [NotNull] IConventionPropertyBuilder propertyBuilder,
-            [NotNull] DefaultValueSqlAttribute attribute,
-            [NotNull] MemberInfo clrMember,
-            [NotNull] IConventionContext context)
+            IConventionPropertyBuilder propertyBuilder,
+            DefaultValueSqlAttribute attribute,
+            MemberInfo clrMember,
+            IConventionContext context)
         {
             if (propertyBuilder.CanSetDefaultValueSql(attribute.Value, true))
             {

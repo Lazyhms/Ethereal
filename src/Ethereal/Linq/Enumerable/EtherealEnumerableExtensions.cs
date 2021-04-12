@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
 using Ethereal.NETCore;
-using Ethereal.Utilities;
-using JetBrains.Annotations;
 using System.Collections.Generic;
 
 namespace System.Linq
@@ -18,9 +16,9 @@ namespace System.Linq
         /// Contains
         /// </summary>
         public static bool Contains<TSource>(
-            [NotNull] this IEnumerable<TSource> source,
-            [CanBeNull] TSource item,
-            [NotNull] Func<TSource?, TSource?, bool> selector) where TSource : class
+            this IEnumerable<TSource> source,
+            TSource item,
+            Func<TSource?, TSource?, bool> selector) where TSource : class
         {
             Check.NotNull(source, nameof(source));
 
@@ -31,9 +29,9 @@ namespace System.Linq
         /// Contains
         /// </summary>
         public static bool Contains<TSource, TKey>(
-            [NotNull] this IEnumerable<TSource> source,
-            [CanBeNull] TSource item,
-            [NotNull] Func<TSource?, TKey?> selector) where TSource : class
+            this IEnumerable<TSource> source,
+            TSource item,
+            Func<TSource?, TKey?> selector) where TSource : class
         {
             Check.NotNull(source, nameof(source));
 
@@ -44,8 +42,8 @@ namespace System.Linq
         /// Distinct
         /// </summary>
         public static IEnumerable<TSource> Distinct<TSource>(
-            [NotNull] this IEnumerable<TSource> source,
-            [NotNull] Func<TSource?, TSource?, bool> selector) where TSource : class
+            this IEnumerable<TSource> source,
+            Func<TSource?, TSource?, bool> selector) where TSource : class
         {
             Check.NotNull(source, nameof(source));
 
@@ -56,8 +54,8 @@ namespace System.Linq
         /// Distinct
         /// </summary>
         public static IEnumerable<TSource> Distinct<TSource, TKey>(
-            [NotNull] this IEnumerable<TSource> source,
-            [NotNull] Func<TSource?, TKey?> selector) where TSource : class
+            this IEnumerable<TSource> source,
+            Func<TSource?, TKey?> selector) where TSource : class
         {
             Check.NotNull(source, nameof(source));
 
@@ -68,9 +66,9 @@ namespace System.Linq
         /// Except
         /// </summary>
         public static IEnumerable<TSource> Except<TSource>(
-            [NotNull] this IEnumerable<TSource> first,
-            [CanBeNull] IEnumerable<TSource> second,
-            [NotNull] Func<TSource?, TSource?, bool> selector) where TSource : class
+            this IEnumerable<TSource> first,
+            IEnumerable<TSource> second,
+            Func<TSource?, TSource?, bool> selector) where TSource : class
         {
             Check.NotNull(first, nameof(first));
 
@@ -81,9 +79,9 @@ namespace System.Linq
         /// Except
         /// </summary>
         public static IEnumerable<TSource> Except<TSource, TKey>(
-            [NotNull] this IEnumerable<TSource> first,
-            [CanBeNull] IEnumerable<TSource> second,
-            [NotNull] Func<TSource?, TKey?> selector) where TSource : class
+            this IEnumerable<TSource> first,
+            IEnumerable<TSource> second,
+            Func<TSource?, TKey?> selector) where TSource : class
         {
             Check.NotNull(first, nameof(first));
 
@@ -94,9 +92,9 @@ namespace System.Linq
         /// Intersect
         /// </summary>
         public static IEnumerable<TSource> Intersect<TSource>(
-            [NotNull] this IEnumerable<TSource> first,
-            [CanBeNull] IEnumerable<TSource> second,
-            [NotNull] Func<TSource?, TSource?, bool> selector) where TSource : class
+            this IEnumerable<TSource> first,
+            IEnumerable<TSource> second,
+            Func<TSource?, TSource?, bool> selector) where TSource : class
         {
             Check.NotNull(first, nameof(first));
 
@@ -107,9 +105,9 @@ namespace System.Linq
         /// Intersect
         /// </summary>
         public static IEnumerable<TSource> Intersect<TSource, TKey>(
-            [NotNull] this IEnumerable<TSource> first,
-            [CanBeNull] IEnumerable<TSource> second,
-            [NotNull] Func<TSource?, TKey?> selector) where TSource : class
+            this IEnumerable<TSource> first,
+            IEnumerable<TSource> second,
+            Func<TSource?, TKey?> selector) where TSource : class
         {
             Check.NotNull(first, nameof(first));
 
@@ -120,9 +118,9 @@ namespace System.Linq
         /// Union
         /// </summary>
         public static IEnumerable<TSource> Union<TSource>(
-            [NotNull] this IEnumerable<TSource> first,
-            [CanBeNull] IEnumerable<TSource> second,
-            [NotNull] Func<TSource?, TSource?, bool> selector) where TSource : class
+            this IEnumerable<TSource> first,
+            IEnumerable<TSource> second,
+            Func<TSource?, TSource?, bool> selector) where TSource : class
         {
             Check.NotNull(first, nameof(first));
 
@@ -133,9 +131,9 @@ namespace System.Linq
         /// Union
         /// </summary>
         public static IEnumerable<TSource> Union<TSource, TKey>(
-            [NotNull] this IEnumerable<TSource> first,
-            [CanBeNull] IEnumerable<TSource> second,
-            [NotNull] Func<TSource?, TKey?> selector) where TSource : class
+            this IEnumerable<TSource> first,
+            IEnumerable<TSource> second,
+            Func<TSource?, TKey?> selector) where TSource : class
         {
             Check.NotNull(first, nameof(first));
 
@@ -172,9 +170,9 @@ namespace System.Linq
         /// when the condition is true will use the predicate
         /// </summary>
         public static IEnumerable<TSource> Where<TSource>(
-            [NotNull] this IEnumerable<TSource> source,
+            this IEnumerable<TSource> source,
             bool condition,
-            [NotNull] Func<TSource, bool> predicate)
+            Func<TSource, bool> predicate)
         {
             Check.NotNull(source, nameof(source));
             Check.NotNull(predicate, nameof(predicate));
@@ -186,8 +184,8 @@ namespace System.Linq
         /// when the condition is true will use the predicate
         /// </summary>
         public static IEnumerable<TSource> Where<TSource>(
-            [NotNull] this IEnumerable<TSource> source,
-            [NotNull] Func<TSource, bool> predicate,
+            this IEnumerable<TSource> source,
+            Func<TSource, bool> predicate,
             bool condition)
         {
             Check.NotNull(source, nameof(source));
@@ -200,10 +198,10 @@ namespace System.Linq
         /// when the condition is true will use the predicate
         /// </summary>
         public static IEnumerable<TSource> Where<TSource>(
-            [NotNull] this IEnumerable<TSource> source,
+            this IEnumerable<TSource> source,
             bool condition,
-            [NotNull] Func<TSource, bool> truePredicate,
-            [NotNull] Func<TSource, bool> falsePredicate)
+            Func<TSource, bool> truePredicate,
+            Func<TSource, bool> falsePredicate)
         {
             Check.NotNull(source, nameof(source));
             Check.NotNull(truePredicate, nameof(truePredicate));
@@ -216,9 +214,9 @@ namespace System.Linq
         /// when the condition is true will use the predicate
         /// </summary>
         public static IEnumerable<TSource> Where<TSource>(
-            [NotNull] this IEnumerable<TSource> source,
+            this IEnumerable<TSource> source,
             bool condition,
-            [NotNull] Func<TSource, int, bool> predicate)
+            Func<TSource, int, bool> predicate)
         {
             Check.NotNull(source, nameof(source));
             Check.NotNull(predicate, nameof(predicate));
@@ -230,8 +228,8 @@ namespace System.Linq
         /// when the condition is true will use the predicate
         /// </summary>
         public static IEnumerable<TSource> Where<TSource>(
-            [NotNull] this IEnumerable<TSource> source,
-            [NotNull] Func<TSource, int, bool> predicate,
+            this IEnumerable<TSource> source,
+            Func<TSource, int, bool> predicate,
             bool condition)
         {
             Check.NotNull(source, nameof(source));
@@ -244,10 +242,10 @@ namespace System.Linq
         /// when the condition is true will use the predicate
         /// </summary>
         public static IEnumerable<TSource> Where<TSource>(
-            [NotNull] this IEnumerable<TSource> source,
+            this IEnumerable<TSource> source,
             bool condition,
-            [NotNull] Func<TSource, int, bool> truePredicate,
-            [NotNull] Func<TSource, int, bool> falsePredicate)
+            Func<TSource, int, bool> truePredicate,
+            Func<TSource, int, bool> falsePredicate)
         {
             Check.NotNull(source, nameof(source));
             Check.NotNull(truePredicate, nameof(truePredicate));
@@ -264,7 +262,7 @@ namespace System.Linq
         /// Pagination
         /// </summary>
         public static IPagedList<TEntity> Pagination<TEntity>(
-            [NotNull] this IEnumerable<TEntity> source,
+            this IEnumerable<TEntity> source,
             int pageIndex,
             int pageSize) where TEntity : class
         {
@@ -303,8 +301,8 @@ namespace System.Linq
         /// PagedList
         /// </summary>
         public static IPagedList<TEntity> PaginationBy<TEntity, TKey>(
-            [NotNull] this IEnumerable<TEntity> source,
-            [NotNull] Func<TEntity, TKey> keySelector,
+            this IEnumerable<TEntity> source,
+            Func<TEntity, TKey> keySelector,
             int pageIndex,
             int pageSize) where TEntity : class
         {
@@ -318,9 +316,9 @@ namespace System.Linq
         /// PagedList
         /// </summary>
         public static IPagedList<TEntity> PaginationBy<TEntity, TKey>(
-            [NotNull] this IEnumerable<TEntity> source,
-            [NotNull] Func<TEntity, bool> predicate,
-            [NotNull] Func<TEntity, TKey> keySelector,
+            this IEnumerable<TEntity> source,
+            Func<TEntity, bool> predicate,
+            Func<TEntity, TKey> keySelector,
             int pageIndex,
             int pageSize) where TEntity : class
         {
@@ -335,8 +333,8 @@ namespace System.Linq
         /// PagedList
         /// </summary>
         public static IPagedList<TEntity> PaginationByByDescending<TEntity, TKey>(
-            [NotNull] this IEnumerable<TEntity> source,
-            [NotNull] Func<TEntity, TKey> selector,
+            this IEnumerable<TEntity> source,
+            Func<TEntity, TKey> selector,
             int pageIndex,
             int pageSize) where TEntity : class
         {
@@ -350,9 +348,9 @@ namespace System.Linq
         /// PagedList
         /// </summary>
         public static IPagedList<TEntity> PaginationByByDescending<TEntity, TKey>(
-            [NotNull] this IEnumerable<TEntity> source,
-            [NotNull] Func<TEntity, bool> predicate,
-            [NotNull] Func<TEntity, TKey> keySelector,
+            this IEnumerable<TEntity> source,
+            Func<TEntity, bool> predicate,
+            Func<TEntity, TKey> keySelector,
             int pageIndex,
             int pageSize) where TEntity : class
         {
@@ -371,9 +369,9 @@ namespace System.Linq
         /// Replace
         /// </summary>
         public static IEnumerable<TSource> Replace<TSource>(
-            [NotNull] this IEnumerable<TSource> source,
+            this IEnumerable<TSource> source,
             int index,
-            [CanBeNull] TSource present)
+            TSource present)
         {
             Check.NotNull(source, nameof(source));
 
@@ -396,9 +394,9 @@ namespace System.Linq
         /// ReplaceAll
         /// </summary>
         public static IEnumerable<TSource> ReplaceAll<TSource>(
-            [NotNull] this IEnumerable<TSource> source,
-            [CanBeNull] TSource original,
-            [CanBeNull] TSource present)
+            this IEnumerable<TSource> source,
+            TSource original,
+            TSource present)
         {
             Check.NotNull(source, nameof(source));
 
@@ -419,9 +417,9 @@ namespace System.Linq
         /// ReplaceAll
         /// </summary>
         public static IEnumerable<TSource> ReplaceAll<TSource>(
-            [NotNull] this IEnumerable<TSource> source,
-            [NotNull] Func<TSource, bool> predicate,
-            [CanBeNull] TSource present)
+            this IEnumerable<TSource> source,
+            Func<TSource, bool> predicate,
+            TSource present)
         {
             Check.NotNull(source, nameof(source));
             Check.NotNull(predicate, nameof(predicate));
@@ -444,9 +442,9 @@ namespace System.Linq
         /// </summary>
         public static IEnumerable<TSource> ReplaceAll<TSource, TKey>(
             this IEnumerable<TSource> source,
-            [CanBeNull] TSource original,
-            [CanBeNull] TSource present,
-            [NotNull] Func<TSource, TKey> compare) where TSource : class
+            TSource original,
+            TSource present,
+            Func<TSource, TKey> compare) where TSource : class
         {
             Check.NotNull(source, nameof(source));
             Check.NotNull(compare, nameof(compare));
@@ -472,11 +470,11 @@ namespace System.Linq
         /// LeftJoin
         /// </summary>
         public static IEnumerable<TResult> LeftJoin<TOuter, TInner, TKey, TResult>(
-            [NotNull] this IEnumerable<TOuter> outer,
-            [NotNull] IEnumerable<TInner> inner,
-            [NotNull] Func<TOuter, TKey> outerKeySelector,
-            [NotNull] Func<TInner, TKey> innerKeySelector,
-            [NotNull] Func<TOuter, TInner?, TResult> resultSelector)
+            this IEnumerable<TOuter> outer,
+            IEnumerable<TInner> inner,
+            Func<TOuter, TKey> outerKeySelector,
+            Func<TInner, TKey> innerKeySelector,
+            Func<TOuter, TInner?, TResult> resultSelector)
         {
             Check.NotNull(outer, nameof(outer));
             Check.NotNull(inner, nameof(inner));
@@ -499,8 +497,8 @@ namespace System.Linq
         /// Join
         /// </summary>
         public static string Join<TSource>(
-           [NotNull] this IEnumerable<TSource> source,
-           [NotNull] char separator = ',')
+           this IEnumerable<TSource> source,
+           char separator = ',')
         {
             Check.NotNull(source, nameof(source));
             Check.NotNull(separator, nameof(separator));
@@ -512,8 +510,8 @@ namespace System.Linq
         /// Join
         /// </summary>
         public static string Join<TSource>(
-           [NotNull] this IEnumerable<TSource> source,
-           [NotNull] string? separator = ",")
+           this IEnumerable<TSource> source,
+           string? separator = ",")
         {
             Check.NotNull(source, nameof(source));
             Check.NotNull(separator, nameof(separator));

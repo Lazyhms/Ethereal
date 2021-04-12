@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using JetBrains.Annotations;
 using System;
 
 namespace Ethereal.EntityFrameworkCore
@@ -14,7 +13,7 @@ namespace Ethereal.EntityFrameworkCore
         /// <summary>
         /// QueryFilter method
         /// </summary>
-        public QueryFilterAttribute([NotNull] bool value) => Value = value;
+        public QueryFilterAttribute(bool value) => Value = value;
 
         /// <summary>
         /// The bool value

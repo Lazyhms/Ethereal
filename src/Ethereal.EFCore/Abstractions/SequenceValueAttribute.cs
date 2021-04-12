@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using Ethereal.Utilities;
 using System;
 
 namespace Ethereal.EntityFrameworkCore

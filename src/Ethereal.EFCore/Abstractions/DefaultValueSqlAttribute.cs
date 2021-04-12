@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using JetBrains.Annotations;
 using System;
 
 namespace Ethereal.EntityFrameworkCore
@@ -15,7 +14,7 @@ namespace Ethereal.EntityFrameworkCore
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultValueSqlAttribute"/> class.
         /// </summary>
-        public DefaultValueSqlAttribute([CanBeNull] string? value) => Value = value;
+        public DefaultValueSqlAttribute(string? value) => Value = value;
 
         /// <summary>
         /// The value sql
