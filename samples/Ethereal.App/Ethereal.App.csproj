@@ -28,6 +28,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Update="DEVPFX.pfx">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Ethereal.App.xml">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>

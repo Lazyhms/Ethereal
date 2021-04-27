@@ -42,6 +42,9 @@ namespace Ethereal.App
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseHsts();
+            app.UseHttpsRedirection();
+
             app.UseRouting();
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
