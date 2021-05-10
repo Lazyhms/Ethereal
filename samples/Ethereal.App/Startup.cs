@@ -1,6 +1,9 @@
+using Ethereal.App.ScheduledTasks;
+using Ethereal.App.Services;
 using Hangfire;
 using Hangfire.Dashboard;
 using Hangfire.MemoryStorage;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -35,12 +38,20 @@ namespace Ethereal.App
         public IConfiguration Configuration { get; }
         public IWebHostEnvironment WebHostEnvironment { get; }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory logger)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory logger, IHostApplicationLifetime hostApplicationLifetime)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            //// ONE
+            //hostApplicationLifetime.ApplicationStarted.Register(() =>
+            //{
+            //    RecurringJob.AddOrUpdate<IValueService>("²âÊÔ", c => c.Write(), Cron.Minutely(), TimeZoneInfo.Local);
+            //});
+
+            app.UseCors("CorsPolicy");
 
             app.UseHsts();
             app.UseHttpsRedirection();
@@ -55,8 +66,6 @@ namespace Ethereal.App
             app.UsePathBase(Configuration.GetValue<string>("PathBase") ?? string.Empty);
 
             app.UseSerilogRequestLogging();
-
-            app.UseCors("CorsPolicy");
 
             app.UseResponseCompression();
 
@@ -73,7 +82,7 @@ namespace Ethereal.App
 
             app.UseHangfireServer(new BackgroundJobServerOptions
             {
-                Queues = new[] { "test" },
+                Queues = new[] { "default" },
                 WorkerCount = Environment.ProcessorCount,
                 ServerName = "Test",
                 SchedulePollingInterval = TimeSpan.FromSeconds(3),
@@ -105,6 +114,31 @@ namespace Ethereal.App
                                .AllowAnyHeader()
                                .AllowAnyMethod()
                                .AllowCredentials());
+            });
+
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            })
+            .AddCookie(options =>
+            {
+                options.LoginPath = "/signin";
+                options.LogoutPath = "/signout";
+            })
+            .AddWeixin(options =>
+            {
+                options.ClientId = "wx057a224f4bc3166c";
+                options.ClientSecret = "bce001b1eb54b2fd3500f62d15c412ab";
+            }).AddQQ(options =>
+            {
+                options.ClientId = "1";
+                options.ClientSecret = "2";
+            }).AddGitHub(options =>
+            {
+                options.ClientId = "29add1b8175d6b0ddd22";
+                options.ClientSecret = "370a035e6b46698157a3405a1411b4d8698cb184";
+                options.Scope.Add("user:email");
             });
 
             services.AddHttpContextAccessor();
@@ -176,6 +210,9 @@ namespace Ethereal.App
                 options.UseSerilogLogProvider();
                 options.UseMemoryStorage();
             });
+
+            // TWO ÍÆ¼ö?
+            services.AddHostedService<RecurringTasks>();
         }
     }
 }

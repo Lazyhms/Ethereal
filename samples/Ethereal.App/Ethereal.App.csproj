@@ -11,6 +11,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="AspNet.Security.OAuth.GitHub" Version="5.0.4" />
+		<PackageReference Include="AspNet.Security.OAuth.QQ" Version="5.0.4" />
+		<PackageReference Include="AspNet.Security.OAuth.Weixin" Version="5.0.4" />
 		<PackageReference Include="Hangfire.AspNetCore" Version="1.7.22" />
 		<PackageReference Include="Hangfire.Dashboard.Management" Version="1.7.9" />
 		<PackageReference Include="Hangfire.MemoryStorage" Version="1.7.0" />

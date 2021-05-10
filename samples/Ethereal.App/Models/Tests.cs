@@ -18,6 +18,7 @@ namespace Ethereal.App.Models
         [FileExtensions]
         public string FileExtensions { get; set; }
 
+        [Required]
         public Guid Id { get; set; }
 
         [IDCard]

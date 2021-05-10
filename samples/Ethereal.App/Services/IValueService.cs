@@ -9,5 +9,6 @@ namespace Ethereal.App.Services
     public interface IValueService
     {
         Task<object> Insert(Tests tests);
+        Task Write();
     }
 }
