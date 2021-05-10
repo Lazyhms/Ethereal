@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
+using Ethereal.AspNetCore;
 using Ethereal.AspNetCore.SwaggerGen.Filters;
-using Ethereal.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;

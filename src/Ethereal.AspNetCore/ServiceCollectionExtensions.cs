@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using Ethereal.Extensions;
+using Ethereal.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;

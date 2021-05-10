@@ -24,8 +24,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\Ethereal.AspNetCore\Ethereal.AspNetCore.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<EmbeddedResource Update="Properties\CoreStrings.resx">
-			<CustomToolNamespace>Ethereal.Extensions</CustomToolNamespace>
+			<CustomToolNamespace>Ethereal.AspNetCore</CustomToolNamespace>
 			<LastGenOutput>CoreStrings.Designer.cs</LastGenOutput>
 			<Generator>ResXFileCodeGenerator</Generator>
 		</EmbeddedResource>

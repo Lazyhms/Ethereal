@@ -61,15 +61,6 @@ namespace Ethereal.NETCore {
         }
         
         /// <summary>
-        ///   查找类似 An error occur.Try it again. 的本地化字符串。
-        /// </summary>
-        internal static string Global_Exception {
-            get {
-                return ResourceManager.GetString("Global_Exception", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 The {0} field is not a valid IDCard. 的本地化字符串。
         /// </summary>
         internal static string IDCardAttribute_Invalid {
@@ -84,42 +75,6 @@ namespace Ethereal.NETCore {
         internal static string PageSize_Invalid {
             get {
                 return ResourceManager.GetString("PageSize_Invalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 The First Quarter 的本地化字符串。
-        /// </summary>
-        internal static string Quarter_First {
-            get {
-                return ResourceManager.GetString("Quarter_First", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 The Fourth Quarter 的本地化字符串。
-        /// </summary>
-        internal static string Quarter_Fourth {
-            get {
-                return ResourceManager.GetString("Quarter_Fourth", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 The Second Quarter 的本地化字符串。
-        /// </summary>
-        internal static string Quarter_Second {
-            get {
-                return ResourceManager.GetString("Quarter_Second", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 The Thrid Quarter 的本地化字符串。
-        /// </summary>
-        internal static string Quarter_Thrid {
-            get {
-                return ResourceManager.GetString("Quarter_Thrid", resourceCulture);
             }
         }
         

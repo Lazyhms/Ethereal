@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Ethereal.Extensions {
+namespace Ethereal.AspNetCore {
     using System;
     
     
@@ -57,15 +57,6 @@ namespace Ethereal.Extensions {
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 No implementation of type {0} was found. 的本地化字符串。
-        /// </summary>
-        internal static string NotImplemented_Exception {
-            get {
-                return ResourceManager.GetString("NotImplemented_Exception", resourceCulture);
             }
         }
         

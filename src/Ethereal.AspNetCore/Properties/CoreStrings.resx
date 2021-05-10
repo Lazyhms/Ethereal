@@ -129,4 +129,7 @@
   <data name="Global_Exception" xml:space="preserve">
     <value>An error occur.Try it again.</value>
   </data>
+  <data name="NotImplemented_Exception" xml:space="preserve">
+    <value>No implementation of type {0} was found.</value>
+  </data>
 </root>

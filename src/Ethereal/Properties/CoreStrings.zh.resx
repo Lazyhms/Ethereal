@@ -117,32 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="FileLengthAttribute_Invalid" xml:space="preserve">
-    <value>字段 {0} 文件大小超过了允许的最大值.</value>
-  </data>
-  <data name="FileLengthAttribute_InvalidCast" xml:space="preserve">
-    <value>无效的转换,仅支持IFormFile或IFormFileCollection类型.</value>
-  </data>
-  <data name="FileLengthAttribute_InvalidOperation" xml:space="preserve">
-    <value>无效的操作,文件长度不能小于等于0.</value>
-  </data>
   <data name="IDCardAttribute_Invalid" xml:space="preserve">
     <value>字段 {0} 不是有效的身份证号码.</value>
   </data>
   <data name="PageSize_Invalid" xml:space="preserve">
     <value>每页大小 pageSize 不能小于或等于0.</value>
-  </data>
-  <data name="Quarter_First" xml:space="preserve">
-    <value>第一季度</value>
-  </data>
-  <data name="Quarter_Fourth" xml:space="preserve">
-    <value>第四季度</value>
-  </data>
-  <data name="Quarter_Second" xml:space="preserve">
-    <value>第二季度</value>
-  </data>
-  <data name="Quarter_Thrid" xml:space="preserve">
-    <value>第三季度</value>
   </data>
   <data name="RequiredAttribute_Invalid" xml:space="preserve">
     <value>字段 {0} 是必填字段.</value>

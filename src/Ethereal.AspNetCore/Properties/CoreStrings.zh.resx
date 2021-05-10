@@ -129,4 +129,7 @@
   <data name="Global_Exception" xml:space="preserve">
     <value>服务器发生错误,请重试.</value>
   </data>
+  <data name="NotImplemented_Exception" xml:space="preserve">
+    <value>未找到类型 {0} 的实现.</value>
+  </data>
 </root>
