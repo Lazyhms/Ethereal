@@ -11,12 +11,6 @@ namespace Ethereal.EFCore.Tests
 {
     public class MuilplteTests
     {
-        [Fact]
-        public async Task Bewteen_Tests()
-        {
-            using var context = GetDbContext();
-            var t1 = await context.Stus.Where(s => s.Score > 0 && s.Created.Between(DateTime.Now.AddDays(-1), DateTime.Now.AddDays(-1))).ToListAsync();
-        }
 
         [Fact]
         public async Task DbContextExtension_TestAsync()

@@ -3,8 +3,6 @@
 using Ethereal.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions.Infrastructure;
-using Microsoft.EntityFrameworkCore.Query;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -23,11 +21,7 @@ namespace Ethereal.EntityFrameworkCore
             Check.NotNull(serviceCollection, nameof(serviceCollection));
 
             new EntityFrameworkRelationalServicesBuilder(serviceCollection)
-                .TryAdd<IConventionSetPlugin, EtherealConventionSetPlugin>()
-                .TryAddProviderSpecificServices(
-                    x =>
-                        x.TryAddSingletonEnumerable<IMethodCallTranslatorPlugin, EtherealDateTimeMethodCallTranslatorPlugin>()
-                );
+                .TryAdd<IConventionSetPlugin, EtherealConventionSetPlugin>();
 
             return serviceCollection;
         }
