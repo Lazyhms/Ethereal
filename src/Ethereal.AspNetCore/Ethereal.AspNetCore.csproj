@@ -35,4 +35,8 @@
 		</Compile>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <PackageReference Update="Microsoft.CodeAnalysis.CSharp" Version="3.11.0" />
+	</ItemGroup>
+
 </Project>

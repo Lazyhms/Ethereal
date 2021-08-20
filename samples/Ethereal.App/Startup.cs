@@ -1,5 +1,4 @@
 using Ethereal.App.ScheduledTasks;
-using Ethereal.App.Services;
 using Hangfire;
 using Hangfire.Dashboard;
 using Hangfire.MemoryStorage;

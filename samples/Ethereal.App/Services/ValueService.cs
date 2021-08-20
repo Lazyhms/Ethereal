@@ -1,6 +1,5 @@
 ﻿using Ethereal.App.Models;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Threading.Tasks;
 
 namespace Ethereal.App.Services
@@ -8,10 +7,7 @@ namespace Ethereal.App.Services
     public class ValueService : IValueService
     {
         private readonly ILogger _logger;
-        public ValueService(ILogger<ValueService> logger)
-        {
-            _logger = logger;
-        }
+        public ValueService(ILogger<ValueService> logger) => _logger = logger;
 
         public async Task<object> Insert(Tests tests) => await new ValueTask<object>(tests);
 
