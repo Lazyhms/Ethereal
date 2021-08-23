@@ -3,36 +3,20 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace Ethereal.EntityFrameworkCore
 {
     /// <summary>
     /// PagedList
     /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public class PagedList
     {
         /// <summary>
         /// Empty PagedList
         /// </summary>
         public static IPagedList<T> Empty<T>() => EmptyPagedList<T>.Value;
-
-        /// <summary>
-        /// override Equals method
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object? obj) => base.Equals(obj);
-
-        /// <summary>
-        /// override GetHashCode method
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => base.GetHashCode();
-
-        /// <summary>
-        /// override ToString method
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string? ToString() => base.ToString();
 
         private class EmptyPagedList<T>
         {
