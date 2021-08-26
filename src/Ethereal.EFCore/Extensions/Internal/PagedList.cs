@@ -40,7 +40,7 @@ namespace Ethereal.EntityFrameworkCore
         public int PageCount { get; set; }
 
         /// <inheritdoc/>
-        public IList<TEntity> PageData { get; set; } = Array.Empty<TEntity>();
+        public IEnumerable<TEntity> PageData { get; set; } = Enumerable.Empty<TEntity>();
 
         /// <inheritdoc/>
         public int PageIndex { get; set; }

@@ -27,7 +27,7 @@ namespace System.Linq
         /// <summary>
         /// Page data
         /// </summary>
-        IList<TEntity> PageData { get; set; }
+        IEnumerable<TEntity> PageData { get; set; }
 
         /// <summary>
         /// Index of page

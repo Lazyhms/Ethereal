@@ -35,7 +35,7 @@ namespace System.Linq
         public int PageCount { get; set; }
 
         /// <inheritdoc/>
-        public IList<TEntity> PageData { get; set; } = Array.Empty<TEntity>();
+        public IEnumerable<TEntity> PageData { get; set; } = Array.Empty<TEntity>();
 
         /// <inheritdoc/>
         public int PageIndex { get; set; }

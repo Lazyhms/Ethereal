@@ -19,7 +19,7 @@ namespace Microsoft.AspNetCore.Builder
         /// </summary>
         public static SwaggerUIOptions SwaggerEndpoint(this SwaggerUIOptions options, IDictionary<string, OpenApiInfo> docs)
         {
-            options.ConfigObject.Urls = docs.Select(d => new UrlDescriptor { Name = d.Key, Url = $"/swagger/{d.Key}/swagger.json" });
+            options.ConfigObject.Urls = docs.Select(d => new UrlDescriptor { Name = d.Key, Url = $"/swagger/{d.Key}/swagger.json" }).Union(options.ConfigObject.Urls ?? Enumerable.Empty<UrlDescriptor>());
             return options;
         }
 
@@ -29,7 +29,7 @@ namespace Microsoft.AspNetCore.Builder
         public static SwaggerUIOptions SwaggerEndpoint(this SwaggerUIOptions options, IConfiguration configuration)
         {
             var docs = configuration.Bind<Dictionary<string, OpenApiInfo>>();
-            options.ConfigObject.Urls = docs.Select(d => new UrlDescriptor { Name = d.Key, Url = $"/swagger/{d.Key}/swagger.json" });
+            options.ConfigObject.Urls = docs.Select(d => new UrlDescriptor { Name = d.Key, Url = $"/swagger/{d.Key}/swagger.json" }).Union(options.ConfigObject.Urls ?? Enumerable.Empty<UrlDescriptor>());
             return options;
         }
 
@@ -39,7 +39,7 @@ namespace Microsoft.AspNetCore.Builder
         public static SwaggerUIOptions SwaggerEndpoint(this SwaggerUIOptions options, IConfiguration configuration, string key)
         {
             var docs = configuration.Bind<Dictionary<string, OpenApiInfo>>(key);
-            options.ConfigObject.Urls = docs.Select(d => new UrlDescriptor { Name = d.Key, Url = $"/swagger/{d.Key}/swagger.json" });
+            options.ConfigObject.Urls = docs.Select(d => new UrlDescriptor { Name = d.Key, Url = $"/swagger/{d.Key}/swagger.json" }).Union(options.ConfigObject.Urls ?? Enumerable.Empty<UrlDescriptor>());
             return options;
         }
     }

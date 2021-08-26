@@ -286,7 +286,7 @@ namespace System.Linq
             {
                 pageIndex = pageCount;
             }
-            var pageData = source.Skip(pageSize * (pageIndex - 1)).Take(pageSize).ToList();
+            var pageData = source.Skip(pageSize * (pageIndex - 1)).Take(pageSize);
             return new PagedList<TEntity>
             {
                 PageCount = pageCount,
