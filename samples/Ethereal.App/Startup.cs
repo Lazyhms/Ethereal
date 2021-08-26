@@ -169,8 +169,6 @@ namespace Ethereal.App
                 options
                     .AddJwtSecurityDefinition()
                     .AddJwtSecurityRequirement();
-
-                options.IncludeXmlComments();
             });
 
             services.AddDbContextPool<TestContext>(options =>

@@ -6,7 +6,6 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-	  <DocumentationFile>Ethereal.App.xml</DocumentationFile>
 	  <NoWarn>;1701;1702;1705;NU5105;1591</NoWarn>
 	</PropertyGroup>
 
@@ -32,9 +31,6 @@
 
 	<ItemGroup>
 	  <None Update="DEVPFX.pfx">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Ethereal.App.xml">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>
