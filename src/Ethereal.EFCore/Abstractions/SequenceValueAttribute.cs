@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Ethereal.EntityFrameworkCore
+namespace Microsoft.EntityFrameworkCore
 {
     /// <summary>
     /// Marks a property or field with a sequence value which will be included in the SQL sent to

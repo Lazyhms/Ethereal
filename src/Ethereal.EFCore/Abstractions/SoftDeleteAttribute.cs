@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Ethereal.EntityFrameworkCore
+namespace Microsoft.EntityFrameworkCore
 {
     /// <summary>
     /// Marks a class use SoftDelete

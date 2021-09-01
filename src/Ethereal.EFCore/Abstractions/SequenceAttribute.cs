@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Ethereal.EntityFrameworkCore
+namespace Microsoft.EntityFrameworkCore
 {
     /// <summary>
     /// Create a sequence which will be included in the SQL sent to the database .

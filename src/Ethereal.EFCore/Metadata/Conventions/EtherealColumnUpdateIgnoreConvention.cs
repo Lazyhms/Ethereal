@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
