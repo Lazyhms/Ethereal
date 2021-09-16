@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Ethereal.EntityFrameworkCore
+namespace Microsoft.EntityFrameworkCore
 {
     /// <summary>
     /// IPagedList
