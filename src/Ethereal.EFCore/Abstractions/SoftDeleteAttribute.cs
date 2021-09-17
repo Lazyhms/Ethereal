@@ -13,7 +13,7 @@ namespace Microsoft.EntityFrameworkCore
         /// <summary>
         /// Initializes a new instance of the <see cref="SoftDeleteAttribute"/> class.
         /// </summary>
-        public SoftDeleteAttribute(string columnName = "IsDeleted", string comment = "soft deleted")
+        public SoftDeleteAttribute(string columnName = "is_deleted", string comment = "soft deleted")
         {
             Check.NotEmpty(columnName, nameof(columnName));
 

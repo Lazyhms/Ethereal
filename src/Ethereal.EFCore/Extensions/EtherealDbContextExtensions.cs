@@ -74,7 +74,7 @@ namespace Ethereal.EntityFrameworkCore
 
             var primaryKey = dbContext.Model.FindRuntimeEntityType(typeof(TEntity)).FindPrimaryKey().Properties.Select(s => s.Name).Single();
             var trackingEntity = dbContext.ChangeTracker.Entries<TEntity>().FirstOrDefault(f => f.Property(primaryKey).OriginalValue.Equals(typeof(TEntity).GetRequiredRuntimePropertyValue(primaryKey, entity)));
-            var entry = trackingEntity is not null ? trackingEntity : dbContext.Entry(new TEntity());
+            var entry = trackingEntity is not null ? trackingEntity : dbContext.Entry(entity);
             entry.State = EntityState.Deleted;
             return entry;
         }
@@ -118,7 +118,7 @@ namespace Ethereal.EntityFrameworkCore
 
             var primaryKey = dbContext.Model.FindRuntimeEntityType(typeof(TEntity)).FindPrimaryKey().Properties.Select(s => s.Name).Single();
             var trackingEntity = dbContext.ChangeTracker.Entries<TEntity>().FirstOrDefault(f => f.Property(primaryKey).OriginalValue.Equals(typeof(TEntity).GetRequiredRuntimePropertyValue(primaryKey, entity)));
-            var entry = trackingEntity is not null ? trackingEntity : dbContext.Entry(new TEntity());
+            var entry = trackingEntity is not null ? trackingEntity : dbContext.Entry(entity);
             var isDeleted = typeof(TEntity).GetCustomAttribute<SoftDeleteAttribute>()!.ColumnName;
             entry.Property(isDeleted).IsModified = true;
             entry.Property(isDeleted).CurrentValue = true;

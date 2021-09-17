@@ -63,7 +63,7 @@ namespace Ethereal.Permission.Tests
                 IdentityType = 1
             };
 
-            dbContext2.Account.Remove(account3);
+            dbContext2.Account.Delete<Account>(account3);
             dbContext2.SaveChanges();
         }
     }

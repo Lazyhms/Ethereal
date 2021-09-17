@@ -36,11 +36,11 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
                     {
                         throw new TypeAccessException(string.Format(CoreStrings.SoftDeletedType_Invalid, info.Name));
                     }
-                    entityTypeBuilder.Property(info.PropertyType, info.Name, true).HasComment(attribute.Comment, true);
+                    entityTypeBuilder.Property(info.PropertyType, info.Name, true, true).HasComment(attribute.Comment, true);
                 }
                 else
                 {
-                    entityTypeBuilder.Property(typeof(bool), attribute.ColumnName, true).HasComment(attribute.Comment, true);
+                    entityTypeBuilder.Property(typeof(bool), attribute.ColumnName, true, true).HasComment(attribute.Comment, true);
                 }
                 // add query filter
                 var parameter = Expression.Parameter(clrType, "filter");

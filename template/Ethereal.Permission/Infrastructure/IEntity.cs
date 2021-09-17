@@ -11,11 +11,11 @@ namespace Ethereal.Permission
         public long Id { get; set; }
 
         [UpdateIgnore]
-        [Column(TypeName = "datetime", Order = 0), DefaultValueSql("CURRENT_TIMESTAMP")]
+        [Column("create_time", TypeName = "datetime", Order = 0)]
         public DateTime Created { get; private set; }
 
         [InsertIgnore]
-        [Column(TypeName = "datetime", Order = 1)]
+        [Column("update_time", TypeName = "datetime", Order = 1)]
         public DateTime? Updated { get; private set; } = DateTime.Now;
     }
 }

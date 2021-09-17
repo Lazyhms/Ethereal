@@ -79,13 +79,6 @@ namespace Ethereal.App
                 opts.SwaggerEndpoint(Configuration, "SwaggerDoc");
             });
 
-            app.UseHangfireServer(new BackgroundJobServerOptions
-            {
-                Queues = new[] { "default" },
-                WorkerCount = Environment.ProcessorCount,
-                ServerName = "Test",
-                SchedulePollingInterval = TimeSpan.FromSeconds(3),
-            });
             app.UseHangfireDashboard(options: new DashboardOptions
             {
             });
@@ -190,6 +183,15 @@ namespace Ethereal.App
             });
 
             services.RegisterAssemblyTypes(typeof(Startup).Assembly);
+
+            services.AddHangfireServer(options =>
+            {
+
+                options.Queues = new[] { "default" };
+                options.WorkerCount = Environment.ProcessorCount;
+                options.ServerName = "Test";
+                options.SchedulePollingInterval = TimeSpan.FromSeconds(3);
+            });
 
             services.AddHangfire(options =>
             {
