@@ -12,6 +12,32 @@ namespace Ethereal.EFCore.Tests
 {
     public class MuilplteTests
     {
+        private readonly IServiceCollection serviceDescriptors;
+
+        public MuilplteTests()
+        {
+            serviceDescriptors = new ServiceCollection();
+            serviceDescriptors.AddDbContext<AppDbContextTest>(opts =>
+            {
+                opts.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+                opts.EnableSensitiveDataLogging();
+                opts.UseLoggerFactory(LoggerFactory.Create(builder =>
+                {
+                    builder.AddConsole();
+                    builder.AddDebug();
+                }));
+                //opts.UseSqlServer("Server=127.0.0.1;Database=Ethereal;User Id=sa;Password=okok;MultipleActiveResultSets=true", opts =>
+                //{
+                //});
+                opts.UseMySql("server=127.0.0.1;userid=sa;pwd=okok;port=3306;database=Ethereal;sslmode=none;Charset=utf8;AutoEnlist=false", ServerVersion.AutoDetect("server=127.0.0.1;userid=sa;pwd=okok;port=3306;database=Permission;sslmode=none;Charset=utf8;AutoEnlist=false"), opts =>
+                {
+                    opts.SchemaBehavior(MySqlSchemaBehavior.Translate, (a, b) => a + b);
+                });
+                opts.UseEthereal(opts =>
+                {
+                });
+            });
+        }
 
         [Fact]
         public async Task DbContextExtensions_TestAsync()
@@ -113,6 +139,59 @@ namespace Ethereal.EFCore.Tests
         }
 
         [Fact]
+        public async Task DbSetExtensions_Scope_TestAsync()
+        {
+            using var context = GetDbContext();
+
+            var id = Guid.NewGuid();
+            var stu1 = new Stu
+            {
+                Id = id,
+                Name = "31231233123543531231",
+                Score = 20
+            };
+            context.Stus.Add(stu1);
+            await context.SaveChangesAsync();
+
+            using var context1 = GetDbContext();
+
+            context1.Stus.Update(new Stu
+            {
+                Id = id,
+                Name = "312312331235435",
+                Score = 21
+            }, true, b => b.Name, b => b.Score);
+            await context1.SaveChangesAsync();
+        }
+
+        [Fact]
+        public async Task DbContextExtensions_Scope_TestAsync()
+        {
+            using var context = GetDbContext();
+
+            var id = Guid.NewGuid();
+            var stu1 = new Stu
+            {
+                Id = id,
+                Name = "31231233123543531231",
+                Score = 20
+            };
+            context.Add(stu1);
+            await context.SaveChangesAsync();
+
+            using var context1 = GetDbContext();
+
+            context1.Update(new Stu
+            {
+                Id = id,
+                Name = "312312331235435",
+                Score = 21
+            }, true, b => b.Name, b => b.Score);
+            await context1.SaveChangesAsync();
+        }
+
+
+        [Fact]
         public async Task PaginationExtension_Tests()
         {
             using var context = GetDbContext();
@@ -131,30 +210,6 @@ namespace Ethereal.EFCore.Tests
             var t2 = await context.Stus.Where(1 == 2, s => s.Name.Equals("1")).ToListAsync();
         }
 
-        private AppDbContextTest GetDbContext()
-        {
-            IServiceCollection serviceDescriptors = new ServiceCollection();
-            serviceDescriptors.AddDbContext<AppDbContextTest>(opts =>
-            {
-                opts.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-                opts.EnableSensitiveDataLogging();
-                opts.UseLoggerFactory(LoggerFactory.Create(builder =>
-                {
-                    builder.AddConsole();
-                    builder.AddDebug();
-                }));
-                //opts.UseSqlServer("Server=127.0.0.1;Database=Ethereal;User Id=sa;Password=okok;MultipleActiveResultSets=true", opts =>
-                //{
-                //});
-                opts.UseMySql("server=127.0.0.1;userid=sa;pwd=okok;port=3306;database=Ethereal;sslmode=none;Charset=utf8;AutoEnlist=false", ServerVersion.AutoDetect("server=127.0.0.1;userid=sa;pwd=okok;port=3306;database=Permission;sslmode=none;Charset=utf8;AutoEnlist=false"), opts =>
-                {
-                    opts.SchemaBehavior(MySqlSchemaBehavior.Translate, (a, b) => a + b);
-                });
-                opts.UseEthereal(opts =>
-                {
-                });
-            });
-            return serviceDescriptors.BuildServiceProvider().GetService<AppDbContextTest>();
-        }
+        private AppDbContextTest GetDbContext() => serviceDescriptors.BuildServiceProvider().GetService<AppDbContextTest>();
     }
 }
