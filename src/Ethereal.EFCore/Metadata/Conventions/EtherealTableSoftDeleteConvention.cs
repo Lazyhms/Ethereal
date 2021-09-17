@@ -30,7 +30,7 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
             if (clrType is not null && Attribute.IsDefined(clrType, typeof(SoftDeleteAttribute)))
             {
                 var attribute = clrType.GetCustomAttribute<SoftDeleteAttribute>()!;
-                if (clrType.GetProperty(attribute.IsDeleted) is PropertyInfo info)
+                if (clrType.GetProperty(attribute.ColumnName) is PropertyInfo info)
                 {
                     if (info.PropertyType != typeof(bool))
                     {
@@ -40,7 +40,7 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
                 }
                 else
                 {
-                    entityTypeBuilder.Property(typeof(bool), attribute.IsDeleted, true).HasComment(attribute.Comment, true);
+                    entityTypeBuilder.Property(typeof(bool), attribute.ColumnName, true).HasComment(attribute.Comment, true);
                 }
                 // add query filter
                 var parameter = Expression.Parameter(clrType, "filter");
@@ -48,7 +48,7 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
                     Expression.Lambda(
                         Expression.Equal(
                             Expression.Call(typeof(EF), nameof(EF.Property), new[] { typeof(bool) }, parameter,
-                                Expression.Constant(attribute.IsDeleted)), Expression.Constant(false)), parameter),
+                                Expression.Constant(attribute.ColumnName)), Expression.Constant(false)), parameter),
                     true);
             }
         }

@@ -3,7 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -14,8 +14,6 @@ namespace Ethereal.EntityFrameworkCore
     /// </summary>
     public static class EtherealDbContextExtensions
     {
-        #region Update
-
         /// <summary>
         /// Updates the specified property when the update is true, or do not update
         /// </summary>
@@ -29,29 +27,9 @@ namespace Ethereal.EntityFrameworkCore
             Check.NotNull(entity, nameof(entity));
             Check.NotNull(properties, nameof(properties));
 
-            var entry = dbContext.Entry(entity);
-            entry.State = update ? EntityState.Unchanged : EntityState.Modified;
-            foreach (var item in properties)
-            {
-                entry.Property(item).IsModified = update;
-            }
-            return entry;
-        }
-
-        /// <summary>
-        /// Updates the specified property when the update is true, or do not update
-        /// </summary>
-        public static EntityEntry<TEntity> Update<TEntity>(
-            this DbContext dbContext,
-            TEntity entity,
-            bool update,
-            IEnumerable<string> properties) where TEntity : class
-        {
-            Check.NotNull(dbContext, nameof(dbContext));
-            Check.NotNull(entity, nameof(entity));
-            Check.NotNull(properties, nameof(properties));
-
-            var entry = dbContext.Entry(entity);
+            var primaryKey = dbContext.Model.FindRuntimeEntityType(typeof(TEntity)).FindPrimaryKey().Properties.Select(s => s.Name).Single();
+            var trackingEntity = dbContext.ChangeTracker.Entries<TEntity>().FirstOrDefault(f => f.Property(primaryKey).OriginalValue.Equals(typeof(TEntity).GetRequiredRuntimePropertyValue(primaryKey, entity)));
+            var entry = trackingEntity is not null ? trackingEntity : dbContext.Entry(entity);
             entry.State = update ? EntityState.Unchanged : EntityState.Modified;
             foreach (var item in properties)
             {
@@ -73,7 +51,9 @@ namespace Ethereal.EntityFrameworkCore
             Check.NotNull(entity, nameof(entity));
             Check.NotNull(properties, nameof(properties));
 
-            var entry = dbContext.Entry(entity);
+            var primaryKey = dbContext.Model.FindRuntimeEntityType(typeof(TEntity)).FindPrimaryKey().Properties.Select(s => s.Name).Single();
+            var trackingEntity = dbContext.ChangeTracker.Entries<TEntity>().FirstOrDefault(f => f.Property(primaryKey).OriginalValue.Equals(typeof(TEntity).GetRequiredRuntimePropertyValue(primaryKey, entity)));
+            var entry = trackingEntity is not null ? trackingEntity : dbContext.Entry(entity);
             entry.State = update ? EntityState.Unchanged : EntityState.Modified;
             foreach (var item in properties)
             {
@@ -81,49 +61,6 @@ namespace Ethereal.EntityFrameworkCore
             }
             return entry;
         }
-
-        /// <summary>
-        /// Updates the specified property when the update is true, or do not update
-        /// </summary>
-        public static EntityEntry<TEntity> Update<TEntity, TProperty>(
-            this DbContext dbContext,
-            TEntity entity,
-            bool update,
-            params Expression<Func<TEntity, TProperty>>[] properties) where TEntity : class
-        {
-            Check.NotNull(dbContext, nameof(dbContext));
-            Check.NotNull(entity, nameof(entity));
-            Check.NotNull(properties, nameof(properties));
-
-            var entry = dbContext.Entry(entity);
-            entry.State = update ? EntityState.Unchanged : EntityState.Modified;
-            foreach (var item in properties)
-            {
-                entry.Property(item).IsModified = update;
-            }
-            return entry;
-        }
-
-        /// <summary>
-        /// Updates the specified property when the update is true, or do not update
-        /// </summary>
-        public static EntityEntry<TEntity> WithProperty<TEntity, TProperty>(
-            this EntityEntry<TEntity> entry,
-            bool update,
-            params Expression<Func<TEntity, TProperty>>[] properties) where TEntity : class
-        {
-            Check.NotNull(entry, nameof(entry));
-
-            foreach (var item in properties)
-            {
-                entry.Property(item).IsModified = update;
-            }
-            return entry;
-        }
-
-        #endregion Update
-
-        #region Delete
 
         /// <summary>
         /// Delete
@@ -132,7 +69,12 @@ namespace Ethereal.EntityFrameworkCore
             this DbContext dbContext,
             TEntity entity) where TEntity : class, new()
         {
-            var entry = dbContext.Entry(entity);
+            Check.NotNull(dbContext, nameof(dbContext));
+            Check.NotNull(entity, nameof(entity));
+
+            var primaryKey = dbContext.Model.FindRuntimeEntityType(typeof(TEntity)).FindPrimaryKey().Properties.Select(s => s.Name).Single();
+            var trackingEntity = dbContext.ChangeTracker.Entries<TEntity>().FirstOrDefault(f => f.Property(primaryKey).OriginalValue.Equals(typeof(TEntity).GetRequiredRuntimePropertyValue(primaryKey, entity)));
+            var entry = trackingEntity is not null ? trackingEntity : dbContext.Entry(new TEntity());
             entry.State = EntityState.Deleted;
             return entry;
         }
@@ -143,29 +85,20 @@ namespace Ethereal.EntityFrameworkCore
         public static EntityEntry<TEntity> Delete<TEntity, TPrimaryKey>(
             this DbContext dbContext,
             TPrimaryKey id) where TEntity : class, new()
+                            where TPrimaryKey : notnull
         {
-            var entry = dbContext.Entry(new TEntity());
-            entry.Property("Id").CurrentValue = id;
+            Check.NotNull(dbContext, nameof(dbContext));
+
+            var primaryKey = dbContext.Model.FindRuntimeEntityType(typeof(TEntity)).FindPrimaryKey().Properties.Select(s => s.Name).Single();
+            var trackingEntity = dbContext.ChangeTracker.Entries<TEntity>().FirstOrDefault(f => id.Equals(f.Property(primaryKey).OriginalValue));
+            var entry = trackingEntity is not null ? trackingEntity : dbContext.Entry(new TEntity());
+            if (trackingEntity is null)
+            {
+                entry.Property(primaryKey).CurrentValue = id;
+            }
             entry.State = EntityState.Deleted;
             return entry;
         }
-
-        /// <summary>
-        /// Delete
-        /// </summary>
-        public static EntityEntry<TEntity> Delete<TEntity>(
-            this DbContext dbContext,
-            object id) where TEntity : class, new()
-        {
-            var entry = dbContext.Entry(new TEntity());
-            entry.Property("Id").CurrentValue = id;
-            entry.State = EntityState.Deleted;
-            return entry;
-        }
-
-        #endregion Delete
-
-        #region SoftDelete
 
         /// <summary>
         /// SoftDelete
@@ -175,12 +108,18 @@ namespace Ethereal.EntityFrameworkCore
             this DbContext dbContext,
             TEntity entity) where TEntity : class, new()
         {
+            Check.NotNull(dbContext, nameof(dbContext));
+            Check.NotNull(entity, nameof(entity));
+
             if (!Attribute.IsDefined(typeof(TEntity), typeof(SoftDeleteAttribute)))
             {
                 throw new InvalidOperationException(CoreStrings.SoftDeleted_Invalid);
             }
-            var entry = dbContext.Entry(entity);
-            var isDeleted = typeof(TEntity).GetCustomAttribute<SoftDeleteAttribute>()!.IsDeleted;
+
+            var primaryKey = dbContext.Model.FindRuntimeEntityType(typeof(TEntity)).FindPrimaryKey().Properties.Select(s => s.Name).Single();
+            var trackingEntity = dbContext.ChangeTracker.Entries<TEntity>().FirstOrDefault(f => f.Property(primaryKey).OriginalValue.Equals(typeof(TEntity).GetRequiredRuntimePropertyValue(primaryKey, entity)));
+            var entry = trackingEntity is not null ? trackingEntity : dbContext.Entry(new TEntity());
+            var isDeleted = typeof(TEntity).GetCustomAttribute<SoftDeleteAttribute>()!.ColumnName;
             entry.Property(isDeleted).IsModified = true;
             entry.Property(isDeleted).CurrentValue = true;
             return entry;
@@ -193,41 +132,26 @@ namespace Ethereal.EntityFrameworkCore
         public static EntityEntry<TEntity> SoftDelete<TEntity, TPrimaryKey>(
             this DbContext dbContext,
             TPrimaryKey id) where TEntity : class, new()
+                            where TPrimaryKey : notnull
         {
+            Check.NotNull(dbContext, nameof(dbContext));
+
             if (!Attribute.IsDefined(typeof(TEntity), typeof(SoftDeleteAttribute)))
             {
                 throw new InvalidOperationException(CoreStrings.SoftDeleted_Invalid);
             }
-            var entry = dbContext.Entry(new TEntity());
-            entry.Property("Id").CurrentValue = id;
-            var isDeleted = typeof(TEntity).GetCustomAttribute<SoftDeleteAttribute>()!.IsDeleted;
-            entry.State = EntityState.Unchanged;
-            entry.Property(isDeleted).IsModified = true;
-            entry.Property(isDeleted).CurrentValue = true;
-            return entry;
-        }
 
-        /// <summary>
-        /// SoftDelete
-        /// </summary>
-        /// <exception cref="InvalidOperationException">SoftDeleteAttribute is not defined</exception>
-        public static EntityEntry<TEntity> SoftDelete<TEntity>(
-            this DbContext dbContext,
-            object id) where TEntity : class, new()
-        {
-            if (!Attribute.IsDefined(typeof(TEntity), typeof(SoftDeleteAttribute)))
+            var primaryKey = dbContext.Model.FindRuntimeEntityType(typeof(TEntity)).FindPrimaryKey().Properties.Select(s => s.Name).Single();
+            var trackingEntity = dbContext.ChangeTracker.Entries<TEntity>().FirstOrDefault(s => id.Equals(s.Property(primaryKey).OriginalValue));
+            var entry = trackingEntity is not null ? trackingEntity : dbContext.Entry(new TEntity());
+            if (trackingEntity is null)
             {
-                throw new InvalidOperationException(CoreStrings.SoftDeleted_Invalid);
+                entry.Property(primaryKey).CurrentValue = id;
             }
-            var entry = dbContext.Entry(new TEntity());
-            entry.Property("Id").CurrentValue = id;
-            var isDeleted = typeof(TEntity).GetCustomAttribute<SoftDeleteAttribute>()!.IsDeleted;
-            entry.State = EntityState.Unchanged;
+            var isDeleted = typeof(TEntity).GetCustomAttribute<SoftDeleteAttribute>()!.ColumnName;
             entry.Property(isDeleted).IsModified = true;
             entry.Property(isDeleted).CurrentValue = true;
             return entry;
         }
-
-        #endregion SoftDelete
     }
 }

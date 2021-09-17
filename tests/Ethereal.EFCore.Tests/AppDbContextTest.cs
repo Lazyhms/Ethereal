@@ -16,13 +16,13 @@ namespace Ethereal.EFCore.Tests
     }
 
     [SoftDelete]
-    [Sequence("Order")]
+    //[Sequence("Order")]
     [Table("t_stu")]
     public class Stu
     {
         [Comment("创建时间")]
         [UpdateIgnore]
-        [DefaultValueSql("GETDATE()")]
+        //[DefaultValueSql("GETDATE()")]
         public DateTime? Created { get; set; }
 
         public Guid Id { get; set; }
@@ -32,7 +32,7 @@ namespace Ethereal.EFCore.Tests
         [Comment("名称")]
         public string Name { get; set; }
 
-        [SequenceValue("Order")]
+        //[SequenceValue("Order")]
         public int Order { get; set; }
 
         [Comment("分数")]

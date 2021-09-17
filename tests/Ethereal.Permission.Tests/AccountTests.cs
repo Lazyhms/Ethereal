@@ -1,5 +1,4 @@
 ﻿using Ethereal.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
 using Xunit;
 
 namespace Ethereal.Permission.Tests

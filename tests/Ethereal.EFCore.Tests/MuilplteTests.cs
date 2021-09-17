@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,31 +14,11 @@ namespace Ethereal.EFCore.Tests
     {
 
         [Fact]
-        public async Task DbContextExtension_TestAsync()
+        public async Task DbContextExtensions_TestAsync()
         {
             var context = GetDbContext();
 
-            var id = Guid.Parse("f0158dca-e568-47ec-9980-07503ab389ef");
-
-            //await context.Stus.AddAsync(new Stu
-            //{
-            //    Id = id,
-            //    Name = "121",
-            //});
-            //await context.SaveChangesAsync();
-
-            //var stu = new Stu
-            //{
-            //    Id = id,
-            //    Name = "312312331235435",
-            //    Score = 20
-            //};
-            //context.Stus.Update(stu, true, b => b.Name);
-            //await context.SaveChangesAsync();
-
-            //context.Stus.SoftDelete(new Stu { Id = id });
-            //context.Stus.Delete(id);
-            //await context.SaveChangesAsync();
+            var id = Guid.NewGuid();
 
             var stu1 = new Stu
             {
@@ -46,16 +27,88 @@ namespace Ethereal.EFCore.Tests
                 Score = 20
             };
 
-            //context.Add(stu1);
-            //await context.SaveChangesAsync();
+            context.Add(stu1);
+            await context.SaveChangesAsync();
 
-            //context.Update(stu1, true, b => b.Name);
-            //await context.SaveChangesAsync();
+            context.Update(stu1, true, b => b.Name);
+            await context.SaveChangesAsync();
 
-            //context.SoftDelete<Stu, Guid>(id);
-            //await context.SaveChangesAsync();
+            context.SoftDelete<Stu, Guid>(id);
+            await context.SaveChangesAsync();
 
-            context.Delete(stu1);
+            context.Delete<Stu, Guid>(id);
+            await context.SaveChangesAsync();
+
+
+            await context.Stus.AddAsync(new Stu
+            {
+                Id = id,
+                Name = "121",
+            });
+            await context.SaveChangesAsync();
+
+            context.Update(new Stu
+            {
+                Id = id,
+                Name = "312312331235435",
+                Score = 21
+            }, true, b => b.Name, b => b.Score);
+            await context.SaveChangesAsync();
+
+            context.SoftDelete(new Stu { Id = id });
+            await context.SaveChangesAsync();
+
+            context.Delete(new Stu { Id = id });
+            await context.SaveChangesAsync();
+        }
+
+
+        [Fact]
+        public async Task DbSetExtensions_TestAsync()
+        {
+            var context = GetDbContext();
+
+            var id = Guid.NewGuid();
+
+            var stu1 = new Stu
+            {
+                Id = id,
+                Name = "31231233123543531231",
+                Score = 20
+            };
+
+            context.Stus.Add(stu1);
+            await context.SaveChangesAsync();
+
+            context.Stus.Update(stu1, true, b => b.Name);
+            await context.SaveChangesAsync();
+
+            context.Stus.SoftDelete(id);
+            await context.SaveChangesAsync();
+
+            context.Stus.Delete(id);
+            await context.SaveChangesAsync();
+
+
+            await context.Stus.AddAsync(new Stu
+            {
+                Id = id,
+                Name = "121",
+            });
+            await context.SaveChangesAsync();
+
+            context.Stus.Update(new Stu
+            {
+                Id = id,
+                Name = "312312331235435",
+                Score = 21
+            }, true, b => b.Name, b => b.Score);
+            await context.SaveChangesAsync();
+
+            context.Stus.SoftDelete<Stu>(new Stu { Id = id });
+            await context.SaveChangesAsync();
+
+            context.Stus.Delete<Stu>(new Stu { Id = id });
             await context.SaveChangesAsync();
         }
 
@@ -83,14 +136,19 @@ namespace Ethereal.EFCore.Tests
             IServiceCollection serviceDescriptors = new ServiceCollection();
             serviceDescriptors.AddDbContext<AppDbContextTest>(opts =>
             {
+                opts.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
                 opts.EnableSensitiveDataLogging();
                 opts.UseLoggerFactory(LoggerFactory.Create(builder =>
                 {
                     builder.AddConsole();
                     builder.AddDebug();
                 }));
-                opts.UseSqlServer("Server=127.0.0.1;Database=Ethereal;User Id=sa;Password=okok;MultipleActiveResultSets=true", opts =>
+                //opts.UseSqlServer("Server=127.0.0.1;Database=Ethereal;User Id=sa;Password=okok;MultipleActiveResultSets=true", opts =>
+                //{
+                //});
+                opts.UseMySql("server=127.0.0.1;userid=sa;pwd=okok;port=3306;database=Ethereal;sslmode=none;Charset=utf8;AutoEnlist=false", ServerVersion.AutoDetect("server=127.0.0.1;userid=sa;pwd=okok;port=3306;database=Permission;sslmode=none;Charset=utf8;AutoEnlist=false"), opts =>
                 {
+                    opts.SchemaBehavior(MySqlSchemaBehavior.Translate, (a, b) => a + b);
                 });
                 opts.UseEthereal(opts =>
                 {

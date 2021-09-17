@@ -13,11 +13,11 @@ namespace Microsoft.EntityFrameworkCore
         /// <summary>
         /// Initializes a new instance of the <see cref="SoftDeleteAttribute"/> class.
         /// </summary>
-        public SoftDeleteAttribute(string isDeleted = "IsDeleted", string comment = "soft deleted")
+        public SoftDeleteAttribute(string columnName = "IsDeleted", string comment = "soft deleted")
         {
-            Check.NotEmpty(isDeleted, nameof(isDeleted));
+            Check.NotEmpty(columnName, nameof(columnName));
 
-            IsDeleted = isDeleted;
+            ColumnName = columnName;
             Comment = comment ?? string.Empty;
         }
 
@@ -29,6 +29,6 @@ namespace Microsoft.EntityFrameworkCore
         /// <summary>
         /// Used to identify whether the column is soft deleted
         /// </summary>
-        public string IsDeleted { get; set; }
+        public string ColumnName { get; set; }
     }
 }
