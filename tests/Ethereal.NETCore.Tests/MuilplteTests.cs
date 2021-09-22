@@ -81,6 +81,16 @@ namespace Ethereal.Json.Tests
             var validationResults = new List<ValidationResult>();
             var ttt1 = Validator.TryValidateObject(t, new ValidationContext(t), validationResults, true);
         }
+
+        [Fact]
+        public void Rank_Tests()
+        {
+            var list = Enumerable.Range(1, 10).Concat(Enumerable.Repeat(8, 2)).OrderByDescending(s => s).ToList();
+            var rank = list.Rank().ToList();
+
+            var list1 = new List<T> { new T { MyProperty4 = 10 }, new T { MyProperty4 = 9 }, new T { MyProperty4 = 10 }, null, new T { MyProperty4 = 8 }, new T { MyProperty4 = 7 } };
+            var rank1 = list1.Rank(s => s.MyProperty4).ToList();
+        }
     }
 
     internal class T

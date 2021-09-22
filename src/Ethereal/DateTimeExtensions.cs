@@ -122,11 +122,11 @@ namespace System
         /// <summary>
         /// DateDiffMicrosecond
         /// </summary>
-        public static int DateDiffMicrosecond(this DateTime startDate, DateTime endDate)
+        public static long DateDiffMicrosecond(this DateTime startDate, DateTime endDate)
         {
             checked
             {
-                return (int)((endDate.Ticks - startDate.Ticks) / 10);
+                return (endDate.Ticks - startDate.Ticks) / 10;
             }
         }
 

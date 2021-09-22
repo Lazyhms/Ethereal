@@ -378,7 +378,6 @@ namespace System.Linq
             var i = -1;
             foreach (var element in source)
             {
-                checked { i++; }
                 if (i == index)
                 {
                     yield return present;
@@ -520,5 +519,63 @@ namespace System.Linq
         }
 
         #endregion Join
+
+        /// <summary>
+        /// Rank
+        /// </summary>
+        public static IEnumerable<(int rank, TSource)> Rank<TSource>(this IEnumerable<TSource> sources)
+        {
+            var rank = new List<(int, TSource)>();
+            int index = 1, sequence = 1;
+            foreach (var item in sources)
+            {
+                if (rank.Any())
+                {
+                    var lastest = rank.Last();
+                    if (!Equals(item, lastest.Item2))
+                    {
+                        index = lastest.Item1 + sequence;
+                        sequence = 1;
+                    }
+                    else
+                    {
+                        sequence++;
+                    }
+                }
+                rank.Add((index, item));
+            }
+            return rank;
+        }
+
+        /// <summary>
+        /// Rank
+        /// </summary>
+        public static IEnumerable<(int rank, TSource)> Rank<TSource, TProperty>(
+            this IEnumerable<TSource> sources,
+            Func<TSource, TProperty?> predicate) where TSource : class
+                                                 where TProperty : struct
+        {
+            var rank = new List<(int, TSource)>();
+            int index = 1, sequence = 1;
+            var rankSource = sources.Where(w => w is not null).OrderByDescending(predicate);
+            foreach (var item in rankSource)
+            {
+                if (rank.Any())
+                {
+                    var lastest = rank.Last();
+                    if (!Equals(predicate(item!), predicate(lastest.Item2)))
+                    {
+                        index = lastest.Item1 + sequence;
+                        sequence = 1;
+                    }
+                    else
+                    {
+                        sequence++;
+                    }
+                }
+                rank.Add((index, item));
+            }
+            return rank;
+        }
     }
 }
