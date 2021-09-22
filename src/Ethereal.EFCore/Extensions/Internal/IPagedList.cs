@@ -28,7 +28,7 @@ namespace Microsoft.EntityFrameworkCore
         /// <summary>
         /// Page data
         /// </summary>
-        IEnumerable<TEntity> PageData { get; set; }
+        IList<TEntity> PageData { get; set; }
 
         /// <summary>
         /// Index of page

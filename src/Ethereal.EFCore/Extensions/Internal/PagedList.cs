@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -39,7 +40,7 @@ namespace Microsoft.EntityFrameworkCore
         public int PageCount { get; set; }
 
         /// <inheritdoc/>
-        public IEnumerable<TEntity> PageData { get; set; } = Enumerable.Empty<TEntity>();
+        public IList<TEntity> PageData { get; set; } = Array.Empty<TEntity>();
 
         /// <inheritdoc/>
         public int PageIndex { get; set; }
