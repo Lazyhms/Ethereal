@@ -5,8 +5,7 @@ using System;
 namespace Microsoft.EntityFrameworkCore
 {
     /// <summary>
-    /// Marks a property or field with a sequence value which will be included in the SQL sent to
-    /// the database .
+    /// Marks a property or field with a sequence value which will be included in the SQL sent to the database .
     /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     public sealed class SequenceValueAttribute : Attribute

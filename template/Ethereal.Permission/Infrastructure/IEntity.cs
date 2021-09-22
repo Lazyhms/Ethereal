@@ -10,12 +10,18 @@ namespace Ethereal.Permission
         [Key]
         public long Id { get; set; }
 
-        [UpdateIgnore]
+        /// <summary>
+        /// create_time
+        /// </summary>
+        [UpdateIgnore, Comment("create_time")]
         [Column("create_time", TypeName = "datetime", Order = 0)]
-        public DateTime Created { get; private set; }
+        public DateTime Created { get; private set; } = DateTime.Now;
 
-        [InsertIgnore]
+        /// <summary>
+        /// update_time
+        /// </summary>
+        [InsertIgnore, Comment("update_time")]
         [Column("update_time", TypeName = "datetime", Order = 1)]
-        public DateTime? Updated { get; private set; } = DateTime.Now;
+        public DateTime? Updated { get; set; } = DateTime.Now;
     }
 }

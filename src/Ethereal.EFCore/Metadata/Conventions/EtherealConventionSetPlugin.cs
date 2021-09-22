@@ -26,9 +26,17 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
             // soft delete
             var etherealTableSoftDeleteConvention = new EtherealTableSoftDeleteConvention();
             conventionSet.EntityTypeAddedConventions.Add(etherealTableSoftDeleteConvention);
+            // sequence
+            var etherealSequenceConvention = new EtherealSequenceConvention(Dependencies);
+            conventionSet.EntityTypeAddedConventions.Add(etherealSequenceConvention);
+            // column sequence
+            var etherealColumnSequenceConvention = new EtherealColumnSequenceValueConvention(Dependencies);
+            conventionSet.PropertyAddedConventions.Add(etherealColumnSequenceConvention);
+            conventionSet.PropertyFieldChangedConventions.Add(etherealColumnSequenceConvention);
             // query filters
             var etherealTableQueryFilterConvention = new EtherealTableQueryFilterConvention(Dependencies);
             conventionSet.PropertyAddedConventions.Add(etherealTableQueryFilterConvention);
+            conventionSet.PropertyFieldChangedConventions.Add(etherealTableQueryFilterConvention);
             // column default value
             var etherealColumnDefaultValueConvention = new EtherealColumnDefaultValueConvention(Dependencies);
             conventionSet.PropertyAddedConventions.Add(etherealColumnDefaultValueConvention);
@@ -41,13 +49,10 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
             var etherealColumnUpdateIgnoreConvention = new EtherealColumnUpdateIgnoreConvention(Dependencies);
             conventionSet.PropertyAddedConventions.Add(etherealColumnUpdateIgnoreConvention);
             conventionSet.PropertyFieldChangedConventions.Add(etherealColumnUpdateIgnoreConvention);
-            // sequence
-            var etherealSequenceConvention = new EtherealSequenceConvention(Dependencies);
-            conventionSet.EntityTypeAddedConventions.Add(etherealSequenceConvention);
-            // column sequence
-            var etherealColumnSequenceConvention = new EtherealColumnSequenceValueConvention(Dependencies);
-            conventionSet.PropertyAddedConventions.Add(etherealColumnSequenceConvention);
-            conventionSet.PropertyFieldChangedConventions.Add(etherealColumnSequenceConvention);
+            // column InsertIgnore
+            var etherealColumnInsertIgnoreConvention = new EtherealColumnInsertIgnoreConvention(Dependencies);
+            conventionSet.PropertyAddedConventions.Add(etherealColumnInsertIgnoreConvention);
+            conventionSet.PropertyFieldChangedConventions.Add(etherealColumnInsertIgnoreConvention);
 
             return conventionSet;
         }

@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using Microsoft.EntityFrameworkCore;
+using Ethereal.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Ethereal.EntityFrameworkCore
+namespace Microsoft.EntityFrameworkCore
 {
     /// <summary>
     /// EtherealDbSetExtensions

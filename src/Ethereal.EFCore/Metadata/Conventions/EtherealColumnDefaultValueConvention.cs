@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions.Infrastructure;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
@@ -23,10 +24,10 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
 
         /// <inheritdoc/>
         protected override void ProcessPropertyAdded(
-            IConventionPropertyBuilder propertyBuilder,
-            DefaultValueAttribute attribute,
-            MemberInfo clrMember,
-            IConventionContext context)
+           [NotNull] IConventionPropertyBuilder propertyBuilder,
+           [NotNull] DefaultValueAttribute attribute,
+           [NotNull] MemberInfo clrMember,
+           [NotNull] IConventionContext context)
         {
             if (propertyBuilder.CanSetDefaultValue(attribute.Value, true))
             {
