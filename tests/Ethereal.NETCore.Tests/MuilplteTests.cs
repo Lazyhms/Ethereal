@@ -85,11 +85,11 @@ namespace Ethereal.Json.Tests
         [Fact]
         public void Rank_Tests()
         {
-            var list = Enumerable.Range(1, 10).Concat(Enumerable.Repeat(8, 2)).OrderByDescending(s => s).ToList();
-            var rank = list.Rank().ToList();
+            var list1 = new List<int?> { 10, 9, 4, 5, 2, 7, 6, null }.Concat(Enumerable.Repeat<int?>(8, 2)).OrderByDescending(s => s).ToList();
+            var rank1 = list1.Rank().ToList();
 
-            var list1 = new List<T> { new T { MyProperty4 = 10 }, new T { MyProperty4 = 9 }, new T { MyProperty4 = 10 }, null, new T { MyProperty4 = 8 }, new T { MyProperty4 = 7 } };
-            var rank1 = list1.Rank(s => s.MyProperty4).ToList();
+            var list2 = new List<T> { new T { MyProperty4 = 10 }, new T { MyProperty4 = 9 }, new T { MyProperty4 = null }, new T { MyProperty4 = 10 }, new T { MyProperty4 = 8 }, new T { MyProperty4 = 7 }, new T { MyProperty4 = null } };
+            var rank2 = list2.Rank(s => s.MyProperty4).ToList();
         }
     }
 

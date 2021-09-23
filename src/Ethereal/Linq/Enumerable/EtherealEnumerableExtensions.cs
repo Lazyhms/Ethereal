@@ -10,8 +10,6 @@ namespace System.Linq
     /// </summary>
     public static partial class EtherealEnumerableExtensions
     {
-        #region Distinct,Union,Except,Intersect,Contains
-
         /// <summary>
         /// Contains
         /// </summary>
@@ -162,10 +160,6 @@ namespace System.Linq
             public int GetHashCode(TS? obj) => 0;
         }
 
-        #endregion Distinct,Union,Except,Intersect,Contains
-
-        #region Where
-
         /// <summary>
         /// when the condition is true will use the predicate
         /// </summary>
@@ -253,10 +247,6 @@ namespace System.Linq
 
             return condition ? source.Where(truePredicate) : source.Where(falsePredicate);
         }
-
-        #endregion Where
-
-        #region Pagination
 
         /// <summary>
         /// Pagination
@@ -361,10 +351,6 @@ namespace System.Linq
             return source.Where(predicate).OrderByDescending(keySelector).Pagination(pageIndex, pageSize);
         }
 
-        #endregion Pagination
-
-        #region Replace
-
         /// <summary>
         /// Replace
         /// </summary>
@@ -461,10 +447,6 @@ namespace System.Linq
             }
         }
 
-        #endregion Replace
-
-        #region LeftJoin
-
         /// <summary>
         /// LeftJoin
         /// </summary>
@@ -488,53 +470,23 @@ namespace System.Linq
             }).SelectMany(joinResult => joinResult.inners.Select(innerObj => resultSelector(joinResult.outerObj, innerObj)));
         }
 
-        #endregion LeftJoin
-
-        #region Join
-
-        /// <summary>
-        /// Join
-        /// </summary>
-        public static string Join<TSource>(
-           this IEnumerable<TSource> source,
-           char separator = ',')
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(separator, nameof(separator));
-
-            return string.Join(separator, source);
-        }
-
-        /// <summary>
-        /// Join
-        /// </summary>
-        public static string Join<TSource>(
-           this IEnumerable<TSource> source,
-           string? separator = ",")
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(separator, nameof(separator));
-
-            return string.Join(separator, source);
-        }
-
-        #endregion Join
-
         /// <summary>
         /// Rank
         /// </summary>
-        public static IEnumerable<(int rank, TSource)> Rank<TSource>(this IEnumerable<TSource> sources)
+        public static IEnumerable<(int rank, TSource?)> Rank<TSource>(
+            this IEnumerable<TSource> sources) where TSource : struct
         {
             var rank = new List<(int, TSource)>();
             int index = 1, sequence = 1;
-            foreach (var item in sources)
+            TSource? lastest = default;
+            using var itor = sources.OrderByDescending(o => o).GetEnumerator();
+            while (itor.MoveNext())
             {
-                if (rank.Any())
+                if (lastest is not null)
                 {
-                    var lastest = rank.Last();
-                    if (!Equals(item, lastest.Item2))
+                    if (!Equals(lastest ?? default, itor.Current))
                     {
-                        index = lastest.Item1 + sequence;
+                        index = index + sequence;
                         sequence = 1;
                     }
                     else
@@ -542,9 +494,38 @@ namespace System.Linq
                         sequence++;
                     }
                 }
-                rank.Add((index, item));
+                lastest = itor.Current;
+                yield return (index, lastest);
             }
-            return rank;
+        }
+
+        /// <summary>
+        /// Rank
+        /// </summary>
+        public static IEnumerable<(int rank, TSource?)> Rank<TSource>(
+            this IEnumerable<TSource?> sources) where TSource : struct
+        {
+            var rank = new List<(int, TSource)>();
+            int index = 1, sequence = 1;
+            TSource? lastest = default;
+            using var itor = sources.OrderByDescending(o => o).GetEnumerator();
+            while (itor.MoveNext())
+            {
+                if (lastest is not null)
+                {
+                    if (!Equals(lastest ?? default, itor.Current ?? default))
+                    {
+                        index = index + sequence;
+                        sequence = 1;
+                    }
+                    else
+                    {
+                        sequence++;
+                    }
+                }
+                lastest = itor.Current;
+                yield return (index, lastest);
+            }
         }
 
         /// <summary>
@@ -555,17 +536,16 @@ namespace System.Linq
             Func<TSource, TProperty?> predicate) where TSource : class
                                                  where TProperty : struct
         {
-            var rank = new List<(int, TSource)>();
             int index = 1, sequence = 1;
-            var rankSource = sources.Where(w => w is not null).OrderByDescending(predicate);
-            foreach (var item in rankSource)
+            TSource? lastest = default;
+            using var itor = sources.OrderByDescending(predicate).GetEnumerator();
+            while (itor.MoveNext())
             {
-                if (rank.Any())
+                if (lastest is not null)
                 {
-                    var lastest = rank.Last();
-                    if (!Equals(predicate(item!), predicate(lastest.Item2)))
+                    if (!Equals(predicate(lastest!) ?? default, predicate(itor.Current) ?? default))
                     {
-                        index = lastest.Item1 + sequence;
+                        index = index + sequence;
                         sequence = 1;
                     }
                     else
@@ -573,9 +553,9 @@ namespace System.Linq
                         sequence++;
                     }
                 }
-                rank.Add((index, item));
+                lastest = itor.Current;
+                yield return (index, lastest);
             }
-            return rank;
         }
     }
 }
