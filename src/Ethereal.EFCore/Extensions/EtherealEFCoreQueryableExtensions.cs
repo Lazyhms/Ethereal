@@ -15,8 +15,6 @@ namespace Microsoft.EntityFrameworkCore
     /// </summary>
     public static class EtherealEFCoreQueryableExtensions
     {
-        #region Pagination
-
         /// <summary>
         /// Pagination
         /// </summary>
@@ -36,7 +34,7 @@ namespace Microsoft.EntityFrameworkCore
             {
                 throw new ArgumentException(CoreStrings.PageSize_Invalid);
             }
-            var pageCount = (int)decimal.Ceiling(decimal.Divide(count, pageSize));
+            var pageCount = Convert.ToInt32(decimal.Ceiling(decimal.Divide(count, pageSize)));
             if (pageIndex < 1)
             {
                 pageIndex = 1;
@@ -76,7 +74,7 @@ namespace Microsoft.EntityFrameworkCore
             {
                 throw new ArgumentException(CoreStrings.PageSize_Invalid);
             }
-            var pageCount = (int)decimal.Ceiling(decimal.Divide(count, pageSize));
+            var pageCount = Convert.ToInt32(decimal.Ceiling(decimal.Divide(count, pageSize)));
             if (pageIndex < 1)
             {
                 pageIndex = 1;
@@ -228,10 +226,6 @@ namespace Microsoft.EntityFrameworkCore
             return await source.Where(predicate).OrderByDescending(keySelector).PaginationAsync(pageIndex, pageSize, cancellationToken);
         }
 
-        #endregion Pagination
-
-        #region Where
-
         /// <summary>
         /// When the condition is true will use the predicate
         /// </summary>
@@ -239,20 +233,6 @@ namespace Microsoft.EntityFrameworkCore
             this IQueryable<TSource> source,
             bool condition,
             Expression<Func<TSource, bool>> predicate)
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(predicate, nameof(predicate));
-
-            return condition ? source.Where(predicate) : source;
-        }
-
-        /// <summary>
-        /// When the condition is true will use the predicate
-        /// </summary>
-        public static IQueryable<TSource> Where<TSource>(
-            this IQueryable<TSource> source,
-            Expression<Func<TSource, bool>> predicate,
-            bool condition)
         {
             Check.NotNull(source, nameof(source));
             Check.NotNull(predicate, nameof(predicate));
@@ -291,20 +271,6 @@ namespace Microsoft.EntityFrameworkCore
         }
 
         /// <summary>
-        /// When the condition is true will use the predicate
-        /// </summary>
-        public static IQueryable<TSource> Where<TSource>(
-            this IQueryable<TSource> source,
-            Expression<Func<TSource, int, bool>> predicate,
-            bool condition)
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(predicate, nameof(predicate));
-
-            return condition ? source.Where(predicate) : source;
-        }
-
-        /// <summary>
         /// when the condition is true will use the predicate
         /// </summary>
         public static IQueryable<TSource> Where<TSource>(
@@ -319,7 +285,5 @@ namespace Microsoft.EntityFrameworkCore
 
             return condition ? source.Where(truePredicate) : source.Where(falsePredicate);
         }
-
-        #endregion Where
     }
 }

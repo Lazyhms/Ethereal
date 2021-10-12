@@ -179,20 +179,6 @@ namespace System.Linq
         /// </summary>
         public static IEnumerable<TSource> Where<TSource>(
             this IEnumerable<TSource> source,
-            Func<TSource, bool> predicate,
-            bool condition)
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(predicate, nameof(predicate));
-
-            return condition ? source.Where(predicate) : source;
-        }
-
-        /// <summary>
-        /// when the condition is true will use the predicate
-        /// </summary>
-        public static IEnumerable<TSource> Where<TSource>(
-            this IEnumerable<TSource> source,
             bool condition,
             Func<TSource, bool> truePredicate,
             Func<TSource, bool> falsePredicate)
@@ -223,20 +209,6 @@ namespace System.Linq
         /// </summary>
         public static IEnumerable<TSource> Where<TSource>(
             this IEnumerable<TSource> source,
-            Func<TSource, int, bool> predicate,
-            bool condition)
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(predicate, nameof(predicate));
-
-            return condition ? source.Where(predicate) : source;
-        }
-
-        /// <summary>
-        /// when the condition is true will use the predicate
-        /// </summary>
-        public static IEnumerable<TSource> Where<TSource>(
-            this IEnumerable<TSource> source,
             bool condition,
             Func<TSource, int, bool> truePredicate,
             Func<TSource, int, bool> falsePredicate)
@@ -251,23 +223,23 @@ namespace System.Linq
         /// <summary>
         /// Pagination
         /// </summary>
-        public static IPagedList<TEntity> Pagination<TEntity>(
-            this IEnumerable<TEntity> source,
+        public static IPagedList<TSource> Pagination<TSource>(
+            this IEnumerable<TSource> source,
             int pageIndex,
-            int pageSize) where TEntity : class
+            int pageSize)
         {
             Check.NotNull(source, nameof(source));
 
             var count = source.Count();
             if (count == 0)
             {
-                return PagedList.Empty<TEntity>();
+                return PagedList.Empty<TSource>();
             }
             if (pageSize <= 0)
             {
                 throw new ArgumentException(CoreStrings.PageSize_Invalid);
             }
-            var pageCount = (int)decimal.Ceiling(decimal.Divide(count, pageSize));
+            var pageCount = Convert.ToInt32(decimal.Ceiling(decimal.Divide(count, pageSize)));
             if (pageIndex < 1)
             {
                 pageIndex = 1;
@@ -277,7 +249,7 @@ namespace System.Linq
                 pageIndex = pageCount;
             }
             var pageData = source.Skip(pageSize * (pageIndex - 1)).Take(pageSize);
-            return new PagedList<TEntity>
+            return new PagedList<TSource>
             {
                 PageCount = pageCount,
                 PageData = pageData,
@@ -289,12 +261,12 @@ namespace System.Linq
 
         /// <summary>
         /// PagedList
-        /// </summary>
-        public static IPagedList<TEntity> PaginationBy<TEntity, TKey>(
-            this IEnumerable<TEntity> source,
-            Func<TEntity, TKey> keySelector,
+        /// </summary>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        public static IPagedList<TSource> PaginationBy<TSource, TKey>(
+            this IEnumerable<TSource> source,
+            Func<TSource, TKey> keySelector,
             int pageIndex,
-            int pageSize) where TEntity : class
+            int pageSize)
         {
             Check.NotNull(source, nameof(source));
             Check.NotNull(keySelector, nameof(keySelector));
@@ -305,12 +277,12 @@ namespace System.Linq
         /// <summary>
         /// PagedList
         /// </summary>
-        public static IPagedList<TEntity> PaginationBy<TEntity, TKey>(
-            this IEnumerable<TEntity> source,
-            Func<TEntity, bool> predicate,
-            Func<TEntity, TKey> keySelector,
+        public static IPagedList<TSource> PaginationBy<TSource, TKey>(
+            this IEnumerable<TSource> source,
+            Func<TSource, bool> predicate,
+            Func<TSource, TKey> keySelector,
             int pageIndex,
-            int pageSize) where TEntity : class
+            int pageSize)
         {
             Check.NotNull(source, nameof(source));
             Check.NotNull(predicate, nameof(predicate));
@@ -322,11 +294,11 @@ namespace System.Linq
         /// <summary>
         /// PagedList
         /// </summary>
-        public static IPagedList<TEntity> PaginationByByDescending<TEntity, TKey>(
-            this IEnumerable<TEntity> source,
-            Func<TEntity, TKey> selector,
+        public static IPagedList<TSource> PaginationByByDescending<TSource, TKey>(
+            this IEnumerable<TSource> source,
+            Func<TSource, TKey> selector,
             int pageIndex,
-            int pageSize) where TEntity : class
+            int pageSize)
         {
             Check.NotNull(source, nameof(source));
             Check.NotNull(selector, nameof(selector));
@@ -337,12 +309,12 @@ namespace System.Linq
         /// <summary>
         /// PagedList
         /// </summary>
-        public static IPagedList<TEntity> PaginationByByDescending<TEntity, TKey>(
-            this IEnumerable<TEntity> source,
-            Func<TEntity, bool> predicate,
-            Func<TEntity, TKey> keySelector,
+        public static IPagedList<TSource> PaginationByByDescending<TSource, TKey>(
+            this IEnumerable<TSource> source,
+            Func<TSource, bool> predicate,
+            Func<TSource, TKey> keySelector,
             int pageIndex,
-            int pageSize) where TEntity : class
+            int pageSize)
         {
             Check.NotNull(source, nameof(source));
             Check.NotNull(predicate, nameof(predicate));

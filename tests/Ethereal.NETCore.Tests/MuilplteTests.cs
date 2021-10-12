@@ -10,9 +10,6 @@ namespace Ethereal.Json.Tests
 {
     public class MuilplteTests
     {
-        private readonly List<T> sss = Enumerable.Repeat(new T { MyProperty2 = "132132131" }, 10).ToList();
-        private readonly List<T> sss1 = Enumerable.Repeat(new T { MyProperty2 = "1321321312" }, 10).ToList();
-
         [Fact]
         public void DateTime_Tests()
         {
@@ -63,15 +60,23 @@ namespace Ethereal.Json.Tests
         [Fact]
         public void Linq_Tests()
         {
-            new List<T>().Where(1 == 1, t => t.MyProperty is not null);
+            var _ = new List<T>().Where(1 == 1, t => t.MyProperty is not null);
 
-            var ttu1 = sss.Union(sss1).ToList();
-            var ttu2 = sss.Union(sss1, (x, y) => Equals(x?.MyProperty, y?.MyProperty)).ToList();
+            var sss = Enumerable.Repeat(new T { MyProperty2 = "132132131" }, 10);
+            var sss1 = Enumerable.Repeat(new T { MyProperty2 = "1321321312" }, 10);
 
-            var ttd1 = sss.Union(sss1).Distinct().ToList();
-            var ttd2 = sss.Union(sss1).Distinct((x, y) => Equals(x?.MyProperty2, y?.MyProperty2)).ToList();
-            var ttd3 = sss.Union(sss1).Distinct(x => x?.MyProperty2).ToList();
-            var ttd4 = sss.Union(sss1).Distinct(x => x?.MyProperty).ToList();
+            var ttp1 = sss.Concat(sss1).Pagination(1, 3);
+            var ttp2 = sss.Concat(sss1).PaginationBy(s => s.MyProperty, 1, 3);
+            var ttp3 = sss.Concat(sss1).PaginationByByDescending(s => s.MyProperty, 1, 3);
+
+            var t1 = JsonSerializer.Serialize(ttp1);
+
+            var ttu1 = sss.Union(sss1, (x, y) => Equals(x?.MyProperty, y?.MyProperty)).ToList();
+
+            var ttd1 = sss.Concat(sss1).Distinct().ToList();
+            var ttd2 = sss.Concat(sss1).Distinct((x, y) => Equals(x?.MyProperty2, y?.MyProperty2)).ToList();
+            var ttd3 = sss.Concat(sss1).Distinct(x => x?.MyProperty2).ToList();
+            var ttd4 = sss.Concat(sss1).Distinct(x => x?.MyProperty).ToList();
         }
 
         [Fact]
