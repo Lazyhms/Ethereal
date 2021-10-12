@@ -118,15 +118,15 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="IDCardAttribute_Invalid" xml:space="preserve">
-    <value>字段 {0} 不是有效的身份证号码.</value>
+    <value>字段 {0} 不是有效的身份证号码。</value>
   </data>
   <data name="PageSize_Invalid" xml:space="preserve">
-    <value>每页大小 pageSize 不能小于或等于0.</value>
+    <value>每页大小 pageSize 不能小于或等于 0 。</value>
   </data>
   <data name="RequiredAttribute_Invalid" xml:space="preserve">
-    <value>字段 {0} 是必填字段.</value>
+    <value>字段 {0} 是必填字段。</value>
   </data>
   <data name="SocialCreditCodeAttribute_Invalid" xml:space="preserve">
-    <value>字段 {0} 不是有效的统一社会信用代码.</value>
+    <value>字段 {0} 不是有效的统一社会信用代码。</value>
   </data>
 </root>

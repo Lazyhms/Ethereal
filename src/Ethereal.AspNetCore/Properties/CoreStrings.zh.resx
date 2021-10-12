@@ -118,18 +118,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="FileLengthAttribute_Invalid" xml:space="preserve">
-    <value>字段 {0} 文件大小超过了允许的最大值.</value>
+    <value>字段 {0} 文件大小超过了允许的最大值。</value>
   </data>
   <data name="FileLengthAttribute_InvalidCast" xml:space="preserve">
-    <value>无效的转换,仅支持IFormFile或IFormFileCollection类型.</value>
+    <value>无效的转换，仅支持IFormFile或IFormFileCollection类型。</value>
   </data>
   <data name="FileLengthAttribute_InvalidOperation" xml:space="preserve">
-    <value>无效的操作,文件长度不能小于等于0.</value>
+    <value>无效的操作，文件长度不能小于等于0。</value>
   </data>
   <data name="Global_Exception" xml:space="preserve">
-    <value>服务器发生错误,请重试.</value>
+    <value>服务器发生错误,请重试。</value>
   </data>
   <data name="NotImplemented_Exception" xml:space="preserve">
-    <value>未找到类型 {0} 的实现.</value>
+    <value>未找到类型 {0} 的实现。</value>
   </data>
 </root>
