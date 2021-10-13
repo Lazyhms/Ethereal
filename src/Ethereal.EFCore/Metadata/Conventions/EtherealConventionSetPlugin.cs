@@ -2,6 +2,7 @@
 
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions.Infrastructure;
+using System.Linq;
 
 namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
 {
@@ -23,6 +24,7 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
         /// <inheritdoc/>
         public virtual ConventionSet ModifyConventions(ConventionSet conventionSet)
         {
+            var s = conventionSet.PropertyAnnotationChangedConventions.ToArray();
             // soft delete
             var etherealTableSoftDeleteConvention = new EtherealTableSoftDeleteConvention();
             conventionSet.EntityTypeAddedConventions.Add(etherealTableSoftDeleteConvention);
