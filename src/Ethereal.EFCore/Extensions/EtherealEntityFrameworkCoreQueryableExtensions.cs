@@ -13,7 +13,7 @@ namespace Microsoft.EntityFrameworkCore
     /// <summary>
     /// LINQ related extension methods.
     /// </summary>
-    public static class EtherealEFCoreQueryableExtensions
+    public static class EtherealEntityFrameworkCoreQueryableExtensions
     {
         /// <summary>
         /// Pagination
@@ -32,7 +32,7 @@ namespace Microsoft.EntityFrameworkCore
             }
             if (pageSize <= 0)
             {
-                throw new ArgumentException(CoreStrings.PageSize_Invalid);
+                throw new ArgumentOutOfRangeException(CoreStrings.PageSize_Invalid);
             }
             var pageCount = Convert.ToInt32(decimal.Ceiling(decimal.Divide(count, pageSize)));
             if (pageIndex < 1)
@@ -72,7 +72,7 @@ namespace Microsoft.EntityFrameworkCore
             }
             if (pageSize <= 0)
             {
-                throw new ArgumentException(CoreStrings.PageSize_Invalid);
+                throw new ArgumentOutOfRangeException(CoreStrings.PageSize_Invalid);
             }
             var pageCount = Convert.ToInt32(decimal.Ceiling(decimal.Divide(count, pageSize)));
             if (pageIndex < 1)
