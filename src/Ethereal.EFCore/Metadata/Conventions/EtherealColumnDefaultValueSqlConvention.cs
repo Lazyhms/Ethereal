@@ -27,7 +27,7 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
             MemberInfo clrMember,
             IConventionContext context)
         {
-            if (propertyBuilder.CanSetDefaultValueSql(attribute.Value, true))
+            if (!string.IsNullOrWhiteSpace(attribute.Value))
             {
                 propertyBuilder.HasDefaultValueSql(attribute.Value, true);
             }

@@ -27,10 +27,9 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
             MemberInfo clrMember,
             IConventionContext context)
         {
-            var sequence = $"NEXT VALUE FOR {(string.IsNullOrWhiteSpace(attribute.Schema) ? string.Empty : $"[{attribute.Schema}].")} [{attribute.Name}]";
-            if (propertyBuilder.CanSetDefaultValueSql(sequence, true))
+            if (!string.IsNullOrWhiteSpace(attribute.Name))
             {
-                propertyBuilder.HasDefaultValueSql(sequence, true);
+                propertyBuilder.HasDefaultValueSql($"NEXT VALUE FOR {(string.IsNullOrWhiteSpace(attribute.Schema) ? string.Empty : $"[{attribute.Schema}].")}[{attribute.Name}]", true);
             }
         }
     }

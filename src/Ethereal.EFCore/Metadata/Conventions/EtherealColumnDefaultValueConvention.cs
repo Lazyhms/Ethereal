@@ -29,7 +29,7 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
            [NotNull] MemberInfo clrMember,
            [NotNull] IConventionContext context)
         {
-            if (propertyBuilder.CanSetDefaultValue(attribute.Value, true))
+            if (attribute.Value is not null)
             {
                 propertyBuilder.HasDefaultValue(attribute.Value, true);
             }
