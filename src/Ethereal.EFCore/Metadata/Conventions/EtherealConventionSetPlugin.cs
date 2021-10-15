@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
+using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions.Infrastructure;
-using System.Linq;
 
 namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
 {
@@ -14,7 +14,10 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
         /// <summary>
         /// Initializes a new instance of the <see cref="EtherealConventionSetPlugin"/> class.
         /// </summary>
-        public EtherealConventionSetPlugin(ProviderConventionSetBuilderDependencies dependencies) => Dependencies = dependencies;
+        public EtherealConventionSetPlugin(ProviderConventionSetBuilderDependencies dependencies)
+        {
+            Dependencies = dependencies;
+        }
 
         /// <summary>
         /// Dependencies
@@ -24,11 +27,9 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
         /// <inheritdoc/>
         public virtual ConventionSet ModifyConventions(ConventionSet conventionSet)
         {
-            var etherealTableSoftDeleteConvention = new EtherealTableSoftDeleteConvention();
-            conventionSet.EntityTypeAddedConventions.Add(etherealTableSoftDeleteConvention);
-
-            var etherealSequenceConvention = new EtherealSequenceConvention(Dependencies);
-            conventionSet.EntityTypeAddedConventions.Add(etherealSequenceConvention);
+            conventionSet.EntityTypeAddedConventions.Add(new EtherealTableSoftDeleteConvention());
+            
+            conventionSet.EntityTypeAddedConventions.Add(new EtherealSequenceConvention(Dependencies));
 
             var etherealColumnSequenceConvention = new EtherealColumnSequenceValueConvention(Dependencies);
             conventionSet.PropertyAddedConventions.Add(etherealColumnSequenceConvention);

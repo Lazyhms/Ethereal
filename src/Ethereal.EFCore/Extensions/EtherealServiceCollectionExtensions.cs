@@ -2,6 +2,8 @@
 
 using Ethereal.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -21,7 +23,10 @@ namespace Ethereal.EntityFrameworkCore
             Check.NotNull(serviceCollection, nameof(serviceCollection));
 
             new EntityFrameworkRelationalServicesBuilder(serviceCollection)
-                .TryAdd<IConventionSetPlugin, EtherealConventionSetPlugin>();
+                .TryAdd<ISingletonOptions, IEtherealOptions>(p => p.GetRequiredService<IEtherealOptions>())
+                .TryAdd<IConventionSetPlugin, EtherealConventionSetPlugin>()
+                .TryAddProviderSpecificServices(p => p
+                    .TryAddSingleton<IEtherealOptions, EtherealOptions>());
 
             return serviceCollection;
         }

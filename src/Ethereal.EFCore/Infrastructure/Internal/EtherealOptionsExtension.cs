@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 
-namespace Ethereal.EntityFrameworkCore.Infrastructure
+namespace Ethereal.EntityFrameworkCore.Infrastructure.Internal
 {
     /// <summary>
     /// EtherealOptions Extension
@@ -36,6 +36,15 @@ namespace Ethereal.EntityFrameworkCore.Infrastructure
         /// <inheritdoc/>
         public void Validate(IDbContextOptions options)
         {
+        }
+
+        /// <summary>
+        /// WithServerVersion
+        /// </summary>
+        public virtual EtherealOptionsExtension UseSequence()
+        {
+            var clone = Clone();
+            return clone;
         }
 
         /// <summary>

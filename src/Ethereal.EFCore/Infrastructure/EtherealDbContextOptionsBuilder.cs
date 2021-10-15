@@ -2,6 +2,7 @@
 
 using Ethereal.EntityFrameworkCore.Infrastructure.Internal;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.ComponentModel;
 
 namespace Ethereal.EntityFrameworkCore.Infrastructure
@@ -9,7 +10,7 @@ namespace Ethereal.EntityFrameworkCore.Infrastructure
     /// <summary>
     /// EtherealDbContextOptionsBuilder
     /// </summary>
-    public class EtherealDbContextOptionsBuilder : EtherealDbContextOptionsBuilder<EtherealOptionsExtension>
+    public class EtherealDbContextOptionsBuilder : EtherealDbContextOptionsBuilder<EtherealDbContextOptionsBuilder, EtherealOptionsExtension>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="EtherealDbContextOptionsBuilder"/> class.
@@ -17,6 +18,12 @@ namespace Ethereal.EntityFrameworkCore.Infrastructure
         public EtherealDbContextOptionsBuilder(DbContextOptionsBuilder optionsBuilder) : base(optionsBuilder)
         {
         }
+
+        /// <summary>
+        /// WithServerVersion
+        /// </summary>
+        public virtual EtherealDbContextOptionsBuilder WithNoForeignKeys() =>
+            WithOption(o => o.UseSequence());
 
         /// <summary>
         /// override Equals method

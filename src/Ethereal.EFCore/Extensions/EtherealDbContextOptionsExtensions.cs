@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
 using Ethereal.EntityFrameworkCore.Infrastructure;
+using Ethereal.EntityFrameworkCore.Infrastructure.Internal;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 
@@ -16,7 +17,7 @@ namespace Microsoft.EntityFrameworkCore
         /// </summary>
         public static DbContextOptionsBuilder UseEthereal(
             this DbContextOptionsBuilder optionsBuilder,
-            Action<EtherealDbContextOptionsBuilder>? sqlServerOptionsAction = default)
+            Action<EtherealDbContextOptionsBuilder>? etherealOptionsAction = default)
         {
             Check.NotNull(optionsBuilder, nameof(optionsBuilder));
 
@@ -24,7 +25,7 @@ namespace Microsoft.EntityFrameworkCore
 
             ConfigureWarnings(optionsBuilder);
 
-            sqlServerOptionsAction?.Invoke(new EtherealDbContextOptionsBuilder(optionsBuilder));
+            etherealOptionsAction?.Invoke(new EtherealDbContextOptionsBuilder(optionsBuilder));
 
             return optionsBuilder;
         }
