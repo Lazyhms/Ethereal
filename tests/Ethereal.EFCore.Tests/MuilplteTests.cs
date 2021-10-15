@@ -1,8 +1,6 @@
-﻿using Ethereal.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -35,6 +33,7 @@ namespace Ethereal.EFCore.Tests
                 //});
                 opts.UseEthereal(opts =>
                 {
+                    opts.WithNoForeignKeys();
                 });
             });
         }
