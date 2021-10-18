@@ -31,6 +31,10 @@ namespace Microsoft.EntityFrameworkCore
             var trackingEntity = dbSet.Local.FirstOrDefault(s => s.GetType().GetRequiredRuntimePropertyValue(primaryKey, s)!.Equals(typeof(TEntity).GetRequiredRuntimePropertyValue(primaryKey, entity)));
             var entry = dbSet.Attach(trackingEntity ?? entity);
             entry.State = update ? EntityState.Unchanged : EntityState.Modified;
+            if (trackingEntity is not null)
+            {
+                entry.CurrentValues.SetValues(entity);
+            }
             foreach (var item in properties)
             {
                 entry.Property(item).IsModified = update;
@@ -55,6 +59,10 @@ namespace Microsoft.EntityFrameworkCore
             var trackingEntity = dbSet.Local.FirstOrDefault(s => s.GetType().GetRequiredRuntimePropertyValue(primaryKey, s)!.Equals(typeof(TEntity).GetRequiredRuntimePropertyValue(primaryKey, entity)));
             var entry = dbSet.Attach(trackingEntity ?? entity);
             entry.State = update ? EntityState.Unchanged : EntityState.Modified;
+            if (trackingEntity is not null)
+            {
+                entry.CurrentValues.SetValues(entity);
+            }
             foreach (var item in properties)
             {
                 entry.Property(item).IsModified = update;
