@@ -435,20 +435,19 @@ namespace System.Linq
             Check.NotNull(innerKeySelector, nameof(innerKeySelector));
             Check.NotNull(resultSelector, nameof(resultSelector));
 
-            return outer.GroupJoin(inner, outerKeySelector, innerKeySelector, (outerObj, inners) => new
+            return outer.GroupJoin(inner, outerKeySelector, innerKeySelector, (outer, inners) => new
             {
-                outerObj,
+                outer,
                 inners = inners.DefaultIfEmpty()
-            }).SelectMany(joinResult => joinResult.inners.Select(innerObj => resultSelector(joinResult.outerObj, innerObj)));
+            }).SelectMany(joinResult => joinResult.inners.Select(innerObj => resultSelector(joinResult.outer, innerObj)));
         }
 
         /// <summary>
         /// Rank
         /// </summary>
-        public static IEnumerable<(int rank, TSource?)> Rank<TSource>(
+        public static IEnumerable<(int rank, TSource)> Rank<TSource>(
             this IEnumerable<TSource> sources) where TSource : struct
         {
-            var rank = new List<(int, TSource)>();
             int index = 1, sequence = 1;
             TSource? lastest = default;
             using var itor = sources.OrderByDescending(o => o).GetEnumerator();
@@ -467,7 +466,7 @@ namespace System.Linq
                     }
                 }
                 lastest = itor.Current;
-                yield return (index, lastest);
+                yield return (index, lastest!.Value);
             }
         }
 
@@ -477,7 +476,6 @@ namespace System.Linq
         public static IEnumerable<(int rank, TSource?)> Rank<TSource>(
             this IEnumerable<TSource?> sources) where TSource : struct
         {
-            var rank = new List<(int, TSource)>();
             int index = 1, sequence = 1;
             TSource? lastest = default;
             using var itor = sources.OrderByDescending(o => o).GetEnumerator();

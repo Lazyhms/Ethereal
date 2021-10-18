@@ -241,7 +241,7 @@ namespace Microsoft.EntityFrameworkCore
         }
 
         /// <summary>
-        /// when the condition is true will use the predicate
+        /// When the condition is true will use the predicate
         /// </summary>
         public static IQueryable<TSource> Where<TSource>(
             this IQueryable<TSource> source,
@@ -271,7 +271,7 @@ namespace Microsoft.EntityFrameworkCore
         }
 
         /// <summary>
-        /// when the condition is true will use the predicate
+        /// When the condition is true will use the predicate
         /// </summary>
         public static IQueryable<TSource> Where<TSource>(
             this IQueryable<TSource> source,
@@ -284,6 +284,29 @@ namespace Microsoft.EntityFrameworkCore
             Check.NotNull(falsePredicate, nameof(falsePredicate));
 
             return condition ? source.Where(truePredicate) : source.Where(falsePredicate);
+        }
+
+        /// <summary>
+        /// Left join
+        /// </summary>
+        public static IQueryable<TResult> LeftJoin<TOuter, TInner, TKey, TResult>(
+            this IQueryable<TOuter> outer,
+            IQueryable<TInner> inner,
+            Expression<Func<TOuter, TKey>> outerKeySelector,
+            Expression<Func<TInner, TKey>> innerKeySelector,
+            Func<TOuter, TInner?, TResult> resultSelector)
+        {
+            Check.NotNull(outer, nameof(outer));
+            Check.NotNull(inner, nameof(inner));
+            Check.NotNull(outerKeySelector, nameof(outerKeySelector));
+            Check.NotNull(innerKeySelector, nameof(innerKeySelector));
+            Check.NotNull(resultSelector, nameof(resultSelector));
+
+            return outer.GroupJoin(inner, outerKeySelector, innerKeySelector, (outer, inners) => new
+            {
+                outer,
+                inners
+            }).SelectMany(collectionSelector => collectionSelector.inners.DefaultIfEmpty(), (r, s) => resultSelector(r.outer, s));
         }
     }
 }
