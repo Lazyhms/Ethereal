@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -35,6 +37,7 @@ namespace Ethereal.EFCore.Tests
                 {
                     opts.WithNoForeignKeys();
                 });
+                //opts.ReplaceService<IMigrationsModelDiffer, EtherealMigrationsModelDiffer>();
             });
         }
 
@@ -95,37 +98,37 @@ namespace Ethereal.EFCore.Tests
 
             var id = Guid.NewGuid();
 
-            var stu1 = new Stu
-            {
-                Id = id,
-                Name = "31231233123543531231",
-                Score = 20
-            };
+            //var stu1 = new Stu
+            //{
+            //    Id = id,
+            //    Name = "1",
+            //    Score = 20
+            //};
 
-            context.Stus.Add(stu1);
-            await context.SaveChangesAsync();
+            //context.Stus.Add(stu1);
+            //await context.SaveChangesAsync();
 
-            context.Stus.Update(stu1, true, b => b.Name);
-            await context.SaveChangesAsync();
+            //context.Stus.Update(stu1, true, b => b.Name);
+            //await context.SaveChangesAsync();
 
-            context.Stus.SoftDelete(id);
-            await context.SaveChangesAsync();
+            //context.Stus.SoftDelete(id);
+            //await context.SaveChangesAsync();
 
-            context.Stus.Delete(id);
-            await context.SaveChangesAsync();
+            //context.Stus.Delete(id);
+            //await context.SaveChangesAsync();
 
 
             await context.Stus.AddAsync(new Stu
             {
                 Id = id,
-                Name = "121",
+                Name = "1",
             });
             await context.SaveChangesAsync();
 
-            context.Stus.Update(new Stu
+            context.Stus.UpdateAsync(new Stu
             {
                 Id = id,
-                Name = "312312331235435",
+                Name = "2",
                 Score = 21
             }, true, b => b.Name, b => b.Score);
             await context.SaveChangesAsync();
@@ -154,7 +157,7 @@ namespace Ethereal.EFCore.Tests
 
             using var context1 = GetDbContext();
 
-            context1.Stus.Update(new Stu
+            context1.Stus.UpdateAsync(new Stu
             {
                 Id = id,
                 Name = "312312331235435",
@@ -207,6 +210,34 @@ namespace Ethereal.EFCore.Tests
 
             var t1 = await context.Stus.Where(1 == 1, s => s.Name.Equals("1")).ToListAsync();
             var t2 = await context.Stus.Where(1 == 2, s => s.Name.Equals("1")).ToListAsync();
+        }
+
+        [Fact]
+        public async Task LeftJoinExtension_Tests()
+        {
+            using var context = GetDbContext();
+
+            var t = await (from o in context.Stus.AsNoTracking()
+                           join i in context.Subjects.AsNoTracking() on o.SubjectId equals i.Id
+                           into g
+                           from g1 in g.DefaultIfEmpty()
+                           select new
+                           {
+                               o.Id,
+                               o.Name,
+                               o.Score,
+                               n = g1 == null ? null : g1.Name
+                           }).ToListAsync();
+
+
+
+            var t1 = await context.Stus.AsNoTracking().LeftJoin(context.Subjects.AsNoTracking(), o => o.SubjectId, i => i.Id, (o, i) => new
+            {
+                o.Id,
+                o.Name,
+                o.Score,
+                n = i?.Name
+            }).ToListAsync();
         }
 
         private AppDbContextTest GetDbContext() => serviceDescriptors.BuildServiceProvider().GetService<AppDbContextTest>();

@@ -13,15 +13,15 @@ namespace Ethereal.Permission
         /// <summary>
         /// create_time
         /// </summary>
-        [UpdateIgnore, Comment("create_time")]
-        [Column("create_time", TypeName = "datetime", Order = 0)]
+        [UpdateIgnore, Comment("gmt_create")]
+        [Column("gmt_create", TypeName = "datetime", Order = 98)]
         public DateTime Created { get; private set; } = DateTime.Now;
 
         /// <summary>
         /// update_time
         /// </summary>
-        [InsertIgnore, Comment("update_time")]
-        [Column("update_time", TypeName = "datetime", Order = 1)]
-        public DateTime? Updated { get; set; } = DateTime.Now;
+        [InsertIgnore, Comment("gmt_modified")]
+        [Column("gmt_modified", TypeName = "datetime", Order = 99)]
+        public DateTime? Modified { get; private set; } = DateTime.Now;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -12,17 +13,18 @@ namespace Ethereal.EFCore.Tests
 
         public DbSet<Subject> Subjects { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder) => base.OnModelCreating(modelBuilder);
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
     }
 
     [SoftDelete]
-    //[Sequence("Order")]
     [Table("t_stu")]
     public class Stu
     {
         [Comment("创建时间")]
         [UpdateIgnore]
-        //[DefaultValueSql("GETDATE()")]
         public DateTime? Created { get; set; }
 
         public Guid Id { get; set; }
@@ -32,7 +34,6 @@ namespace Ethereal.EFCore.Tests
         [Comment("名称")]
         public string Name { get; set; }
 
-        //[SequenceValue("Order")]
         public int Order { get; set; }
 
         [Comment("分数")]
@@ -40,13 +41,15 @@ namespace Ethereal.EFCore.Tests
 
         [Comment("更新时间")]
         public DateTime? Updated { get; set; }
+
+        public Guid? SubjectId { get; set; }
+        public virtual Subject Subject { get; set; }
     }
 
     [SoftDelete]
     [Table("t_subject")]
     public class Subject
     {
-        public bool Deleted { get; set; }
         public Guid Id { get; set; }
 
         public string Name { get; set; }
