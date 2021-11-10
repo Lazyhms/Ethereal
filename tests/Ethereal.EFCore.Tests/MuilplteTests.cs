@@ -39,87 +39,6 @@ namespace Ethereal.EFCore.Tests
             });
         }
 
-        [Fact]
-        public async Task DbContextExtensions_TestAsync()
-        {
-            var context = GetDbContext();
-
-            var id = Guid.NewGuid();
-
-            var stu1 = new Stu
-            {
-                Id = id,
-                Name = "31231233123543531231",
-                Score = 20
-            };
-
-            context.Add(stu1);
-            await context.SaveChangesAsync();
-
-            context.SoftDelete<Stu, Guid>(id);
-            await context.SaveChangesAsync();
-
-
-            await context.Stus.AddAsync(new Stu
-            {
-                Id = id,
-                Name = "121",
-            });
-            await context.SaveChangesAsync();
-
-            context.SoftDelete(new Stu { Id = id });
-            await context.SaveChangesAsync();
-        }
-
-
-        [Fact]
-        public async Task DbSetExtensions_TestAsync()
-        {
-            var context = GetDbContext();
-
-            var id = Guid.NewGuid();
-
-            //var stu1 = new Stu
-            //{
-            //    Id = id,
-            //    Name = "1",
-            //    Score = 20
-            //};
-
-            //context.Stus.Add(stu1);
-            //await context.SaveChangesAsync();
-
-            //context.Stus.Update(stu1, true, b => b.Name);
-            //await context.SaveChangesAsync();
-
-            //context.Stus.SoftDelete(id);
-            //await context.SaveChangesAsync();
-
-            //context.Stus.Delete(id);
-            //await context.SaveChangesAsync();
-
-
-            await context.Stus.AddAsync(new Stu
-            {
-                Id = id,
-                Name = "1",
-            });
-            await context.SaveChangesAsync();
-
-            //context.Stus.UpdateAsync(new Stu
-            //{
-            //    Id = id,
-            //    Name = "2",
-            //    Score = 21
-            //}, true, b => b.Name, b => b.Score);
-            //await context.SaveChangesAsync();
-
-            context.Stus.SoftDelete<Stu>(new Stu { Id = id });
-            await context.SaveChangesAsync();
-
-            context.Stus.Delete<Stu>(new Stu { Id = id });
-            await context.SaveChangesAsync();
-        }
 
         [Fact]
         public async Task DbSetExtensions_Scope_TestAsync()
@@ -135,16 +54,6 @@ namespace Ethereal.EFCore.Tests
             };
             context.Stus.Add(stu1);
             await context.SaveChangesAsync();
-
-            using var context1 = GetDbContext();
-
-            //context1.Stus.UpdateAsync(new Stu
-            //{
-            //    Id = id,
-            //    Name = "312312331235435",
-            //    Score = 21
-            //}, true, b => b.Name, b => b.Score);
-            //await context1.SaveChangesAsync();
         }
 
         [Fact]

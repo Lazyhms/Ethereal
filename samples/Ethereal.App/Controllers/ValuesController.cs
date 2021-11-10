@@ -17,9 +17,6 @@ namespace Ethereal.App.Controllers
 
         public ValuesController(IValueService valueService) => ValueService = valueService;
 
-        [HttpGet]
-        public Task<IActionResult> Get() => throw new InvalidOperationException("das");
-
         /// <summary>
         /// Post测试
         /// </summary>
