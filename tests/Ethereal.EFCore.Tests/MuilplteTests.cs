@@ -1,10 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -58,13 +56,7 @@ namespace Ethereal.EFCore.Tests
             context.Add(stu1);
             await context.SaveChangesAsync();
 
-            context.Update(stu1, true, b => b.Name);
-            await context.SaveChangesAsync();
-
             context.SoftDelete<Stu, Guid>(id);
-            await context.SaveChangesAsync();
-
-            context.Delete<Stu, Guid>(id);
             await context.SaveChangesAsync();
 
 
@@ -75,18 +67,7 @@ namespace Ethereal.EFCore.Tests
             });
             await context.SaveChangesAsync();
 
-            context.Update(new Stu
-            {
-                Id = id,
-                Name = "312312331235435",
-                Score = 21
-            }, true, b => b.Name, b => b.Score);
-            await context.SaveChangesAsync();
-
             context.SoftDelete(new Stu { Id = id });
-            await context.SaveChangesAsync();
-
-            context.Delete(new Stu { Id = id });
             await context.SaveChangesAsync();
         }
 
@@ -125,13 +106,13 @@ namespace Ethereal.EFCore.Tests
             });
             await context.SaveChangesAsync();
 
-            context.Stus.UpdateAsync(new Stu
-            {
-                Id = id,
-                Name = "2",
-                Score = 21
-            }, true, b => b.Name, b => b.Score);
-            await context.SaveChangesAsync();
+            //context.Stus.UpdateAsync(new Stu
+            //{
+            //    Id = id,
+            //    Name = "2",
+            //    Score = 21
+            //}, true, b => b.Name, b => b.Score);
+            //await context.SaveChangesAsync();
 
             context.Stus.SoftDelete<Stu>(new Stu { Id = id });
             await context.SaveChangesAsync();
@@ -157,13 +138,13 @@ namespace Ethereal.EFCore.Tests
 
             using var context1 = GetDbContext();
 
-            context1.Stus.UpdateAsync(new Stu
-            {
-                Id = id,
-                Name = "312312331235435",
-                Score = 21
-            }, true, b => b.Name, b => b.Score);
-            await context1.SaveChangesAsync();
+            //context1.Stus.UpdateAsync(new Stu
+            //{
+            //    Id = id,
+            //    Name = "312312331235435",
+            //    Score = 21
+            //}, true, b => b.Name, b => b.Score);
+            //await context1.SaveChangesAsync();
         }
 
         [Fact]
@@ -180,16 +161,6 @@ namespace Ethereal.EFCore.Tests
             };
             context.Add(stu1);
             await context.SaveChangesAsync();
-
-            using var context1 = GetDbContext();
-
-            context1.Update(new Stu
-            {
-                Id = id,
-                Name = "312312331235435",
-                Score = 21
-            }, true, b => b.Name, b => b.Score);
-            await context1.SaveChangesAsync();
         }
 
 
@@ -200,7 +171,7 @@ namespace Ethereal.EFCore.Tests
 
             var t1 = await context.Stus.PaginationAsync(1, 10);
             var t2 = await context.Stus.PaginationByAsync(s => s.Created, 1, 10);
-            var t3 = await context.Stus.PaginationByDescendingAsync(s => s.Name.Contains("1"), o => o.Created, 1, 10);
+            var t3 = await context.Stus.PaginationByDescendingAsync(s => s.Name.Contains('1'), o => o.Created, 1, 10);
         }
 
         [Fact]

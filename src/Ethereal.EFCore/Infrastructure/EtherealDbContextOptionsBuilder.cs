@@ -2,7 +2,6 @@
 
 using Ethereal.EntityFrameworkCore.Infrastructure.Internal;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.ComponentModel;
 
 namespace Ethereal.EntityFrameworkCore.Infrastructure

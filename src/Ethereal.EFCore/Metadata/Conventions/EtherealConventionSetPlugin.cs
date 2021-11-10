@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions.Infrastructure;
 
@@ -28,7 +27,7 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
         public virtual ConventionSet ModifyConventions(ConventionSet conventionSet)
         {
             conventionSet.EntityTypeAddedConventions.Add(new EtherealTableSoftDeleteConvention());
-            
+
             conventionSet.EntityTypeAddedConventions.Add(new EtherealSequenceConvention(Dependencies));
 
             var etherealColumnSequenceConvention = new EtherealColumnSequenceValueConvention(Dependencies);

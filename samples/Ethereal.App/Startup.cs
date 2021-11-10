@@ -150,7 +150,7 @@ namespace Ethereal.App
                     var errorMessage = context.ModelState.Values.SelectMany(e => e.Errors).Select(e => e.ErrorMessage);
                     return new JsonResult(new { Messages = errorMessage }) { StatusCode = StatusCodes.Status400BadRequest };
                 };
-            }).SetCompatibilityVersion(CompatibilityVersion.Latest);
+            });
 
             services.AddSwaggerGen(options =>
             {

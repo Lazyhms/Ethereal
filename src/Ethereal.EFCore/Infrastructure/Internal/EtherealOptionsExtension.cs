@@ -54,19 +54,28 @@ namespace Ethereal.EntityFrameworkCore.Infrastructure.Internal
 
         private sealed class ExtensionInfo : DbContextOptionsExtensionInfo
         {
-            public ExtensionInfo(IDbContextOptionsExtension extension) : base(extension)
+            public ExtensionInfo(IDbContextOptionsExtension extension)
+                : base(extension)
             {
             }
 
-            public new EtherealOptionsExtension Extension => (EtherealOptionsExtension)base.Extension;
+            private new EtherealOptionsExtension Extension
+                => (EtherealOptionsExtension)base.Extension;
 
-            public override bool IsDatabaseProvider => false;
+            public override bool IsDatabaseProvider
+                => false;
 
-            public override string LogFragment => string.Empty;
+            public override string LogFragment
+                => "using Ethereal";
 
-            public override long GetServiceProviderHashCode() => 0;
+            public override int GetServiceProviderHashCode()
+                => 0;
 
-            public override void PopulateDebugInfo(IDictionary<string, string> debugInfo) => debugInfo["Ethereal"] = "0";
+            public override void PopulateDebugInfo(IDictionary<string, string> debugInfo)
+                => debugInfo["Ethereal"] = "0";
+
+            public override bool ShouldUseSameServiceProvider(DbContextOptionsExtensionInfo other)
+                => other is ExtensionInfo;
         }
     }
 }

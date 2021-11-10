@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net5.0</TargetFramework>
+		<TargetFramework>net6.0</TargetFramework>
 		<AssemblyName>Ethereal.EntityFrameworkCore</AssemblyName>
 		<RootNamespace>Microsoft.EntityFrameworkCore</RootNamespace>
 	</PropertyGroup>
@@ -11,7 +11,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.11" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -32,7 +32,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Update="Microsoft.CodeAnalysis.CSharp" Version="3.11.0" />
+	  <PackageReference Update="Microsoft.CodeAnalysis.CSharp" Version="4.0.1" />
+	  <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0" />
 	</ItemGroup>
 	
 </Project>
