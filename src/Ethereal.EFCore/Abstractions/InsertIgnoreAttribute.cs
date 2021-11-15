@@ -8,7 +8,7 @@ namespace Microsoft.EntityFrameworkCore
     /// Marks a property or field which will be not update .
     /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-    public sealed class InsertIgnoreAttribute : Attribute
+    public sealed class AddIgnoreAttribute : Attribute
     {
     }
 }

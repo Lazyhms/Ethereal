@@ -8,6 +8,9 @@ namespace Ethereal.Permission
     public class IEntity
     {
         [Key]
+        [Comment("Identity")]
+        [Column("id", Order = 0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
 
         /// <summary>
@@ -20,7 +23,7 @@ namespace Ethereal.Permission
         /// <summary>
         /// update_time
         /// </summary>
-        [InsertIgnore, Comment("gmt_modified")]
+        [AddIgnore, Comment("gmt_modified")]
         [Column("gmt_modified", TypeName = "datetime", Order = 99)]
         public DateTime? Modified { get; private set; } = DateTime.Now;
     }

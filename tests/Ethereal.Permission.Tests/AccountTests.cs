@@ -18,7 +18,6 @@ namespace Ethereal.Permission.Tests
 
             var account = new Account
             {
-                Id = 1,
                 Identifier = string.Empty,
                 Certificate = string.Empty,
                 IdentityType = 1

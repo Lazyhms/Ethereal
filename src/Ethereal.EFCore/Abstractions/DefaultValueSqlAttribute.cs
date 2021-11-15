@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
 using System;
+using System.ComponentModel;
 
 namespace Microsoft.EntityFrameworkCore
 {
@@ -13,7 +14,8 @@ namespace Microsoft.EntityFrameworkCore
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultValueSqlAttribute"/> class.
         /// </summary>
-        public DefaultValueSqlAttribute(string? value) => Value = value;
+        public DefaultValueSqlAttribute(string? value)
+            => Value = value;
 
         /// <summary>
         /// The value sql

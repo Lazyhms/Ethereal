@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace Ethereal.Permission.Tests
 {
@@ -28,11 +27,13 @@ namespace Ethereal.Permission.Tests
                     builder.AddConsole();
                     builder.AddDebug();
                 }));
-                opts.UseMySql("server=127.0.0.1;userid=sa;pwd=okok;port=3306;database=Permission;sslmode=none;Charset=utf8;AutoEnlist=false", ServerVersion.AutoDetect("server=127.0.0.1;userid=sa;pwd=okok;port=3306;database=Permission;sslmode=none;Charset=utf8;AutoEnlist=false"), opts =>
+                //opts.UseMySql("server=127.0.0.1;userid=sa;pwd=okok;port=3306;database=Permission;sslmode=none;Charset=utf8;AutoEnlist=false", ServerVersion.AutoDetect("server=127.0.0.1;userid=sa;pwd=okok;port=3306;database=Permission;sslmode=none;Charset=utf8;AutoEnlist=false"), opts =>
+                //{
+                //    opts.SchemaBehavior(MySqlSchemaBehavior.Translate, (a, b) => a + b);
+                //});
+                opts.UseSqlServer("Server=127.0.0.1;Database=Permission;User Id=sa;Password=okok;MultipleActiveResultSets=true", options =>
                 {
-                    opts.SchemaBehavior(MySqlSchemaBehavior.Translate, (a, b) => a + b);
-                });
-                opts.UseEthereal(opts =>
+                }).UseEthereal(opts =>
                 {
                 });
             });

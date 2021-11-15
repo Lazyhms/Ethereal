@@ -28,16 +28,6 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
         {
             conventionSet.EntityTypeAddedConventions.Add(new EtherealTableSoftDeleteConvention());
 
-            conventionSet.EntityTypeAddedConventions.Add(new EtherealSequenceConvention(Dependencies));
-
-            var etherealColumnSequenceConvention = new EtherealColumnSequenceValueConvention(Dependencies);
-            conventionSet.PropertyAddedConventions.Add(etherealColumnSequenceConvention);
-            conventionSet.PropertyFieldChangedConventions.Add(etherealColumnSequenceConvention);
-
-            var etherealTableQueryFilterConvention = new EtherealTableQueryFilterConvention(Dependencies);
-            conventionSet.PropertyAddedConventions.Add(etherealTableQueryFilterConvention);
-            conventionSet.PropertyFieldChangedConventions.Add(etherealTableQueryFilterConvention);
-
             var etherealColumnDefaultValueConvention = new EtherealColumnDefaultValueConvention(Dependencies);
             conventionSet.PropertyAddedConventions.Add(etherealColumnDefaultValueConvention);
             conventionSet.PropertyFieldChangedConventions.Add(etherealColumnDefaultValueConvention);
@@ -50,7 +40,7 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
             conventionSet.PropertyAddedConventions.Add(etherealColumnUpdateIgnoreConvention);
             conventionSet.PropertyFieldChangedConventions.Add(etherealColumnUpdateIgnoreConvention);
 
-            var etherealColumnInsertIgnoreConvention = new EtherealColumnInsertIgnoreConvention(Dependencies);
+            var etherealColumnInsertIgnoreConvention = new EtherealColumnAddIgnoreConvention(Dependencies);
             conventionSet.PropertyAddedConventions.Add(etherealColumnInsertIgnoreConvention);
             conventionSet.PropertyFieldChangedConventions.Add(etherealColumnInsertIgnoreConvention);
 

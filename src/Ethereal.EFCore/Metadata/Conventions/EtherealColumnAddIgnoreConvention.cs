@@ -9,19 +9,19 @@ namespace Microsoft.EntityFrameworkCore.Metadata.Conventions
     /// <summary>
     /// EtherealColumnUpdateIgnoreConvention
     /// </summary>
-    public class EtherealColumnInsertIgnoreConvention : PropertyAttributeConventionBase<InsertIgnoreAttribute>
+    public sealed class EtherealColumnAddIgnoreConvention : PropertyAttributeConventionBase<AddIgnoreAttribute>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="EtherealColumnInsertIgnoreConvention"/> class.
+        /// Initializes a new instance of the <see cref="EtherealColumnAddIgnoreConvention"/> class.
         /// </summary>
-        public EtherealColumnInsertIgnoreConvention(ProviderConventionSetBuilderDependencies dependencies) : base(dependencies)
+        public EtherealColumnAddIgnoreConvention(ProviderConventionSetBuilderDependencies dependencies) : base(dependencies)
         {
         }
 
         /// <inheritdoc/>
         protected override void ProcessPropertyAdded(
             IConventionPropertyBuilder propertyBuilder,
-            InsertIgnoreAttribute attribute,
+            AddIgnoreAttribute attribute,
             MemberInfo clrMember,
             IConventionContext context)
         {

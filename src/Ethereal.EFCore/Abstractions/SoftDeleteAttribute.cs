@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 
 namespace Microsoft.EntityFrameworkCore
@@ -15,9 +16,7 @@ namespace Microsoft.EntityFrameworkCore
         /// </summary>
         public SoftDeleteAttribute(string columnName = "is_deleted", string comment = "soft deleted")
         {
-            Check.NotEmpty(columnName, nameof(columnName));
-
-            ColumnName = columnName;
+            ColumnName = Check.NotEmpty(columnName, nameof(columnName));
             Comment = comment ?? string.Empty;
         }
 

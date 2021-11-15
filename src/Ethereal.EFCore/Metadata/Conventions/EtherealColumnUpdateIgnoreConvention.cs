@@ -12,7 +12,7 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
     /// <summary>
     /// EtherealColumnUpdateIgnoreConvention
     /// </summary>
-    public class EtherealColumnUpdateIgnoreConvention : PropertyAttributeConventionBase<UpdateIgnoreAttribute>
+    public sealed class EtherealColumnUpdateIgnoreConvention : PropertyAttributeConventionBase<UpdateIgnoreAttribute>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="EtherealColumnUpdateIgnoreConvention"/> class.

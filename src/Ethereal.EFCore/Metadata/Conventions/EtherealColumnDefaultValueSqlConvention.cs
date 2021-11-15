@@ -11,7 +11,7 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
     /// <summary>
     /// EtherealColumnDefaultValueAttributeConvention
     /// </summary>
-    public class EtherealColumnDefaultValueSqlConvention : PropertyAttributeConventionBase<DefaultValueSqlAttribute>
+    public sealed class EtherealColumnDefaultValueSqlConvention : PropertyAttributeConventionBase<DefaultValueSqlAttribute>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="EtherealColumnDefaultValueSqlConvention"/> class.

@@ -12,7 +12,7 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
     /// <summary>
     /// EtherealTableSoftDeleteConvention
     /// </summary>
-    public class EtherealTableSoftDeleteConvention : IEntityTypeAddedConvention
+    public sealed class EtherealTableSoftDeleteConvention : IEntityTypeAddedConvention
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="EtherealTableSoftDeleteConvention"/> class.
@@ -30,18 +30,8 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
             if (clrType is not null && Attribute.IsDefined(clrType, typeof(SoftDeleteAttribute)))
             {
                 var attribute = clrType.GetCustomAttribute<SoftDeleteAttribute>()!;
-                if (clrType.GetProperty(attribute.ColumnName) is PropertyInfo info)
-                {
-                    if (info.PropertyType != typeof(bool))
-                    {
-                        throw new TypeAccessException(string.Format(CoreStrings.SoftDeletedType_Invalid, info.Name));
-                    }
-                    entityTypeBuilder.Property(info.PropertyType, info.Name, true, true)?.HasComment(attribute.Comment, true);
-                }
-                else
-                {
-                    entityTypeBuilder.Property(typeof(bool), attribute.ColumnName, true, true)?.HasComment(attribute.Comment, true);
-                }
+                entityTypeBuilder.Property(typeof(bool), attribute.ColumnName, true, true)!
+                    .HasColumnOrder(100, true)!.HasComment(attribute.Comment, true)!.HasDefaultValue(0);
                 // add query filter
                 var parameter = Expression.Parameter(clrType, "filter");
                 entityTypeBuilder.HasQueryFilter(
