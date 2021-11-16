@@ -22,6 +22,10 @@ namespace Ethereal.Permission.Tests
                 Certificate = string.Empty,
                 IdentityType = 1
             };
+
+
+            await dbContext.Account.WhereIf(1 == 1, (s => s.IdentityType == 1, s => s.IdentityType == 1)).ToListAsync();
+
             dbContext.Account.Add(account);
             dbContext.SaveChanges();
         }

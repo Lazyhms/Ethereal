@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 
 namespace Microsoft.EntityFrameworkCore

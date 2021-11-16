@@ -1,10 +1,8 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Runtime.Intrinsics.X86;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -99,7 +97,7 @@ namespace Microsoft.EntityFrameworkCore
         /// <summary>
         /// When the condition is true will use the predicate
         /// </summary>
-        public static IQueryable<TSource> Where<TSource>(
+        public static IQueryable<TSource> WhereIf<TSource>(
             this IQueryable<TSource> source,
             bool condition,
             Expression<Func<TSource, bool>> predicate)
@@ -113,7 +111,7 @@ namespace Microsoft.EntityFrameworkCore
         /// <summary>
         /// When the condition is true will use the predicate
         /// </summary>
-        public static IQueryable<TSource> Where<TSource>(
+        public static IQueryable<TSource> WhereIf<TSource>(
             this IQueryable<TSource> source,
             bool condition,
             Expression<Func<TSource, int, bool>> predicate)
@@ -122,6 +120,34 @@ namespace Microsoft.EntityFrameworkCore
             Check.NotNull(predicate, nameof(predicate));
 
             return condition ? source.Where(predicate) : source;
+        }
+
+        /// <summary>
+        /// When the condition is true will use the trueExpression, otherwise use falseExpression
+        /// </summary>
+        public static IQueryable<TSource> WhereIf<TSource>(
+            this IQueryable<TSource> source,
+            bool condition,
+            (Expression<Func<TSource, bool>> trueExpression, Expression<Func<TSource, bool>> falseExpression) predicate)
+        {
+            Check.NotNull(source, nameof(source));
+            Check.NotNull(predicate, nameof(predicate));
+
+            return condition ? source.Where(predicate.trueExpression) : source.Where(predicate.falseExpression);
+        }
+
+        /// <summary>
+        /// When the condition is true will use the trueExpression, otherwise use falseExpression
+        /// </summary>
+        public static IQueryable<TSource> WhereIf<TSource>(
+            this IQueryable<TSource> source,
+            bool condition,
+            (Expression<Func<TSource, int, bool>> trueExpression, Expression<Func<TSource, int, bool>> falseExpression) predicate)
+        {
+            Check.NotNull(source, nameof(source));
+            Check.NotNull(predicate, nameof(predicate));
+
+            return condition ? source.Where(predicate.trueExpression) : source.Where(predicate.falseExpression);
         }
 
         /// <summary>

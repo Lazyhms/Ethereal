@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
 using System;
-using System.ComponentModel;
 
 namespace Microsoft.EntityFrameworkCore
 {
