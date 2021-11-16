@@ -1,24 +1,24 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using Ethereal.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.Intrinsics.X86;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.EntityFrameworkCore
 {
     /// <summary>
-    /// LINQ related extension methods.
+    /// Ethereal Entity Framework LINQ related extension methods.
     /// </summary>
     public static class EtherealEntityFrameworkCoreQueryableExtensions
     {
         /// <summary>
-        /// Pagination
+        /// creates a<see cref="PagedList{T}" /> from an<see cref="IQueryable{T}" /> by enumerating it.
         /// </summary>
-        public static IPagedList<TEntity> Pagination<TEntity>(
+        public static PagedList<TEntity> ToPagedList<TEntity>(
             this IQueryable<TEntity> source,
             int pageIndex,
             int pageSize) where TEntity : class
@@ -32,13 +32,15 @@ namespace Microsoft.EntityFrameworkCore
             }
             if (pageSize <= 0)
             {
-                throw new ArgumentOutOfRangeException(CoreStrings.PageSize_Invalid);
+                pageSize = 10;
             }
             var pageCount = Convert.ToInt32(decimal.Ceiling(decimal.Divide(count, pageSize)));
             if (pageIndex < 1)
             {
                 pageIndex = 1;
             }
+            pageIndex = pageIndex < 1 ? 1 : pageIndex;
+
             if (pageIndex > pageCount)
             {
                 pageIndex = pageCount;
@@ -47,7 +49,7 @@ namespace Microsoft.EntityFrameworkCore
             return new PagedList<TEntity>
             {
                 PageCount = pageCount,
-                PageData = pageData,
+                PagedData = pageData,
                 PageIndex = pageIndex,
                 PageSize = pageSize,
                 TotalCount = count
@@ -55,9 +57,9 @@ namespace Microsoft.EntityFrameworkCore
         }
 
         /// <summary>
-        /// PaginationAsync
+        /// Asynchronously creates a <see cref="PagedList{T}" /> from an <see cref="IQueryable{T}" /> by enumerating it asynchronously.
         /// </summary>
-        public static async Task<IPagedList<TEntity>> PaginationAsync<TEntity>(
+        public static async Task<PagedList<TEntity>> ToPagedListAsync<TEntity>(
            this IQueryable<TEntity> source,
            int pageIndex,
            int pageSize,
@@ -72,7 +74,7 @@ namespace Microsoft.EntityFrameworkCore
             }
             if (pageSize <= 0)
             {
-                throw new ArgumentOutOfRangeException(CoreStrings.PageSize_Invalid);
+                pageSize = 10;
             }
             var pageCount = Convert.ToInt32(decimal.Ceiling(decimal.Divide(count, pageSize)));
             if (pageIndex < 1)
@@ -87,143 +89,11 @@ namespace Microsoft.EntityFrameworkCore
             return new PagedList<TEntity>
             {
                 PageCount = pageCount,
-                PageData = pageData,
+                PagedData = pageData,
                 PageIndex = pageIndex,
                 PageSize = pageSize,
                 TotalCount = count
             };
-        }
-
-        /// <summary>
-        /// PagedList
-        /// </summary>
-        public static IPagedList<TEntity> PaginationBy<TEntity, TKey>(
-            this IQueryable<TEntity> source,
-            Expression<Func<TEntity, TKey>> keySelector,
-            int pageIndex,
-            int pageSize) where TEntity : class
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(keySelector, nameof(keySelector));
-
-            return source.OrderBy(keySelector).Pagination(pageIndex, pageSize);
-        }
-
-        /// <summary>
-        /// PagedList
-        /// </summary>
-        public static IPagedList<TEntity> PaginationBy<TEntity, TKey>(
-            this IQueryable<TEntity> source,
-            Expression<Func<TEntity, bool>> predicate,
-            Expression<Func<TEntity, TKey>> keySelector,
-            int pageIndex,
-            int pageSize) where TEntity : class
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(predicate, nameof(predicate));
-            Check.NotNull(keySelector, nameof(keySelector));
-
-            return source.Where(predicate).OrderBy(keySelector).Pagination(pageIndex, pageSize);
-        }
-
-        /// <summary>
-        /// PaginationAsync
-        /// </summary>
-        public static async Task<IPagedList<TEntity>> PaginationByAsync<TEntity, TKey>(
-            this IQueryable<TEntity> source,
-            Expression<Func<TEntity, TKey>> keySelector,
-            int pageIndex,
-            int pageSize,
-            CancellationToken cancellationToken = default) where TEntity : class
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(keySelector, nameof(keySelector));
-
-            return await source.OrderBy(keySelector).PaginationAsync(pageIndex, pageSize, cancellationToken);
-        }
-
-        /// <summary>
-        /// PaginationAsync
-        /// </summary>
-        public static async Task<IPagedList<TEntity>> PaginationByAsync<TEntity, TKey>(
-            this IQueryable<TEntity> source,
-            Expression<Func<TEntity, bool>> predicate,
-            Expression<Func<TEntity, TKey>> keySelector,
-            int pageIndex,
-            int pageSize,
-            CancellationToken cancellationToken = default) where TEntity : class
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(predicate, nameof(predicate));
-            Check.NotNull(keySelector, nameof(keySelector));
-
-            return await source.Where(predicate).OrderBy(keySelector).PaginationAsync(pageIndex, pageSize, cancellationToken);
-        }
-
-        /// <summary>
-        /// PagedList
-        /// </summary>
-        public static IPagedList<TEntity> PaginationByDescending<TEntity, TKey>(
-            this IQueryable<TEntity> source,
-            Expression<Func<TEntity, TKey>> keySelector,
-            int pageIndex,
-            int pageSize) where TEntity : class
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(keySelector, nameof(keySelector));
-
-            return source.OrderByDescending(keySelector).Pagination(pageIndex, pageSize);
-        }
-
-        /// <summary>
-        /// PagedList
-        /// </summary>
-        public static IPagedList<TEntity> PaginationByDescending<TEntity, TKey>(
-            this IQueryable<TEntity> source,
-            Expression<Func<TEntity, bool>> predicate,
-            Expression<Func<TEntity, TKey>> keySelector,
-            int pageIndex,
-            int pageSize) where TEntity : class
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(predicate, nameof(predicate));
-            Check.NotNull(keySelector, nameof(keySelector));
-
-            return source.Where(predicate).OrderByDescending(keySelector).Pagination(pageIndex, pageSize);
-        }
-
-        /// <summary>
-        /// PaginationAsync
-        /// </summary>
-        public static async Task<IPagedList<TEntity>> PaginationByDescendingAsync<TEntity, TKey>(
-            this IQueryable<TEntity> source,
-            Expression<Func<TEntity, TKey>> keySelector,
-            int pageIndex,
-            int pageSize,
-            CancellationToken cancellationToken = default) where TEntity : class
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(keySelector, nameof(keySelector));
-
-            return await source.OrderByDescending(keySelector).PaginationAsync(pageIndex, pageSize, cancellationToken);
-        }
-
-        /// <summary>
-        /// PaginationAsync
-        /// </summary>
-        public static async Task<IPagedList<TEntity>> PaginationByDescendingAsync<TEntity, TKey>(
-            this IQueryable<TEntity> source,
-            Expression<Func<TEntity, bool>> predicate,
-            Expression<Func<TEntity, TKey>> keySelector,
-            int pageIndex,
-            int pageSize,
-            CancellationToken cancellationToken = default) where TEntity : class
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(predicate, nameof(predicate));
-            Check.NotNull(keySelector, nameof(keySelector));
-
-            return await source.Where(predicate).OrderByDescending(keySelector).PaginationAsync(pageIndex, pageSize, cancellationToken);
         }
 
         /// <summary>
@@ -246,44 +116,12 @@ namespace Microsoft.EntityFrameworkCore
         public static IQueryable<TSource> Where<TSource>(
             this IQueryable<TSource> source,
             bool condition,
-            Expression<Func<TSource, bool>> truePredicate,
-            Expression<Func<TSource, bool>> falsePredicate)
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(truePredicate, nameof(truePredicate));
-            Check.NotNull(falsePredicate, nameof(falsePredicate));
-
-            return condition ? source.Where(truePredicate) : source.Where(falsePredicate);
-        }
-
-        /// <summary>
-        /// When the condition is true will use the predicate
-        /// </summary>
-        public static IQueryable<TSource> Where<TSource>(
-            this IQueryable<TSource> source,
-            bool condition,
             Expression<Func<TSource, int, bool>> predicate)
         {
             Check.NotNull(source, nameof(source));
             Check.NotNull(predicate, nameof(predicate));
 
             return condition ? source.Where(predicate) : source;
-        }
-
-        /// <summary>
-        /// When the condition is true will use the predicate
-        /// </summary>
-        public static IQueryable<TSource> Where<TSource>(
-            this IQueryable<TSource> source,
-            bool condition,
-            Expression<Func<TSource, int, bool>> truePredicate,
-            Expression<Func<TSource, int, bool>> falsePredicate)
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(truePredicate, nameof(truePredicate));
-            Check.NotNull(falsePredicate, nameof(falsePredicate));
-
-            return condition ? source.Where(truePredicate) : source.Where(falsePredicate);
         }
 
         /// <summary>

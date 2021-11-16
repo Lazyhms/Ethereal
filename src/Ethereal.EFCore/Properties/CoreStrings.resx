@@ -120,9 +120,6 @@
   <data name="FunctionOnClient" xml:space="preserve">
     <value>The {0} method is not supported because the query has switched to client-evaluation. This usually happens when the arguments to the method cannot be translated to server. Rewrite the query to avoid client evaluation of arguments so that method can be translated to server.</value>
   </data>
-  <data name="PageSize_Invalid" xml:space="preserve">
-    <value>The page size cannot be less than or equal zero.</value>
-  </data>
   <data name="SoftDeletedType_Invalid" xml:space="preserve">
     <value>The type is invalid, {0} must be a boolean because SoftDeletedAttribute is defined.</value>
   </data>
