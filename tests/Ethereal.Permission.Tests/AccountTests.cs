@@ -21,7 +21,9 @@ namespace Ethereal.Permission.Tests
             dbContext.Account.Add(account);
             dbContext.SaveChanges();
 
-            var t1 = await dbContext.Account.WhereIf(1 == 1, (s => s.IdentityType == 1, s => s.IdentityType == 1)).ToListAsync();
+            var t0 = await dbContext.Account.Where(1 == 1, s => s.Id > 3).ToListAsync();
+
+            var t1 = await dbContext.Account.Where(1 == 1, (s => s.IdentityType == 1, s => s.IdentityType == 1)).ToListAsync();
 
             var t2 = await dbContext.Account.OrderBy("Id").ToListAsync();
 

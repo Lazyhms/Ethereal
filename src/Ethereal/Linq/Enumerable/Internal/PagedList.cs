@@ -12,14 +12,14 @@ namespace System.Linq
         /// <summary>
         /// Empty PagedList
         /// </summary>
-        public static IPagedList<T> Empty<T>() => EmptyPagedList<T>.Value;
+        public static PagedList<T> Empty<T>() => EmptyPagedList<T>.Value;
 
         private class EmptyPagedList<T>
         {
-            public static readonly IPagedList<T> Value = new PagedList<T>()
+            public static readonly PagedList<T> Value = new PagedList<T>()
             {
                 PageIndex = 1,
-                PageSize = 0,
+                PageSize = 10,
                 PageCount = 1,
                 TotalCount = 0
             };
@@ -29,21 +29,27 @@ namespace System.Linq
     /// <summary>
     /// Query PagedList
     /// </summary>
-    public class PagedList<TEntity> : IPagedList<TEntity>
+    public class PagedList<TEntity>
     {
-        /// <inheritdoc/>
-        public int PageCount { get; set; }
-
-        /// <inheritdoc/>
-        public IEnumerable<TEntity> PageData { get; set; } = Array.Empty<TEntity>();
-
-        /// <inheritdoc/>
+        /// <summary>
+        /// Index of page
+        /// </summary>
         public int PageIndex { get; set; }
-
-        /// <inheritdoc/>
+        /// <summary>
+        /// PageSize
+        /// </summary>
         public int PageSize { get; set; }
-
-        /// <inheritdoc/>
+        /// <summary>
+        /// PageCount
+        /// </summary>
+        public int PageCount { get; set; }
+        /// <summary>
+        /// TotalCount
+        /// </summary>
         public int TotalCount { get; set; }
+        /// <summary>
+        /// Page data
+        /// </summary>
+        public IEnumerable<TEntity> PageData { get; set; } = Array.Empty<TEntity>();
     }
 }

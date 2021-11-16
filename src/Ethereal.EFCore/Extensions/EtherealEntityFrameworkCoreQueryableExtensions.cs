@@ -23,7 +23,7 @@ namespace Microsoft.EntityFrameworkCore
                 .Single(mi => mi.GetGenericArguments().Count() == 2 && mi.GetParameters().Count() == 2);
 
         /// <summary>
-        /// creates a<see cref="PagedList{T}" /> from an<see cref="IQueryable{T}" /> by enumerating it.
+        /// Creates a<see cref="PagedList{T}" /> from an<see cref="IQueryable{T}" /> by enumerating it.
         /// </summary>
         public static PagedList<TSource> ToPagedList<TSource>(
             this IQueryable<TSource> source,

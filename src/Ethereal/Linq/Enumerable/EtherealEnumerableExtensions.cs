@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using Ethereal.NETCore;
 using System.Collections.Generic;
 
 namespace System.Linq
@@ -161,7 +160,7 @@ namespace System.Linq
         }
 
         /// <summary>
-        /// when the condition is true will use the predicate
+        /// When the condition is true will use the predicate
         /// </summary>
         public static IEnumerable<TSource> Where<TSource>(
             this IEnumerable<TSource> source,
@@ -175,19 +174,17 @@ namespace System.Linq
         }
 
         /// <summary>
-        /// when the condition is true will use the predicate
+        /// When the condition is true will use the trueExpression, otherwise use falseExpression
         /// </summary>
         public static IEnumerable<TSource> Where<TSource>(
             this IEnumerable<TSource> source,
             bool condition,
-            Func<TSource, bool> truePredicate,
-            Func<TSource, bool> falsePredicate)
+            (Func<TSource, bool> truePredicate, Func<TSource, bool> falsePredicate) predicate)
         {
             Check.NotNull(source, nameof(source));
-            Check.NotNull(truePredicate, nameof(truePredicate));
-            Check.NotNull(falsePredicate, nameof(falsePredicate));
+            Check.NotNull(predicate, nameof(predicate));
 
-            return condition ? source.Where(truePredicate) : source.Where(falsePredicate);
+            return condition ? source.Where(predicate.truePredicate) : source.Where(predicate.falsePredicate);
         }
 
         /// <summary>
@@ -205,25 +202,23 @@ namespace System.Linq
         }
 
         /// <summary>
-        /// when the condition is true will use the predicate
+        /// When the condition is true will use the trueExpression, otherwise use falseExpression
         /// </summary>
         public static IEnumerable<TSource> Where<TSource>(
             this IEnumerable<TSource> source,
             bool condition,
-            Func<TSource, int, bool> truePredicate,
-            Func<TSource, int, bool> falsePredicate)
+            (Func<TSource, int, bool> truePredicate, Func<TSource, int, bool> falsePredicate) predicate)
         {
             Check.NotNull(source, nameof(source));
-            Check.NotNull(truePredicate, nameof(truePredicate));
-            Check.NotNull(falsePredicate, nameof(falsePredicate));
+            Check.NotNull(predicate, nameof(predicate));
 
-            return condition ? source.Where(truePredicate) : source.Where(falsePredicate);
+            return condition ? source.Where(predicate.truePredicate) : source.Where(predicate.falsePredicate);
         }
 
         /// <summary>
-        /// Pagination
+        /// Creates a<see cref="PagedList{T}" /> from an<see cref="IQueryable{T}" /> by enumerating it.
         /// </summary>
-        public static IPagedList<TSource> Pagination<TSource>(
+        public static PagedList<TSource> ToPagedList<TSource>(
             this IEnumerable<TSource> source,
             int pageIndex,
             int pageSize)
@@ -237,7 +232,7 @@ namespace System.Linq
             }
             if (pageSize <= 0)
             {
-                throw new ArgumentException(CoreStrings.PageSize_Invalid);
+                pageSize = 10;
             }
             var pageCount = Convert.ToInt32(decimal.Ceiling(decimal.Divide(count, pageSize)));
             if (pageIndex < 1)
@@ -257,70 +252,6 @@ namespace System.Linq
                 PageSize = pageSize,
                 TotalCount = count
             };
-        }
-
-        /// <summary>
-        /// PagedList
-        /// </summary>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-        public static IPagedList<TSource> PaginationBy<TSource, TKey>(
-            this IEnumerable<TSource> source,
-            Func<TSource, TKey> keySelector,
-            int pageIndex,
-            int pageSize)
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(keySelector, nameof(keySelector));
-
-            return source.OrderBy(keySelector).Pagination(pageIndex, pageSize);
-        }
-
-        /// <summary>
-        /// PagedList
-        /// </summary>
-        public static IPagedList<TSource> PaginationBy<TSource, TKey>(
-            this IEnumerable<TSource> source,
-            Func<TSource, bool> predicate,
-            Func<TSource, TKey> keySelector,
-            int pageIndex,
-            int pageSize)
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(predicate, nameof(predicate));
-            Check.NotNull(keySelector, nameof(keySelector));
-
-            return source.Where(predicate).OrderBy(keySelector).Pagination(pageIndex, pageSize);
-        }
-
-        /// <summary>
-        /// PagedList
-        /// </summary>
-        public static IPagedList<TSource> PaginationByByDescending<TSource, TKey>(
-            this IEnumerable<TSource> source,
-            Func<TSource, TKey> selector,
-            int pageIndex,
-            int pageSize)
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(selector, nameof(selector));
-
-            return source.OrderByDescending(selector).Pagination(pageIndex, pageSize);
-        }
-
-        /// <summary>
-        /// PagedList
-        /// </summary>
-        public static IPagedList<TSource> PaginationByByDescending<TSource, TKey>(
-            this IEnumerable<TSource> source,
-            Func<TSource, bool> predicate,
-            Func<TSource, TKey> keySelector,
-            int pageIndex,
-            int pageSize)
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(predicate, nameof(predicate));
-            Check.NotNull(keySelector, nameof(keySelector));
-
-            return source.Where(predicate).OrderByDescending(keySelector).Pagination(pageIndex, pageSize);
         }
 
         /// <summary>
@@ -446,11 +377,11 @@ namespace System.Linq
         /// Rank
         /// </summary>
         public static IEnumerable<(int rank, TSource)> Rank<TSource>(
-            this IEnumerable<TSource> sources) where TSource : struct
+            this IEnumerable<TSource> source) where TSource : struct
         {
             int index = 1, sequence = 1;
             TSource? lastest = default;
-            using var itor = sources.OrderByDescending(o => o).GetEnumerator();
+            using var itor = source.OrderByDescending(o => o).GetEnumerator();
             while (itor.MoveNext())
             {
                 if (lastest is not null)
@@ -474,11 +405,11 @@ namespace System.Linq
         /// Rank
         /// </summary>
         public static IEnumerable<(int rank, TSource?)> Rank<TSource>(
-            this IEnumerable<TSource?> sources) where TSource : struct
+            this IEnumerable<TSource?> source) where TSource : struct
         {
             int index = 1, sequence = 1;
             TSource? lastest = default;
-            using var itor = sources.OrderByDescending(o => o).GetEnumerator();
+            using var itor = source.OrderByDescending(o => o).GetEnumerator();
             while (itor.MoveNext())
             {
                 if (lastest is not null)
@@ -502,13 +433,13 @@ namespace System.Linq
         /// Rank
         /// </summary>
         public static IEnumerable<(int rank, TSource)> Rank<TSource, TProperty>(
-            this IEnumerable<TSource> sources,
+            this IEnumerable<TSource> source,
             Func<TSource, TProperty?> predicate) where TSource : class
                                                  where TProperty : struct
         {
             int index = 1, sequence = 1;
             TSource? lastest = default;
-            using var itor = sources.OrderByDescending(predicate).GetEnumerator();
+            using var itor = source.OrderByDescending(predicate).GetEnumerator();
             while (itor.MoveNext())
             {
                 if (lastest is not null)
@@ -526,6 +457,29 @@ namespace System.Linq
                 lastest = itor.Current;
                 yield return (index, lastest);
             }
+        }
+
+        /// <summary>
+        /// ToTreeNode
+        /// </summary>
+        public static IEnumerable<TSource> ToTreeNode<TSource, TKey>(
+            this IEnumerable<TSource> source,
+            Func<TSource, TKey> keySelector,
+            Func<TSource, TKey> relationKeySelector,
+            TKey rootValue) where TSource : TreeNode<TSource>
+                            where TKey : notnull
+        {
+            var dic = source.ToDictionary(keySelector, k => k);
+
+            foreach (var item in dic.Values)
+            {
+                if (dic.ContainsKey(relationKeySelector(item)))
+                {
+                    dic[relationKeySelector(item)].Children.Add(item);
+                }
+            }
+
+            return dic.Values.Where(p => Equals(relationKeySelector(p), rootValue));
         }
     }
 }

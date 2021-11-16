@@ -22,7 +22,7 @@ namespace Microsoft.EntityFrameworkCore
             public static readonly PagedList<T> Value = new PagedList<T>()
             {
                 PageIndex = 1,
-                PageSize = 0,
+                PageSize = 10,
                 PageCount = 1,
                 TotalCount = 0
             };

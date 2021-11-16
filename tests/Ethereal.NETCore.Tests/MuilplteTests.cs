@@ -65,9 +65,7 @@ namespace Ethereal.Json.Tests
             var sss = Enumerable.Repeat(new T { MyProperty2 = "132132131" }, 10);
             var sss1 = Enumerable.Repeat(new T { MyProperty2 = "1321321312" }, 10);
 
-            var ttp1 = sss.Concat(sss1).Pagination(1, 3);
-            var ttp2 = sss.Concat(sss1).PaginationBy(s => s.MyProperty, 1, 3);
-            var ttp3 = sss.Concat(sss1).PaginationByByDescending(s => s.MyProperty, 1, 3);
+            var ttp1 = sss.Concat(sss1).ToPagedList(1, 3);
 
             var t1 = JsonSerializer.Serialize(ttp1);
 
@@ -99,6 +97,34 @@ namespace Ethereal.Json.Tests
             var list3 = new List<T> { new T { MyProperty4 = 10 }, new T { MyProperty4 = 9 }, new T { MyProperty4 = null }, new T { MyProperty4 = 10 }, new T { MyProperty4 = 8 }, new T { MyProperty4 = 7 }, new T { MyProperty4 = null } };
             var rank3 = list3.Rank(s => s.MyProperty4).ToList();
         }
+
+        [Fact]
+        public void Tree_Tests()
+        {
+            var lists = new List<ST>
+            {
+                new ST
+                {
+                     Id = 1L,
+                     ParentId=0L
+                },
+                new ST
+                {
+                    Id = 2L,
+                    ParentId = 1L
+                }
+            }.ToTreeNode(s => s.Id, s => s.ParentId, 0L).ToList();
+
+            var t = JsonSerializer.Serialize(lists);
+        }
+    }
+
+
+    public class ST : TreeNode<ST>
+    {
+        public long Id { get; set; }
+
+        public long ParentId { get; set; }
     }
 
     internal class T
