@@ -167,7 +167,7 @@ namespace Microsoft.EntityFrameworkCore
         /// <summary>
         /// When the condition is true will use the trueExpression, otherwise use falseExpression
         /// </summary>
-        public static IQueryable<TSource> WhereIf<TSource>(
+        public static IQueryable<TSource> Where<TSource>(
             this IQueryable<TSource> source,
             bool condition,
             (Expression<Func<TSource, bool>> trueExpression, Expression<Func<TSource, bool>> falseExpression) predicate)
@@ -181,7 +181,7 @@ namespace Microsoft.EntityFrameworkCore
         /// <summary>
         /// When the condition is true will use the trueExpression, otherwise use falseExpression
         /// </summary>
-        public static IQueryable<TSource> WhereIf<TSource>(
+        public static IQueryable<TSource> Where<TSource>(
             this IQueryable<TSource> source,
             bool condition,
             (Expression<Func<TSource, int, bool>> trueExpression, Expression<Func<TSource, int, bool>> falseExpression) predicate)

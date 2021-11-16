@@ -11,9 +11,6 @@ namespace Ethereal.Permission.Tests
         {
 
             using var dbContext = AppDbContextTest.GetDbContext();
-            //dbContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-            //dbContext.ChangeTracker.AutoDetectChangesEnabled = false;
-            //var list = await dbContext.Account.ToListAsync();
 
             var account = new Account
             {
