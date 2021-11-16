@@ -38,7 +38,8 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
                     Expression.Lambda(
                         Expression.Equal(
                             Expression.Call(typeof(EF), nameof(EF.Property), new[] { typeof(bool) }, parameter,
-                                Expression.Constant(attribute.ColumnName)), Expression.Constant(false)), parameter),
+                                        Expression.Constant(attribute.ColumnName)),
+                            Expression.Constant(false)), parameter),
                     true);
             }
         }

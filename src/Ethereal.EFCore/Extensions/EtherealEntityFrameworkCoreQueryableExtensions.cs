@@ -3,6 +3,7 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,20 +14,28 @@ namespace Microsoft.EntityFrameworkCore
     /// </summary>
     public static class EtherealEntityFrameworkCoreQueryableExtensions
     {
+
+        private static readonly MethodInfo OrderByMethodInfo
+            = typeof(Queryable).GetTypeInfo().GetDeclaredMethods(nameof(Queryable.OrderBy))
+                .Single(mi => mi.GetGenericArguments().Count() == 2 && mi.GetParameters().Count() == 2);
+        private static readonly MethodInfo OrderByDescendingMethodInfo
+            = typeof(Queryable).GetTypeInfo().GetDeclaredMethods(nameof(Queryable.OrderByDescending))
+                .Single(mi => mi.GetGenericArguments().Count() == 2 && mi.GetParameters().Count() == 2);
+
         /// <summary>
         /// creates a<see cref="PagedList{T}" /> from an<see cref="IQueryable{T}" /> by enumerating it.
         /// </summary>
-        public static PagedList<TEntity> ToPagedList<TEntity>(
-            this IQueryable<TEntity> source,
+        public static PagedList<TSource> ToPagedList<TSource>(
+            this IQueryable<TSource> source,
             int pageIndex,
-            int pageSize) where TEntity : class
+            int pageSize) where TSource : class
         {
             Check.NotNull(source, nameof(source));
 
             var count = source.Count();
             if (count == 0)
             {
-                return PagedList.Empty<TEntity>();
+                return PagedList.Empty<TSource>();
             }
             if (pageSize <= 0)
             {
@@ -44,7 +53,7 @@ namespace Microsoft.EntityFrameworkCore
                 pageIndex = pageCount;
             }
             var pageData = source.Skip(pageSize * (pageIndex - 1)).Take(pageSize).ToList();
-            return new PagedList<TEntity>
+            return new PagedList<TSource>
             {
                 PageCount = pageCount,
                 PagedData = pageData,
@@ -57,18 +66,18 @@ namespace Microsoft.EntityFrameworkCore
         /// <summary>
         /// Asynchronously creates a <see cref="PagedList{T}" /> from an <see cref="IQueryable{T}" /> by enumerating it asynchronously.
         /// </summary>
-        public static async Task<PagedList<TEntity>> ToPagedListAsync<TEntity>(
-           this IQueryable<TEntity> source,
+        public static async Task<PagedList<TSource>> ToPagedListAsync<TSource>(
+           this IQueryable<TSource> source,
            int pageIndex,
            int pageSize,
-           CancellationToken cancellationToken = default) where TEntity : class
+           CancellationToken cancellationToken = default) where TSource : class
         {
             Check.NotNull(source, nameof(source));
 
             var count = await source.CountAsync(cancellationToken);
             if (count == 0)
             {
-                return PagedList.Empty<TEntity>();
+                return PagedList.Empty<TSource>();
             }
             if (pageSize <= 0)
             {
@@ -84,7 +93,7 @@ namespace Microsoft.EntityFrameworkCore
                 pageIndex = pageCount;
             }
             var pageData = await source.Skip(pageSize * (pageIndex - 1)).Take(pageSize).ToListAsync(cancellationToken);
-            return new PagedList<TEntity>
+            return new PagedList<TSource>
             {
                 PageCount = pageCount,
                 PagedData = pageData,
@@ -95,9 +104,41 @@ namespace Microsoft.EntityFrameworkCore
         }
 
         /// <summary>
+        /// Sorts the elements of a sequence in ascending order according to a string key.
+        /// </summary>
+        public static IQueryable<TSource> OrderBy<TSource>(
+            this IQueryable<TSource> source,
+            string name)
+        {
+            var parameter = Expression.Parameter(typeof(TSource));
+            var keySelector = Expression.PropertyOrField(parameter, name);
+
+            return source.Provider.CreateQuery<TSource>(
+                    Expression.Call(null,
+                    OrderByMethodInfo.MakeGenericMethod(parameter.Type, keySelector.Type),
+                    new[] { source.Expression, Expression.Lambda(keySelector, parameter) }));
+        }
+
+        /// <summary>
+        /// Sorts the elements of a sequence in descending order according to a string key.
+        /// </summary>
+        public static IQueryable<TSource> OrderByDescending<TSource>(
+            this IQueryable<TSource> source,
+            string name)
+        {
+            var parameter = Expression.Parameter(typeof(TSource));
+            var keySelector = Expression.PropertyOrField(parameter, name);
+
+            return source.Provider.CreateQuery<TSource>(
+                    Expression.Call(null,
+                    OrderByDescendingMethodInfo.MakeGenericMethod(parameter.Type, keySelector.Type),
+                    new[] { source.Expression, Expression.Lambda(keySelector, parameter) }));
+        }
+
+        /// <summary>
         /// When the condition is true will use the predicate
         /// </summary>
-        public static IQueryable<TSource> WhereIf<TSource>(
+        public static IQueryable<TSource> Where<TSource>(
             this IQueryable<TSource> source,
             bool condition,
             Expression<Func<TSource, bool>> predicate)
@@ -111,7 +152,8 @@ namespace Microsoft.EntityFrameworkCore
         /// <summary>
         /// When the condition is true will use the predicate
         /// </summary>
-        public static IQueryable<TSource> WhereIf<TSource>(
+        /// 
+        public static IQueryable<TSource> Where<TSource>(
             this IQueryable<TSource> source,
             bool condition,
             Expression<Func<TSource, int, bool>> predicate)
