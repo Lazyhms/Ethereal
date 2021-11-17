@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Xunit;
@@ -117,8 +118,28 @@ namespace Ethereal.Json.Tests
 
             var t = JsonSerializer.Serialize(lists);
         }
+
+        [Fact]
+        public void StringBuilder()
+        {
+            var t1 = new StringBuilder()
+                        .Append(1 == 1, "www")
+                        .Append(1 == 1, 2)
+                        .Append(1 == 1, 2L)
+                        .Append(1 == 1, DateTime.Now)
+                        .Append(1 == 1, EE.A);
+
+            var t2 = new StringBuilder().AppendJoin(new List<int> { 1, 3, 4, 5 }, (s, t) =>
+            {
+                s.Append(t);
+            });
+        }
     }
 
+    public enum EE
+    {
+        A
+    }
 
     public class ST : TreeNode<ST>
     {
