@@ -31,7 +31,7 @@ namespace System.ComponentModel.DataAnnotations
                 var sum = 0;
                 for (var i = 0; i < 17; i++)
                 {
-                    sum += int.Parse(valueAsString[i].ToString()) * _weight[i];
+                    sum += Convert.ToInt32(valueAsString[i]) * _weight[i];
                 }
                 return _validate[sum % 11] == valueAsString[17];
             }

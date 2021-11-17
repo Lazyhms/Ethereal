@@ -12,27 +12,32 @@ namespace System
         /// <summary>
         /// Start and end date of the momth
         /// </summary>
-        public static (DateTime start, DateTime end) DayOfMonth(this DateTime date) => (date.FirstDayOfMonth(), date.LastDayOfMonth());
+        public static (DateTime start, DateTime end) DayOfMonth(this DateTime date)
+            => (date.FirstDayOfMonth(), date.LastDayOfMonth());
 
         /// <summary>
         /// Start and end date of the quarter
         /// </summary>
-        public static (DateTime start, DateTime end) DayOfQuarter(this DateTime date) => (date.FirstDayOfQuarter(), date.LastDayOfQuarter());
+        public static (DateTime start, DateTime end) DayOfQuarter(this DateTime date)
+            => (date.FirstDayOfQuarter(), date.LastDayOfQuarter());
 
         /// <summary>
         /// Start and end date of the week
         /// </summary>
-        public static (DateTime start, DateTime end) DayOfWeek(this DateTime date) => (date.FirstDayOfWeek(), date.LastDayOfWeek());
+        public static (DateTime start, DateTime end) DayOfWeek(this DateTime date)
+            => (date.FirstDayOfWeek(), date.LastDayOfWeek());
 
         /// <summary>
         /// Start and end date of the year
         /// </summary>
-        public static (DateTime start, DateTime end) DayOfYear(this DateTime date) => (date.FirstDayOfYear(), date.LastDayOfYear());
+        public static (DateTime start, DateTime end) DayOfYear(this DateTime date)
+            => (date.FirstDayOfYear(), date.LastDayOfYear());
 
         /// <summary>
         /// Start and end date of the day
         /// </summary>
-        public static (DateTime start, DateTime end) TimeOfDay(this DateTime date) => (date.FirstTimeOfToday(), date.LastTimeOfToday());
+        public static (DateTime start, DateTime end) TimeOfDay(this DateTime date)
+            => (date.FirstTimeOfToday(), date.LastTimeOfToday());
 
         #endregion StartAndEnd
 
@@ -41,62 +46,62 @@ namespace System
         /// <summary>
         /// FirstDayOfMonth
         /// </summary>
-        public static DateTime FirstDayOfMonth(this DateTime date) =>
-            date.AddDays(1 - date.Day).Date;
+        public static DateTime FirstDayOfMonth(this DateTime date)
+            => date.AddDays(1 - date.Day).Date;
 
         /// <summary>
         /// FirstDayOfQuarter
         /// </summary>
-        public static DateTime FirstDayOfQuarter(this DateTime date) =>
-            date.AddMonths(0 - (date.Month - 1) % 3).AddDays(1 - date.Day).Date;
+        public static DateTime FirstDayOfQuarter(this DateTime date)
+            => date.AddMonths(0 - (date.Month - 1) % 3).AddDays(1 - date.Day).Date;
 
         /// <summary>
         /// FirstDayOfWeek
         /// </summary>
-        public static DateTime FirstDayOfWeek(this DateTime date) =>
-            date.AddDays(1 - (int)date.DayOfWeek).Date;
+        public static DateTime FirstDayOfWeek(this DateTime date)
+            => date.AddDays(1 - (int)date.DayOfWeek).Date;
 
         /// <summary>
         /// FirstDayOfYear
         /// </summary>
-        public static DateTime FirstDayOfYear(this DateTime date) =>
-            date.AddDays(1 - date.Day).AddMonths(1 - date.Month).Date;
+        public static DateTime FirstDayOfYear(this DateTime date)
+            => date.AddDays(1 - date.Day).AddMonths(1 - date.Month).Date;
 
         /// <summary>
         /// FirstTimeOfToday
         /// </summary>
-        public static DateTime FirstTimeOfToday(this DateTime date) =>
-            date.Date;
+        public static DateTime FirstTimeOfToday(this DateTime date)
+            => date.Date;
 
         /// <summary>
         /// LastDayOfMonth
         /// </summary>
-        public static DateTime LastDayOfMonth(this DateTime date) =>
-            date.AddDays(1 - date.Day).AddMonths(1).AddDays(-1).LastTimeOfToday();
+        public static DateTime LastDayOfMonth(this DateTime date)
+            => date.AddDays(1 - date.Day).AddMonths(1).AddDays(-1).LastTimeOfToday();
 
         /// <summary>
         /// LastDayOfQuarter
         /// </summary>
-        public static DateTime LastDayOfQuarter(this DateTime date) =>
-            date.AddMonths(3 - (date.Month - 1) % 3).AddDays(1 - date.Day).Date.AddSeconds(-1);
+        public static DateTime LastDayOfQuarter(this DateTime date)
+            => date.AddMonths(3 - (date.Month - 1) % 3).AddDays(1 - date.Day).Date.AddSeconds(-1);
 
         /// <summary>
         /// LastDayOfWeek
         /// </summary>
-        public static DateTime LastDayOfWeek(this DateTime date) =>
-            date.AddDays(7 - (int)date.DayOfWeek).LastTimeOfToday();
+        public static DateTime LastDayOfWeek(this DateTime date)
+            => date.AddDays(7 - (int)date.DayOfWeek).LastTimeOfToday();
 
         /// <summary>
         /// LastDayOfYear
         /// </summary>
-        public static DateTime LastDayOfYear(this DateTime date) =>
-            date.AddDays(1 - date.Day).AddMonths(1 - date.Month).Date.AddYears(1).AddSeconds(-1);
+        public static DateTime LastDayOfYear(this DateTime date)
+            => date.AddDays(1 - date.Day).AddMonths(1 - date.Month).Date.AddYears(1).AddSeconds(-1);
 
         /// <summary>
         /// LastTimeOfToday
         /// </summary>
-        public static DateTime LastTimeOfToday(this DateTime date) =>
-            date.Date.AddDays(1).AddSeconds(-1);
+        public static DateTime LastTimeOfToday(this DateTime date)
+            => date.Date.AddDays(1).AddSeconds(-1);
 
         #endregion DayOf
 

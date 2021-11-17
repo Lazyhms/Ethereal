@@ -25,8 +25,6 @@ namespace System.Text.Json.Serialization
             converters.Add(new JsonDateTimeConverter());
             converters.Add(new JsonDateTimeOffsetConverter(DateTimeOffsetConverterOptions.AllowString));
 
-            converters.Add(new JsonMethodBaseConverter());
-
             return converters;
         }
 

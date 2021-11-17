@@ -107,7 +107,10 @@ namespace System
             Check.NotNull(source, nameof(source));
             Check.NotNull(key, nameof(key));
 
-            source[key] = value;
+            if (source.ContainsKey(key))
+            {
+                source[key] = value;
+            }
             return source;
         }
 
@@ -121,7 +124,10 @@ namespace System
             Check.NotNull(source, nameof(source));
             Check.NotNull(item, nameof(item));
 
-            source[item.Key] = item.Value;
+            if (source.ContainsKey(item.Key))
+            {
+                source[item.Key] = item.Value;
+            }
             return source;
         }
     }
