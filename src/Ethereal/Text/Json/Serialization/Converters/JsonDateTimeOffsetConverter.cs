@@ -20,7 +20,7 @@ namespace System.Text.Json.Serialization
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonDateTimeOffsetConverter"/> class.
         /// </summary>
-        public JsonDateTimeOffsetConverter(string? dateFormatString) : 
+        public JsonDateTimeOffsetConverter(string? dateFormatString) :
             this(DateTimeOffsetConverterOptions.AllowString, dateFormatString)
         {
         }
@@ -28,7 +28,7 @@ namespace System.Text.Json.Serialization
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonDateTimeOffsetConverter"/> class.
         /// </summary>
-        public JsonDateTimeOffsetConverter(DateTimeOffsetConverterOptions? dateTimeOffsetConverterOptions) : 
+        public JsonDateTimeOffsetConverter(DateTimeOffsetConverterOptions? dateTimeOffsetConverterOptions) :
             this(dateTimeOffsetConverterOptions, null)
         {
         }

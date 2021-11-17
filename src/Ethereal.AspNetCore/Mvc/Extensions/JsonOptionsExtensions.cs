@@ -23,9 +23,6 @@ namespace Microsoft.AspNetCore.Mvc
             jsonOptions.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
             jsonOptions.JsonSerializerOptions.ReadCommentHandling = JsonCommentHandling.Skip;
             jsonOptions.JsonSerializerOptions.PropertyNameCaseInsensitive = false;
-#if NET5_0
-            jsonOptions.JsonSerializerOptions.NumberHandling = JsonNumberHandling.AllowNamedFloatingPointLiterals;
-#endif
             jsonOptions.JsonSerializerOptions.Converters.UseDefaultConverter();
 
             return jsonOptions;
