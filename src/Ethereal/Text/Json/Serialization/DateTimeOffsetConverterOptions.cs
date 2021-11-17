@@ -9,7 +9,7 @@ namespace System.Text.Json.Serialization
     public enum DateTimeOffsetConverterOptions
     {
         /// <summary>
-        /// None
+        /// AllowString
         /// </summary>
         AllowString = 0x1,
 
