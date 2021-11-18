@@ -109,8 +109,17 @@ namespace System.Text
         /// <summary>
         /// Appends an Object to this string builder when condition is true.
         /// </summary>
-        public static StringBuilder Append(this StringBuilder builder, bool condition, object value)
+        public static StringBuilder Append(this StringBuilder builder, bool condition, object? value)
             => condition ? builder.Append(value) : builder;
+
+        /// <summary>
+        /// Appends values to this string builder.
+        /// </summary>
+        public static StringBuilder AppendJoin<T>(
+            this StringBuilder stringBuilder,
+            IEnumerable<T?> values,
+            string separator = ", ")
+            => stringBuilder.AppendJoin(values, (sb, value) => sb.Append(value), separator);
 
         /// <summary>
         /// Appends values to this string builder.
@@ -128,6 +137,34 @@ namespace System.Text
                 joinAction(stringBuilder, value);
                 stringBuilder.Append(separator);
                 appended = true;
+            }
+
+            if (appended)
+            {
+                stringBuilder.Length -= separator.Length;
+            }
+
+            return stringBuilder;
+        }
+
+        /// <summary>
+        /// Appends values to this string builder.
+        /// </summary>
+        public static StringBuilder AppendJoin<T>(
+                    this StringBuilder stringBuilder,
+                    IEnumerable<T?> values,
+                    Func<StringBuilder, T?, bool> joinFunc,
+                    string separator = ", ")
+        {
+            var appended = false;
+
+            foreach (var value in values)
+            {
+                if (joinFunc(stringBuilder, value))
+                {
+                    stringBuilder.Append(separator);
+                    appended = true;
+                }
             }
 
             if (appended)

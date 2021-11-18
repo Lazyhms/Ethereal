@@ -129,10 +129,7 @@ namespace Ethereal.Json.Tests
                         .Append(1 == 1, DateTime.Now)
                         .Append(1 == 1, EE.A);
 
-            var t2 = new StringBuilder().AppendJoin(new List<int> { 1, 3, 4, 5 }, (s, t) =>
-            {
-                s.Append(t);
-            });
+            var t2 = new StringBuilder().AppendJoin("_", 1, 2, 3, 4, 5);
         }
     }
 
