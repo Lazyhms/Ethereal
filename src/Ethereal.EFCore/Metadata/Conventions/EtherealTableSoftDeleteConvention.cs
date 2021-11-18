@@ -30,16 +30,24 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
             if (clrType is not null && Attribute.IsDefined(clrType, typeof(SoftDeleteAttribute)))
             {
                 var attribute = clrType.GetCustomAttribute<SoftDeleteAttribute>()!;
-                entityTypeBuilder.Property(typeof(bool), attribute.ColumnName, true, true)!
-                    .HasColumnOrder(100, true)!.HasComment(attribute.Comment, true)!.HasDefaultValue(0);
+                entityTypeBuilder.Property(
+                                    typeof(bool), attribute.ColumnName,
+                                    true, true)!
+                                 .HasColumnOrder(100, true)!
+                                 .HasComment(attribute.Comment, true)!
+                                 .HasDefaultValue(0);
                 // add query filter
                 var parameter = Expression.Parameter(clrType, "filter");
                 entityTypeBuilder.HasQueryFilter(
                     Expression.Lambda(
                         Expression.Equal(
-                            Expression.Call(typeof(EF), nameof(EF.Property), new[] { typeof(bool) }, parameter,
-                                        Expression.Constant(attribute.ColumnName)),
-                            Expression.Constant(false)), parameter),
+                            Expression.Call(
+                                        typeof(EF),
+                                        nameof(EF.Property),
+                                        new[] { typeof(bool) },
+                                        parameter, Expression.Constant(attribute.ColumnName)),
+                            Expression.Constant(false)),
+                        parameter),
                     true);
             }
         }
