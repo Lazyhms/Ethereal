@@ -74,8 +74,8 @@ namespace Ethereal.Json.Tests
 
             var ttd1 = sss.Concat(sss1).Distinct().ToList();
             var ttd2 = sss.Concat(sss1).Distinct((x, y) => Equals(x?.MyProperty2, y?.MyProperty2)).ToList();
-            var ttd3 = sss.Concat(sss1).Distinct(x => x?.MyProperty2).ToList();
-            var ttd4 = sss.Concat(sss1).Distinct(x => x?.MyProperty).ToList();
+            var ttd3 = EtherealEnumerableExtensions.Distinct(sss.Concat(sss1), x => (x?.MyProperty2)).ToList();
+            var ttd4 = EtherealEnumerableExtensions.Distinct(sss.Concat(sss1), x => (x?.MyProperty)).ToList();
         }
 
         [Fact]

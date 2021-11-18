@@ -14,8 +14,8 @@ namespace System.Text
         /// Appends a string to this string builder when condition is true.
         /// </summary>
         public static StringBuilder Append(
-            this StringBuilder builder, 
-            bool condition, 
+            this StringBuilder builder,
+            bool condition,
             string? value)
             => condition ? builder.Append(value) : builder;
 
