@@ -25,9 +25,9 @@ namespace Ethereal.Permission.Tests
 
             var t1 = await dbContext.Account.Where(1 == 1, (s => s.IdentityType == 1, s => s.IdentityType == 1)).ToListAsync();
 
-            var t2 = await dbContext.Account.OrderBy("Id").ToListAsync();
+            var t2 = await dbContext.Account.OrderBy("Id").ThenBy(nameof(account.Modified)).ToListAsync();
 
-            var t3 = await dbContext.Account.OrderByDescending("Id").ToListAsync();
+            var t3 = await dbContext.Account.OrderByDescending("Id").ThenByDescending(nameof(account.Modified)).ToListAsync();
         }
     }
 }

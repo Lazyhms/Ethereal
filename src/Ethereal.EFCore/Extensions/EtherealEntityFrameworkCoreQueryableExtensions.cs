@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,14 +14,6 @@ namespace Microsoft.EntityFrameworkCore
     /// </summary>
     public static class EtherealEntityFrameworkCoreQueryableExtensions
     {
-
-        private static readonly MethodInfo OrderByMethodInfo
-            = typeof(Queryable).GetTypeInfo().GetDeclaredMethods(nameof(Queryable.OrderBy))
-                .Single(mi => mi.GetGenericArguments().Count() == 2 && mi.GetParameters().Count() == 2);
-        private static readonly MethodInfo OrderByDescendingMethodInfo
-            = typeof(Queryable).GetTypeInfo().GetDeclaredMethods(nameof(Queryable.OrderByDescending))
-                .Single(mi => mi.GetGenericArguments().Count() == 2 && mi.GetParameters().Count() == 2);
-
         /// <summary>
         /// Creates a<see cref="PagedList{T}" /> from an<see cref="IQueryable{T}" /> by enumerating it.
         /// </summary>
@@ -106,33 +98,85 @@ namespace Microsoft.EntityFrameworkCore
         /// <summary>
         /// Sorts the elements of a sequence in ascending order according to a string key.
         /// </summary>
-        public static IQueryable<TSource> OrderBy<TSource>(
+        public static IOrderedQueryable<TSource> OrderBy<TSource>(
             this IQueryable<TSource> source,
-            string name)
+            string propertyOrFieldName)
+            where TSource : class
         {
-            var parameter = Expression.Parameter(typeof(TSource));
-            var keySelector = Expression.PropertyOrField(parameter, name);
+            Check.NotNull(source, nameof(source));
+            Check.NotEmpty(propertyOrFieldName, nameof(propertyOrFieldName));
 
-            return source.Provider.CreateQuery<TSource>(
-                    Expression.Call(null,
-                    OrderByMethodInfo.MakeGenericMethod(parameter.Type, keySelector.Type),
-                    new[] { source.Expression, Expression.Lambda(keySelector, parameter) }));
+            var parameter = Expression.Parameter(typeof(TSource));
+            var member = Expression.PropertyOrField(parameter, propertyOrFieldName);
+
+            return (IOrderedQueryable<TSource>)source.Provider.CreateQuery<TSource>(
+                Expression.Call(
+                    null,
+                    QueryableMethods.OrderBy.MakeGenericMethod(parameter.Type, member.Type),
+                    new[] { source.Expression, Expression.Lambda(member, parameter) }));
+        }
+
+        /// <summary>
+        /// Sorts the elements of a sequence in ascending order according to a string key.
+        /// </summary>
+        public static IOrderedQueryable<TSource> ThenBy<TSource>(
+            this IOrderedQueryable<TSource> source,
+            string propertyOrFieldName)
+            where TSource : class
+        {
+            Check.NotNull(source, nameof(source));
+            Check.NotEmpty(propertyOrFieldName, nameof(propertyOrFieldName));
+
+            var parameter = Expression.Parameter(typeof(TSource));
+            var member = Expression.PropertyOrField(parameter, propertyOrFieldName);
+
+            return (IOrderedQueryable<TSource>)source.Provider.CreateQuery<TSource>(
+                Expression.Call(
+                    null,
+                    QueryableMethods.ThenBy.MakeGenericMethod(parameter.Type, member.Type),
+                    new[] { source.Expression, Expression.Lambda(member, parameter) }));
         }
 
         /// <summary>
         /// Sorts the elements of a sequence in descending order according to a string key.
         /// </summary>
-        public static IQueryable<TSource> OrderByDescending<TSource>(
+        public static IOrderedQueryable<TSource> OrderByDescending<TSource>(
             this IQueryable<TSource> source,
-            string name)
+            string propertyOrFieldName)
+            where TSource : class
         {
-            var parameter = Expression.Parameter(typeof(TSource));
-            var keySelector = Expression.PropertyOrField(parameter, name);
+            Check.NotNull(source, nameof(source));
+            Check.NotEmpty(propertyOrFieldName, nameof(propertyOrFieldName));
 
-            return source.Provider.CreateQuery<TSource>(
-                    Expression.Call(null,
-                    OrderByDescendingMethodInfo.MakeGenericMethod(parameter.Type, keySelector.Type),
-                    new[] { source.Expression, Expression.Lambda(keySelector, parameter) }));
+            var parameter = Expression.Parameter(typeof(TSource));
+            var member = Expression.PropertyOrField(parameter, propertyOrFieldName);
+
+            return (IOrderedQueryable<TSource>)source.Provider.CreateQuery<TSource>(
+                Expression.Call(
+                    null,
+                    QueryableMethods.OrderByDescending.MakeGenericMethod(parameter.Type, member.Type),
+                    new[] { source.Expression, Expression.Lambda(member, parameter) }));
+        }
+
+        /// <summary>
+        /// Sorts the elements of a sequence in descending order according to a string key.
+        /// </summary>
+        public static IOrderedQueryable<TSource> ThenByDescending<TSource>(
+            this IOrderedQueryable<TSource> source,
+            string propertyOrFieldName)
+            where TSource : class
+        {
+            Check.NotNull(source, nameof(source));
+            Check.NotEmpty(propertyOrFieldName, nameof(propertyOrFieldName));
+
+            var parameter = Expression.Parameter(typeof(TSource));
+            var member = Expression.PropertyOrField(parameter, propertyOrFieldName);
+
+            return (IOrderedQueryable<TSource>)source.Provider.CreateQuery<TSource>(
+                Expression.Call(
+                    null,
+                    QueryableMethods.ThenByDescending.MakeGenericMethod(parameter.Type, member.Type),
+                    new[] { source.Expression, Expression.Lambda(member, parameter) }));
         }
 
         /// <summary>
