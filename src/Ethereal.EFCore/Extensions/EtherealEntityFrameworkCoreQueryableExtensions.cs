@@ -1,9 +1,11 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
 using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -109,11 +111,14 @@ namespace Microsoft.EntityFrameworkCore
             var parameter = Expression.Parameter(typeof(TSource));
             var member = Expression.PropertyOrField(parameter, propertyOrFieldName);
 
-            return (IOrderedQueryable<TSource>)source.Provider.CreateQuery<TSource>(
-                Expression.Call(
-                    null,
-                    QueryableMethods.OrderBy.MakeGenericMethod(parameter.Type, member.Type),
-                    new[] { source.Expression, Expression.Lambda(member, parameter) }));
+            return (IOrderedQueryable<TSource>)
+                (source.Provider is EntityQueryProvider
+                    ? source.Provider.CreateQuery<TSource>(
+                        Expression.Call(
+                            null,
+                            QueryableMethods.OrderBy.MakeGenericMethod(parameter.Type, member.Type),
+                            new[] { source.Expression, Expression.Lambda(member, parameter) }))
+                     : source);
         }
 
         /// <summary>
@@ -130,11 +135,13 @@ namespace Microsoft.EntityFrameworkCore
             var parameter = Expression.Parameter(typeof(TSource));
             var member = Expression.PropertyOrField(parameter, propertyOrFieldName);
 
-            return (IOrderedQueryable<TSource>)source.Provider.CreateQuery<TSource>(
-                Expression.Call(
-                    null,
-                    QueryableMethods.ThenBy.MakeGenericMethod(parameter.Type, member.Type),
-                    new[] { source.Expression, Expression.Lambda(member, parameter) }));
+            return (IOrderedQueryable<TSource>)
+                (source.Provider is EntityQueryProvider
+                    ? source.Provider.CreateQuery<TSource>(
+                        Expression.Call(null,
+                        QueryableMethods.ThenBy.MakeGenericMethod(parameter.Type, member.Type),
+                        new[] { source.Expression, Expression.Lambda(member, parameter) }))
+                    : source);
         }
 
         /// <summary>
@@ -151,11 +158,13 @@ namespace Microsoft.EntityFrameworkCore
             var parameter = Expression.Parameter(typeof(TSource));
             var member = Expression.PropertyOrField(parameter, propertyOrFieldName);
 
-            return (IOrderedQueryable<TSource>)source.Provider.CreateQuery<TSource>(
-                Expression.Call(
-                    null,
-                    QueryableMethods.OrderByDescending.MakeGenericMethod(parameter.Type, member.Type),
-                    new[] { source.Expression, Expression.Lambda(member, parameter) }));
+            return (IOrderedQueryable<TSource>)
+                (source.Provider is EntityQueryProvider
+                    ? source.Provider.CreateQuery<TSource>(
+                        Expression.Call(null,
+                        QueryableMethods.OrderByDescending.MakeGenericMethod(parameter.Type, member.Type),
+                        new[] { source.Expression, Expression.Lambda(member, parameter) }))
+                    : source);
         }
 
         /// <summary>
@@ -172,11 +181,13 @@ namespace Microsoft.EntityFrameworkCore
             var parameter = Expression.Parameter(typeof(TSource));
             var member = Expression.PropertyOrField(parameter, propertyOrFieldName);
 
-            return (IOrderedQueryable<TSource>)source.Provider.CreateQuery<TSource>(
-                Expression.Call(
-                    null,
-                    QueryableMethods.ThenByDescending.MakeGenericMethod(parameter.Type, member.Type),
-                    new[] { source.Expression, Expression.Lambda(member, parameter) }));
+            return (IOrderedQueryable<TSource>)
+                (source.Provider is EntityQueryProvider
+                    ? source.Provider.CreateQuery<TSource>(
+                        Expression.Call(null,
+                        QueryableMethods.ThenByDescending.MakeGenericMethod(parameter.Type, member.Type),
+                        new[] { source.Expression, Expression.Lambda(member, parameter) }))
+                    : source);
         }
 
         /// <summary>
