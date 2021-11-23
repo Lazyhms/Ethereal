@@ -7,5 +7,9 @@ namespace Microsoft.EntityFrameworkCore.Infrastructure.Internal
     /// </summary>
     public interface IEtherealOptions : ISingletonOptions
     {
+        /// <summary>
+        /// Naming policy
+        /// </summary>
+        NamingPolicy NamingPolicy { get; set; }
     }
 }

@@ -21,25 +21,28 @@ namespace Ethereal.EntityFrameworkCore.Infrastructure
         /// <summary>
         /// WithServerVersion
         /// </summary>
-        public virtual EtherealDbContextOptionsBuilder WithNoForeignKeys() =>
-            WithOption(o => o.UseSequence());
+        public virtual EtherealDbContextOptionsBuilder WithNamingPolicy(NamingPolicy namingPolicy)
+            => WithOption(o => o.WithNamingPolicy(namingPolicy));
 
         /// <summary>
         /// override Equals method
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object? obj) => base.Equals(obj);
+        public override bool Equals(object? obj)
+            => base.Equals(obj);
 
         /// <summary>
         /// override GetHashCode method
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => base.GetHashCode();
+        public override int GetHashCode()
+            => base.GetHashCode();
 
         /// <summary>
         /// override ToString method
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string? ToString() => base.ToString();
+        public override string? ToString()
+            => base.ToString();
     }
 }

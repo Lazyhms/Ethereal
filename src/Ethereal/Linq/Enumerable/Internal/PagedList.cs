@@ -16,7 +16,7 @@ namespace System.Linq
 
         private class EmptyPagedList<T>
         {
-            public static readonly PagedList<T> Value = new PagedList<T>()
+            public static readonly PagedList<T> Value = new()
             {
                 PageIndex = 1,
                 PageSize = 10,

@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
+using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions.Infrastructure;
 
@@ -10,18 +11,27 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
     /// </summary>
     public class EtherealConventionSetPlugin : IConventionSetPlugin
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EtherealConventionSetPlugin"/> class.
-        /// </summary>
-        public EtherealConventionSetPlugin(ProviderConventionSetBuilderDependencies dependencies)
-        {
-            Dependencies = dependencies;
-        }
 
         /// <summary>
         /// Dependencies
         /// </summary>
-        private ProviderConventionSetBuilderDependencies Dependencies { get; }
+        protected ProviderConventionSetBuilderDependencies Dependencies { get; }
+
+        /// <summary>
+        /// EtherealOptions
+        /// </summary>
+        protected IEtherealOptions EtherealOptions { get; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EtherealConventionSetPlugin"/> class.
+        /// </summary>
+        public EtherealConventionSetPlugin(
+            IEtherealOptions etherealOptions,
+            ProviderConventionSetBuilderDependencies dependencies)
+        {
+            Dependencies = dependencies;
+            EtherealOptions = etherealOptions;
+        }
 
         /// <inheritdoc/>
         public virtual ConventionSet ModifyConventions(ConventionSet conventionSet)
@@ -44,6 +54,19 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
             conventionSet.PropertyAddedConventions.Add(etherealColumnInsertIgnoreConvention);
             conventionSet.PropertyFieldChangedConventions.Add(etherealColumnInsertIgnoreConvention);
 
+            if (EtherealOptions.NamingPolicy != Microsoft.EntityFrameworkCore.NamingPolicy.NONE)
+            {
+                var etherealNamingPolicyConvention = new EtherealNamingPolicyConvention(EtherealOptions.NamingPolicy);
+                conventionSet.EntityTypeAddedConventions.Add(etherealNamingPolicyConvention);
+                conventionSet.EntityTypeBaseTypeChangedConventions.Add(etherealNamingPolicyConvention);
+                conventionSet.KeyAddedConventions.Add(etherealNamingPolicyConvention);
+                conventionSet.IndexAddedConventions.Add(etherealNamingPolicyConvention);
+                conventionSet.PropertyAddedConventions.Add(etherealNamingPolicyConvention);
+                conventionSet.ForeignKeyAddedConventions.Add(etherealNamingPolicyConvention);
+                conventionSet.PropertyFieldChangedConventions.Add(etherealNamingPolicyConvention);
+                conventionSet.ForeignKeyOwnershipChangedConventions.Add(etherealNamingPolicyConvention);
+
+            }
             return conventionSet;
         }
     }

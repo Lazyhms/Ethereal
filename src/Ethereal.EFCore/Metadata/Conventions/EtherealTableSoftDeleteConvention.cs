@@ -33,7 +33,6 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
                 entityTypeBuilder.Property(
                                     typeof(bool), attribute.ColumnName,
                                     true, true)!
-                                 .HasColumnOrder(100, true)!
                                  .HasComment(attribute.Comment, true)!
                                  .HasDefaultValue(0);
                 // add query filter

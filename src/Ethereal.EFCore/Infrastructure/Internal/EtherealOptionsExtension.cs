@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
@@ -30,8 +31,14 @@ namespace Ethereal.EntityFrameworkCore.Infrastructure.Internal
         /// <inheritdoc/>
         public DbContextOptionsExtensionInfo Info => _info ??= new ExtensionInfo(this);
 
+        /// <summary>
+        /// Naming policy
+        /// </summary>
+        public NamingPolicy NamingPolicy { get; internal set; }
+
         /// <inheritdoc/>
-        public void ApplyServices(IServiceCollection services) => services.AddEntityFrameworkCoreRelationalServices();
+        public void ApplyServices(IServiceCollection services)
+            => services.AddEntityFrameworkCoreRelationalServices();
 
         /// <inheritdoc/>
         public void Validate(IDbContextOptions options)
@@ -41,9 +48,10 @@ namespace Ethereal.EntityFrameworkCore.Infrastructure.Internal
         /// <summary>
         /// WithServerVersion
         /// </summary>
-        public virtual EtherealOptionsExtension UseSequence()
+        public virtual EtherealOptionsExtension WithNamingPolicy(NamingPolicy namingPolicy)
         {
             var clone = Clone();
+            clone.NamingPolicy = namingPolicy;
             return clone;
         }
 
