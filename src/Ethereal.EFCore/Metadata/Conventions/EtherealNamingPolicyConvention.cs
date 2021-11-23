@@ -90,6 +90,7 @@ namespace Microsoft.EntityFrameworkCore.Metadata.Conventions
                 }
             }
         }
+
         /// <inheritdoc/>
         public void ProcessPropertyAdded(
             IConventionPropertyBuilder propertyBuilder,
@@ -156,7 +157,11 @@ namespace Microsoft.EntityFrameworkCore.Metadata.Conventions
         }
 
         /// <inheritdoc/>
-        public void ProcessPropertyFieldChanged(IConventionPropertyBuilder propertyBuilder, FieldInfo? newFieldInfo, FieldInfo? oldFieldInfo, IConventionContext<FieldInfo> context)
+        public void ProcessPropertyFieldChanged(
+            IConventionPropertyBuilder propertyBuilder,
+            FieldInfo? newFieldInfo,
+            FieldInfo? oldFieldInfo,
+            IConventionContext<FieldInfo> context)
         {
             if (newFieldInfo is null)
             {
