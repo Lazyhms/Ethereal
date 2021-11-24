@@ -72,21 +72,27 @@ namespace Microsoft.EntityFrameworkCore.Metadata.Conventions
         {
             if (entityTypeBuilder.Metadata.BaseType is null)
             {
-                if (entityTypeBuilder.Metadata.GetTableNameConfigurationSource() == ConfigurationSource.DataAnnotation)
+                if (entityTypeBuilder.Metadata.GetTableNameConfigurationSource() is not null)
                 {
-                    entityTypeBuilder.ToTable(RewriteNamingCase(entityTypeBuilder.Metadata.GetTableName()));
+                    entityTypeBuilder.ToTable(RewriteNamingCase(entityTypeBuilder.Metadata.GetTableName()), true);
+
+                    if (entityTypeBuilder.Metadata.GetSchemaConfigurationSource() is not null)
+                    {
+                        entityTypeBuilder.ToSchema(RewriteNamingCase(entityTypeBuilder.Metadata.GetSchema()), true);
+                    }
                 }
-                if (entityTypeBuilder.Metadata.GetSchemaConfigurationSource() == ConfigurationSource.DataAnnotation)
-                {
-                    entityTypeBuilder.ToSchema(RewriteNamingCase(entityTypeBuilder.Metadata.GetSchema()));
-                }
-                if (entityTypeBuilder.Metadata.GetViewNameConfigurationSource() == ConfigurationSource.Convention)
+                else if (entityTypeBuilder.Metadata.GetViewNameConfigurationSource() is not null)
                 {
                     entityTypeBuilder.ToView(RewriteNamingCase(entityTypeBuilder.Metadata.GetViewName()));
+
+                    if (entityTypeBuilder.Metadata.GetViewSchemaConfigurationSource() is not null)
+                    {
+                        entityTypeBuilder.ToView(RewriteNamingCase(entityTypeBuilder.Metadata.GetViewSchema()));
+                    }
                 }
-                if (entityTypeBuilder.Metadata.GetViewSchemaConfigurationSource() == ConfigurationSource.Convention)
+                else if (entityTypeBuilder.Metadata.GetFunctionNameConfigurationSource() is not null)
                 {
-                    entityTypeBuilder.ToView(RewriteNamingCase(entityTypeBuilder.Metadata.GetViewSchema()));
+                    entityTypeBuilder.ToFunction(RewriteNamingCase(entityTypeBuilder.Metadata.GetFunctionName()));
                 }
             }
         }
@@ -101,7 +107,7 @@ namespace Microsoft.EntityFrameworkCore.Metadata.Conventions
                                   where store is not null
                                   select store)
             {
-                propertyBuilder.HasColumnName(RewriteNamingCase(propertyBuilder.Metadata.GetColumnName(store.GetValueOrDefault())));
+                propertyBuilder.HasColumnName(RewriteNamingCase(propertyBuilder.Metadata.GetColumnName(store.GetValueOrDefault())), true);
             }
         }
 
@@ -115,13 +121,13 @@ namespace Microsoft.EntityFrameworkCore.Metadata.Conventions
         public void ProcessIndexAdded(
             IConventionIndexBuilder indexBuilder,
             IConventionContext<IConventionIndexBuilder> context)
-            => indexBuilder.HasDatabaseName(RewriteNamingCase(indexBuilder.Metadata.GetDatabaseName()));
+            => indexBuilder.HasDatabaseName(RewriteNamingCase(indexBuilder.Metadata.GetDatabaseName()), true);
 
         /// <inheritdoc/>
         public void ProcessKeyAdded(
             IConventionKeyBuilder keyBuilder,
             IConventionContext<IConventionKeyBuilder> context)
-            => keyBuilder.HasName(RewriteNamingCase(keyBuilder.Metadata.GetName()));
+            => keyBuilder.HasName(RewriteNamingCase(keyBuilder.Metadata.GetName()), true);
 
         /// <inheritdoc/>
         public void ProcessEntityTypeBaseTypeChanged(
@@ -132,27 +138,28 @@ namespace Microsoft.EntityFrameworkCore.Metadata.Conventions
         {
             if (newBaseType is null)
             {
-                if (entityTypeBuilder.Metadata.GetTableNameConfigurationSource() == ConfigurationSource.DataAnnotation)
+                if (entityTypeBuilder.Metadata.GetTableNameConfigurationSource() is not null)
                 {
-                    entityTypeBuilder.ToTable(RewriteNamingCase(entityTypeBuilder.Metadata.GetTableName()));
+                    entityTypeBuilder.ToTable(RewriteNamingCase(entityTypeBuilder.Metadata.GetTableName()), true);
+
+                    if (entityTypeBuilder.Metadata.GetSchemaConfigurationSource() is not null)
+                    {
+                        entityTypeBuilder.ToSchema(RewriteNamingCase(entityTypeBuilder.Metadata.GetSchema()), true);
+                    }
                 }
-                if (entityTypeBuilder.Metadata.GetSchemaConfigurationSource() == ConfigurationSource.DataAnnotation)
-                {
-                    entityTypeBuilder.ToSchema(RewriteNamingCase(entityTypeBuilder.Metadata.GetSchema()));
-                }
-                if (entityTypeBuilder.Metadata.GetViewNameConfigurationSource() == ConfigurationSource.Convention)
+                else if (entityTypeBuilder.Metadata.GetViewNameConfigurationSource() is not null)
                 {
                     entityTypeBuilder.ToView(RewriteNamingCase(entityTypeBuilder.Metadata.GetViewName()));
+
+                    if (entityTypeBuilder.Metadata.GetViewSchemaConfigurationSource() is not null)
+                    {
+                        entityTypeBuilder.ToView(RewriteNamingCase(entityTypeBuilder.Metadata.GetViewSchema()));
+                    }
                 }
-                if (entityTypeBuilder.Metadata.GetViewSchemaConfigurationSource() == ConfigurationSource.Convention)
+                else if (entityTypeBuilder.Metadata.GetFunctionNameConfigurationSource() is not null)
                 {
-                    entityTypeBuilder.ToView(RewriteNamingCase(entityTypeBuilder.Metadata.GetViewSchema()));
+                    entityTypeBuilder.ToFunction(RewriteNamingCase(entityTypeBuilder.Metadata.GetFunctionName()));
                 }
-            }
-            else
-            {
-                entityTypeBuilder.HasNoAnnotation(RelationalAnnotationNames.TableName);
-                entityTypeBuilder.HasNoAnnotation(RelationalAnnotationNames.Schema);
             }
         }
 
@@ -173,11 +180,6 @@ namespace Microsoft.EntityFrameworkCore.Metadata.Conventions
                     propertyBuilder.HasColumnName(RewriteNamingCase(propertyBuilder.Metadata.GetColumnName(store.GetValueOrDefault())));
                 }
             }
-            else
-            {
-                propertyBuilder.HasNoAnnotation(RelationalAnnotationNames.TableName);
-                propertyBuilder.HasNoAnnotation(RelationalAnnotationNames.Schema);
-            }
         }
 
         /// <summary>
@@ -186,8 +188,8 @@ namespace Microsoft.EntityFrameworkCore.Metadata.Conventions
         protected virtual string? RewriteNamingCase(string? name)
             => NamingPolicy switch
             {
-                NamingPolicy.LOWERCASE => name?.ToLower(),
-                NamingPolicy.UPPERCASE => name?.ToUpper(),
+                NamingPolicy.LowerCase => name?.ToLower(),
+                NamingPolicy.UpperCase => name?.ToUpper(),
                 _ => name,
             };
     }

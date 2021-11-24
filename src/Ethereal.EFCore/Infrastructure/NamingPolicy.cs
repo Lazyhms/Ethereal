@@ -13,14 +13,14 @@ namespace Microsoft.EntityFrameworkCore
         /// <summary>
         /// None
         /// </summary>
-        NONE = 0,
+        None = 0,
         /// <summary>
         /// Lower
         /// </summary>
-        LOWERCASE = 0x1,
+        LowerCase = 0x1,
         /// <summary>
         /// Upper
         /// </summary>
-        UPPERCASE = 0x2
+        UpperCase = 0x2
     }
 }

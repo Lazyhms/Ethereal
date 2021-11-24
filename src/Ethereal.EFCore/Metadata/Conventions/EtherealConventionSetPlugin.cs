@@ -54,7 +54,7 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
             conventionSet.PropertyAddedConventions.Add(etherealColumnInsertIgnoreConvention);
             conventionSet.PropertyFieldChangedConventions.Add(etherealColumnInsertIgnoreConvention);
 
-            if (EtherealOptions.NamingPolicy != Microsoft.EntityFrameworkCore.NamingPolicy.NONE)
+            if (EtherealOptions.NamingPolicy != Microsoft.EntityFrameworkCore.NamingPolicy.None)
             {
                 var etherealNamingPolicyConvention = new EtherealNamingPolicyConvention(EtherealOptions.NamingPolicy);
                 conventionSet.EntityTypeAddedConventions.Add(etherealNamingPolicyConvention);
@@ -65,7 +65,6 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
                 conventionSet.ForeignKeyAddedConventions.Add(etherealNamingPolicyConvention);
                 conventionSet.PropertyFieldChangedConventions.Add(etherealNamingPolicyConvention);
                 conventionSet.ForeignKeyOwnershipChangedConventions.Add(etherealNamingPolicyConvention);
-
             }
             return conventionSet;
         }

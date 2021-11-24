@@ -28,9 +28,9 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
             MemberInfo clrMember,
             IConventionContext context)
         {
-            if (propertyBuilder.CanSetAfterSave(PropertySaveBehavior.Ignore, true))
+            if (propertyBuilder.CanSetAfterSave(PropertySaveBehavior.Ignore))
             {
-                propertyBuilder.AfterSave(PropertySaveBehavior.Ignore, true);
+                propertyBuilder.AfterSave(PropertySaveBehavior.Ignore);
             }
         }
     }

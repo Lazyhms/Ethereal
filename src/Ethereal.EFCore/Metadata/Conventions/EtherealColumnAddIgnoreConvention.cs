@@ -25,9 +25,9 @@ namespace Microsoft.EntityFrameworkCore.Metadata.Conventions
             MemberInfo clrMember,
             IConventionContext context)
         {
-            if (propertyBuilder.CanSetBeforeSave(PropertySaveBehavior.Ignore, true))
+            if (propertyBuilder.CanSetBeforeSave(PropertySaveBehavior.Ignore))
             {
-                propertyBuilder.BeforeSave(PropertySaveBehavior.Ignore, true);
+                propertyBuilder.BeforeSave(PropertySaveBehavior.Ignore);
             }
         }
     }

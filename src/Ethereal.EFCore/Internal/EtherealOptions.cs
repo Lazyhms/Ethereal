@@ -17,10 +17,8 @@ namespace Microsoft.EntityFrameworkCore.Internal
         /// <summary>
         /// Initializes a new instance of the <see cref="EtherealOptions"/> class.
         /// </summary>
-        public EtherealOptions()
-        {
-            NamingPolicy = NamingPolicy.NONE;
-        }
+        public EtherealOptions() 
+            => NamingPolicy = NamingPolicy.None;
 
         /// <inheritdoc/>
         public void Initialize(IDbContextOptions options)
