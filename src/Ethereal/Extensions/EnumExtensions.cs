@@ -21,11 +21,5 @@ namespace System
         /// </summary>
         public static string GetDescription(this Enum value)
             => value.GetAttributeOfType<DescriptionAttribute>()?.Description ?? string.Empty;
-
-        /// <summary>
-        /// GetValue
-        /// </summary>
-        public static int GetValue(this Enum value)
-            => Convert.ToInt32(value);
     }
 }

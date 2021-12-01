@@ -7,7 +7,7 @@ namespace System.Linq
     /// <summary>
     /// LINQ related extension methods.
     /// </summary>
-    public static partial class EtherealEnumerableExtensions
+    public static class EnumerableExtensions
     {
         /// <summary>
         /// Contains

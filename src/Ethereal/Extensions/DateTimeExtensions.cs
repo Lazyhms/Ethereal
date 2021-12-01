@@ -37,7 +37,7 @@ namespace System
         /// Start and end date of the day
         /// </summary>
         public static (DateTime start, DateTime end) TimeOfDay(this DateTime date)
-            => (date.FirstTimeOfToday(), date.LastTimeOfToday());
+            => (date.FirstTimeOfDay(), date.LastTimeOfDay());
 
         #endregion StartAndEnd
 
@@ -70,14 +70,14 @@ namespace System
         /// <summary>
         /// FirstTimeOfToday
         /// </summary>
-        public static DateTime FirstTimeOfToday(this DateTime date)
+        public static DateTime FirstTimeOfDay(this DateTime date)
             => date.Date;
 
         /// <summary>
         /// LastDayOfMonth
         /// </summary>
         public static DateTime LastDayOfMonth(this DateTime date)
-            => date.AddDays(1 - date.Day).AddMonths(1).AddDays(-1).LastTimeOfToday();
+            => date.AddDays(1 - date.Day).AddMonths(1).AddDays(-1).LastTimeOfDay();
 
         /// <summary>
         /// LastDayOfQuarter
@@ -89,7 +89,7 @@ namespace System
         /// LastDayOfWeek
         /// </summary>
         public static DateTime LastDayOfWeek(this DateTime date)
-            => date.AddDays(7 - (int)date.DayOfWeek).LastTimeOfToday();
+            => date.AddDays(7 - (int)date.DayOfWeek).LastTimeOfDay();
 
         /// <summary>
         /// LastDayOfYear
@@ -100,7 +100,7 @@ namespace System
         /// <summary>
         /// LastTimeOfToday
         /// </summary>
-        public static DateTime LastTimeOfToday(this DateTime date)
+        public static DateTime LastTimeOfDay(this DateTime date)
             => date.Date.AddDays(1).AddSeconds(-1);
 
         #endregion DayOf

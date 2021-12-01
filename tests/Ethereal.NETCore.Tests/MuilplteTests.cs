@@ -74,8 +74,8 @@ namespace Ethereal.Json.Tests
 
             var ttd1 = sss.Concat(sss1).Distinct().ToList();
             var ttd2 = sss.Concat(sss1).Distinct((x, y) => Equals(x?.MyProperty2, y?.MyProperty2)).ToList();
-            var ttd3 = EtherealEnumerableExtensions.Distinct(sss.Concat(sss1), x => (x?.MyProperty2)).ToList();
-            var ttd4 = EtherealEnumerableExtensions.Distinct(sss.Concat(sss1), x => (x?.MyProperty)).ToList();
+            var ttd3 = EnumerableExtensions.Distinct(sss.Concat(sss1), x => (x?.MyProperty2)).ToList();
+            var ttd4 = EnumerableExtensions.Distinct(sss.Concat(sss1), x => (x?.MyProperty)).ToList();
         }
 
         [Fact]
@@ -125,17 +125,22 @@ namespace Ethereal.Json.Tests
             var t1 = new StringBuilder()
                         .Append(1 == 1, "www")
                         .Append(1 == 1, 2)
-                        .Append(1 == 1, 2L)
-                        .Append(1 == 1, DateTime.Now)
-                        .Append(1 == 1, EE.A);
+                        .Append(1 == 2, 2L)
+                        .Append(1 == 2, 3D)
+                        .Append(EE.A, (s, t1) =>
+                        {
+                            s.Append(EE.A == t1, "aaa")
+                             .Append(EE.B == t1, "bbb");
+                        });
 
-            var t2 = new StringBuilder().AppendJoin("_", 1, 2, 3, 4, 5);
+            Assert.Equal("www2eee", t1.ToString());
         }
     }
 
     public enum EE
     {
-        A
+        A,
+        B
     }
 
     public class ST : TreeNode<ST>

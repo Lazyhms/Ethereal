@@ -5,11 +5,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ethereal.Permission
 {
-    public class IEntity
+    public class EntityBase
     {
         [Key]
+        [Column("id")]
         [Comment("Identity")]
-        [Column("id", Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
 
@@ -17,14 +17,14 @@ namespace Ethereal.Permission
         /// create_time
         /// </summary>
         [UpdateIgnore, Comment("gmt_create")]
-        [Column("gmt_create", TypeName = "datetime", Order = 98)]
+        [Column("gmt_create", TypeName = "datetime")]
         public DateTime Created { get; private set; } = DateTime.Now;
 
         /// <summary>
         /// update_time
         /// </summary>
         [AddIgnore, Comment("gmt_modified")]
-        [Column("gmt_modified", TypeName = "datetime", Order = 99)]
+        [Column("gmt_modified", TypeName = "datetime")]
         public DateTime? Modified { get; private set; } = DateTime.Now;
     }
 }

@@ -11,6 +11,8 @@ namespace Ethereal.Permission.Tests
 
         public DbSet<Account> Account { get; set; }
 
+        public DbSet<Role> Role { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder) =>
             base.OnModelCreating(modelBuilder);
 
@@ -35,6 +37,7 @@ namespace Ethereal.Permission.Tests
                 {
                 }).UseEthereal(opts =>
                 {
+                    opts.WithNamingPolicy(NamingPolicy.UpperCase);
                 });
             });
             return serviceDescriptors.BuildServiceProvider().GetService<AppDbContextTest>();

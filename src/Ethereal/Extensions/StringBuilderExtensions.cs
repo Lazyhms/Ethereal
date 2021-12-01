@@ -20,6 +20,31 @@ namespace System.Text
             => condition ? builder.Append(value) : builder;
 
         /// <summary>
+        /// Appends a string to this string builder.
+        /// </summary>
+        public static StringBuilder Append(
+            this StringBuilder builder,
+            string? source,
+            Action<StringBuilder, string?> appendAction)
+        {
+            appendAction(builder, source);
+            return builder;
+        }
+
+        /// <summary>
+        /// Appends a value to this string builder.
+        /// </summary>
+        public static StringBuilder Append<T>(
+            this StringBuilder builder,
+            T source,
+            Action<StringBuilder, T> appendAction)
+            where T : struct
+        {
+            appendAction(builder, source);
+            return builder;
+        }
+
+        /// <summary>
         /// Appends a boolean to this string builder when condition is true.
         /// </summary>
         public static StringBuilder Append(
@@ -181,6 +206,11 @@ namespace System.Text
                     Action<StringBuilder, T?> joinAction,
                     string separator = ", ")
         {
+            if (values is null)
+            {
+                return stringBuilder;
+            }
+
             var appended = false;
 
             foreach (var value in values)
@@ -207,6 +237,11 @@ namespace System.Text
                     Func<StringBuilder, T?, bool> joinFunc,
                     string separator = ", ")
         {
+            if (values is null)
+            {
+                return stringBuilder;
+            }
+
             var appended = false;
 
             foreach (var value in values)

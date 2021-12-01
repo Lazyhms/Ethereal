@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using System.Linq.Expressions.Internal;
+using System.Collections.ObjectModel;
 
 namespace System.Linq.Expressions
 {
@@ -103,6 +103,20 @@ namespace System.Linq.Expressions
             var visitor = new ParameterVisitor(first.Parameters);
             var expression = merge(visitor.Visit(first.Body)!, visitor.Visit(second.Body)!);
             return Expression.Lambda<T>(expression, first.Parameters);
+        }
+
+        private class ParameterVisitor : ExpressionVisitor
+        {
+            private readonly ReadOnlyCollection<ParameterExpression> _parameters;
+
+            public ParameterVisitor(ReadOnlyCollection<ParameterExpression> parameters)
+                => _parameters = parameters;
+
+            public override Expression? Visit(Expression? node)
+                => base.Visit(node);
+
+            protected override Expression VisitParameter(ParameterExpression parameter)
+                => _parameters.FirstOrDefault(s => s.Type == parameter.Type) ?? parameter;
         }
     }
 }
