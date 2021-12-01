@@ -5,12 +5,35 @@ using System.Collections.Generic;
 namespace System
 {
     /// <summary>
-    /// KeyValue
+    /// Dictionary
     /// </summary>
     public static class DictionaryExtensions
     {
         /// <summary>
-        /// TryAddOrUpdate
+        /// Get value or add
+        /// </summary>
+        public static TValue GetOrAdd<TKey, TValue>(
+            this IDictionary<TKey, TValue> source,
+            TKey key,
+            TValue value)
+        {
+            if (!source.TryGetValue(key, out _))
+            {
+                source.Add(key, value);
+            }
+            return value;
+        }
+
+        /// <summary>
+        /// Get value or default
+        /// </summary>
+        public static TValue? GetValueOrDefault<TKey, TValue>(
+            this IDictionary<TKey, TValue> source,
+            TKey key) where TKey : notnull
+            => source.TryGetValue(key, out var value) ? value : default;
+
+        /// <summary>
+        /// Try add or update item
         /// </summary>
         public static IDictionary<TKey, TValue> TryAddOrUpdate<TKey, TValue>(
            this IDictionary<TKey, TValue> source,
@@ -22,13 +45,13 @@ namespace System
 
             if (!source.TryAdd(key, value))
             {
-                return source.Update(key, value);
+                return source.TryUpdate(key, value);
             }
             return source;
         }
 
         /// <summary>
-        /// TryAddOrUpdate
+        /// Try add or update item
         /// </summary>
         public static IDictionary<TKey, TValue> TryAddOrUpdate<TKey, TValue>(
            this IDictionary<TKey, TValue> source,
@@ -39,13 +62,13 @@ namespace System
 
             if (!source.TryAdd(item.Key, item.Value))
             {
-                return source.Update(item);
+                return source.TryUpdate(item);
             }
             return source;
         }
 
         /// <summary>
-        /// TryUpdate
+        /// Try update item
         /// </summary>
         public static IDictionary<TKey, TValue> TryUpdate<TKey, TValue>(
            this IDictionary<TKey, TValue> source,
@@ -57,13 +80,13 @@ namespace System
 
             if (source.ContainsKey(key))
             {
-                return source.Update(key, value);
+                source[key] = value;
             }
             return source;
         }
 
         /// <summary>
-        /// TryUpdate
+        /// Try update item
         /// </summary>
         public static IDictionary<TKey, TValue> TryUpdate<TKey, TValue>(
            this IDictionary<TKey, TValue> source,
@@ -74,7 +97,7 @@ namespace System
 
             if (source.ContainsKey(item.Key))
             {
-                return source.Update(item);
+                source[item.Key] = item.Value;
             }
             return source;
         }
@@ -97,38 +120,18 @@ namespace System
         }
 
         /// <summary>
-        /// Update
+        /// Try remove item
         /// </summary>
-        public static IDictionary<TKey, TValue> Update<TKey, TValue>(
-           this IDictionary<TKey, TValue> source,
-           TKey key,
-           TValue value) where TKey : notnull
+        public static bool TryRemove<TKey, TValue>(
+            this IDictionary<TKey, TValue> source,
+            TKey key,
+            out TValue? value)
         {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(key, nameof(key));
-
-            if (source.ContainsKey(key))
+            if (source.TryGetValue(key, out value))
             {
-                source[key] = value;
+                return source.Remove(key);
             }
-            return source;
-        }
-
-        /// <summary>
-        /// Update
-        /// </summary>
-        public static IDictionary<TKey, TValue> Update<TKey, TValue>(
-           this IDictionary<TKey, TValue> source,
-           KeyValuePair<TKey, TValue> item) where TKey : notnull
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(item, nameof(item));
-
-            if (source.ContainsKey(item.Key))
-            {
-                source[item.Key] = item.Value;
-            }
-            return source;
+            return false;
         }
     }
 }

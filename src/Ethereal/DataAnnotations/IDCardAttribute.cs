@@ -16,8 +16,8 @@ namespace System.ComponentModel.DataAnnotations
         /// <summary>
         /// Initializes a new instance of the <see cref="IDCardAttribute"/> class.
         /// </summary>
-        public IDCardAttribute(string? errorMessage = default) : base("IDCard") =>
-            ErrorMessage = !string.IsNullOrWhiteSpace(errorMessage) ? errorMessage : CoreStrings.IDCardAttribute_Invalid;
+        public IDCardAttribute(string? errorMessage = default) : base("IDCard")
+            => ErrorMessage = !string.IsNullOrWhiteSpace(errorMessage) ? errorMessage : CoreStrings.IDCardAttribute_Invalid;
 
         /// <inheritdoc/>
         public override bool IsValid(object? value)

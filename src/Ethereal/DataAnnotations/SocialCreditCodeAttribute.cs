@@ -21,8 +21,8 @@ namespace System.ComponentModel.DataAnnotations
         /// <summary>
         /// Initializes a new instance of the <see cref="SocialCreditCodeAttribute"/> class.
         /// </summary>
-        public SocialCreditCodeAttribute(string? errorMessage = default) : base("SocialCreditCode") =>
-            ErrorMessage = !string.IsNullOrWhiteSpace(errorMessage) ? errorMessage : CoreStrings.SocialCreditCodeAttribute_Invalid;
+        public SocialCreditCodeAttribute(string? errorMessage = default) : base("SocialCreditCode")
+            => ErrorMessage = !string.IsNullOrWhiteSpace(errorMessage) ? errorMessage : CoreStrings.SocialCreditCodeAttribute_Invalid;
 
         /// <inheritdoc/>
         public override bool IsValid(object? value)
