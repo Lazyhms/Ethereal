@@ -23,14 +23,14 @@ namespace System.ComponentModel.DataAnnotations
         }
 
         /// <summary>
-        /// use strong password
+        /// Use strong password
         /// </summary>
         public bool StrongPassword { get; set; } = true;
 
         /// <summary>
-        /// use special password
+        /// Use special characters
         /// </summary>
-        public bool SpecialPassword { get; set; } = true;
+        public bool SpecialCharacters { get; set; } = true;
 
         /// <inheritdoc/>
         public override bool IsValid(object? value)
@@ -43,7 +43,7 @@ namespace System.ComponentModel.DataAnnotations
             {
                 if (StrongPassword)
                 {
-                    return SpecialPassword ? _strongRegex.IsMatch(str) : _specialRegex.IsMatch(str);
+                    return SpecialCharacters ? _specialRegex.IsMatch(str) : _strongRegex.IsMatch(str);
                 }
                 else
                 {
