@@ -13,8 +13,12 @@ namespace System.IO
         /// <summary>
         /// Reads all characters from the current position to the end of the stream.
         /// </summary>
-        public static string ToString(this Stream stream, Encoding encoding)
+        public static string ToString(
+            this Stream stream,
+            Encoding encoding)
         {
+            Check.NotNull(stream, "stream");
+
             using var reader = new StreamReader(stream, encoding);
             return reader.ReadToEnd();
         }
@@ -23,10 +27,64 @@ namespace System.IO
         /// Reads all characters from the current position to the end of the stream asynchronously
         ///     and returns them as one string.
         /// </summary>
-        public static async Task<string> ToStringAsync(this Stream stream, Encoding encoding)
+        public static async Task<string> ToStringAsync(
+            this Stream stream,
+            Encoding encoding)
         {
+            Check.NotNull(stream, "stream");
+
             using var reader = new StreamReader(stream, encoding);
             return await reader.ReadToEndAsync();
+        }
+
+        /// <summary>
+        /// Reads characters from the current position to the end of the stream.
+        /// </summary>
+        public static byte[] ToByte(
+            this Stream stream)
+        {
+            Check.NotNull(stream, "stream");
+
+            var bytes = new byte[stream.Length];
+            stream.Read(bytes, 0, bytes.Length);
+            stream.Seek(0, SeekOrigin.Begin);
+            return bytes;
+        }
+
+        /// <summary>
+        /// Reads all characters from the current position to the end of the stream asynchronously
+        ///     and returns them as one byte.
+        /// </summary>
+        public static async Task<byte[]> ToByteAsync(
+            this Stream stream)
+        {
+            Check.NotNull(stream, "stream");
+
+            var bytes = new byte[stream.Length];
+            await stream.ReadAsync(bytes, 0, bytes.Length);
+            stream.Seek(0, SeekOrigin.Begin);
+            return bytes;
+        }
+
+        /// <summary>
+        /// Reads all characters from the current position to the end of the stream.
+        /// </summary>
+        public static string ToBase64String(
+            this Stream stream)
+        {
+            var inArray = stream.ToByte();
+            return Convert.ToBase64String(inArray);
+        }
+
+        /// <summary>
+        /// Reads all characters from the current position to the end of the stream asynchronously
+        ///     and returns them as one base-64 string.
+        /// </summary>
+        public static async Task<string> ToBase64StringAsync(
+            this Stream stream)
+        {
+            var inArray = await stream.ToByteAsync();
+            return Convert.ToBase64String(inArray);
         }
     }
 }

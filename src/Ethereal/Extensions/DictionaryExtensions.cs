@@ -15,8 +15,10 @@ namespace System
         public static TValue GetOrAdd<TKey, TValue>(
             this IDictionary<TKey, TValue> source,
             TKey key,
-            TValue value)
+            TValue value) where TKey : notnull
         {
+            Check.NotNull(source, nameof(source));
+
             if (!source.TryGetValue(key, out _))
             {
                 source.Add(key, value);
@@ -30,7 +32,11 @@ namespace System
         public static TValue? GetValueOrDefault<TKey, TValue>(
             this IDictionary<TKey, TValue> source,
             TKey key) where TKey : notnull
-            => source.TryGetValue(key, out var value) ? value : default;
+        {
+            Check.NotNull(source, nameof(source));
+
+            return source.TryGetValue(key, out var value) ? value : default;
+        }
 
         /// <summary>
         /// Try add or update item
@@ -125,8 +131,10 @@ namespace System
         public static bool TryRemove<TKey, TValue>(
             this IDictionary<TKey, TValue> source,
             TKey key,
-            out TValue? value)
+            out TValue? value) where TKey : notnull
         {
+            Check.NotNull(source, nameof(source));
+
             if (source.TryGetValue(key, out value))
             {
                 return source.Remove(key);
