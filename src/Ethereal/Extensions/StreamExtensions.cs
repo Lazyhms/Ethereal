@@ -41,13 +41,19 @@ namespace System.IO
         /// Reads characters from the current position to the end of the stream.
         /// </summary>
         public static byte[] ToByte(
-            this Stream stream)
+            this Stream stream,
+            bool close = true)
         {
             Check.NotNull(stream, "stream");
 
             var bytes = new byte[stream.Length];
             stream.Read(bytes, 0, bytes.Length);
             stream.Seek(0, SeekOrigin.Begin);
+
+            if (close)
+            {
+                stream.Close();
+            }
             return bytes;
         }
 
@@ -56,13 +62,19 @@ namespace System.IO
         ///     and returns them as one byte.
         /// </summary>
         public static async Task<byte[]> ToByteAsync(
-            this Stream stream)
+            this Stream stream,
+            bool close = true)
         {
             Check.NotNull(stream, "stream");
 
             var bytes = new byte[stream.Length];
             await stream.ReadAsync(bytes, 0, bytes.Length);
             stream.Seek(0, SeekOrigin.Begin);
+
+            if (close)
+            {
+                stream.Close();
+            }
             return bytes;
         }
 
