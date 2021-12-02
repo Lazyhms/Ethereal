@@ -40,7 +40,7 @@ namespace System.IO
         /// <summary>
         /// Reads characters from the current position to the end of the stream.
         /// </summary>
-        public static byte[] ToByte(
+        public static byte[] ToByteArray(
             this Stream stream,
             bool close = true)
         {
@@ -61,7 +61,7 @@ namespace System.IO
         /// Reads all characters from the current position to the end of the stream asynchronously
         ///     and returns them as one byte.
         /// </summary>
-        public static async Task<byte[]> ToByteAsync(
+        public static async Task<byte[]> ToByteArrayAsync(
             this Stream stream,
             bool close = true)
         {
@@ -84,7 +84,7 @@ namespace System.IO
         public static string ToBase64String(
             this Stream stream)
         {
-            var inArray = stream.ToByte();
+            var inArray = stream.ToByteArray();
             return Convert.ToBase64String(inArray);
         }
 
@@ -95,7 +95,7 @@ namespace System.IO
         public static async Task<string> ToBase64StringAsync(
             this Stream stream)
         {
-            var inArray = await stream.ToByteAsync();
+            var inArray = await stream.ToByteArrayAsync();
             return Convert.ToBase64String(inArray);
         }
     }
