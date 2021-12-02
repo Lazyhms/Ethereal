@@ -63,8 +63,8 @@ namespace Ethereal.Json.Tests
         {
             var _ = new List<T>().Where(1 == 1, t => t.MyProperty is not null);
 
-            var sss = Enumerable.Repeat(new T { MyProperty2 = "132132131" }, 10);
-            var sss1 = Enumerable.Repeat(new T { MyProperty2 = "1321321312" }, 10);
+            var sss = Enumerable.Repeat(new T { IDCard = "132132131" }, 10);
+            var sss1 = Enumerable.Repeat(new T { IDCard = "1321321312" }, 10);
 
             var ttp1 = sss.Concat(sss1).ToPagedList(1, 3);
 
@@ -73,15 +73,15 @@ namespace Ethereal.Json.Tests
             var ttu1 = sss.Union(sss1, (x, y) => Equals(x?.MyProperty, y?.MyProperty)).ToList();
 
             var ttd1 = sss.Concat(sss1).Distinct().ToList();
-            var ttd2 = sss.Concat(sss1).Distinct((x, y) => Equals(x?.MyProperty2, y?.MyProperty2)).ToList();
-            var ttd3 = EnumerableExtensions.Distinct(sss.Concat(sss1), x => (x?.MyProperty2)).ToList();
+            var ttd2 = sss.Concat(sss1).Distinct((x, y) => Equals(x?.IDCard, y?.IDCard)).ToList();
+            var ttd3 = EnumerableExtensions.Distinct(sss.Concat(sss1), x => (x?.IDCard)).ToList();
             var ttd4 = EnumerableExtensions.Distinct(sss.Concat(sss1), x => (x?.MyProperty)).ToList();
         }
 
         [Fact]
         public void Vaild_Tests()
         {
-            var t = new T() { MyProperty2 = "3213231991071033115", MyProperty3 = "913201004258014876" };
+            var t = new T() { IDCard = "321323199107103315", SocialCreditCode = "913201004258014876", Account = "Hu122", Password = "Az12234567" };
             var validationResults = new List<ValidationResult>();
             var ttt1 = Validator.TryValidateObject(t, new ValidationContext(t), validationResults, true);
         }
@@ -157,10 +157,16 @@ namespace Ethereal.Json.Tests
         public Guid? MyProperty1 { get; set; }
 
         [IDCard]
-        public string? MyProperty2 { get; set; }
+        public string? IDCard { get; set; }
 
         [SocialCreditCode]
-        public string? MyProperty3 { get; set; }
+        public string? SocialCreditCode { get; set; }
+
+        [Account]
+        public string? Account { get; set; }
+
+        [Password]
+        public string? Password { get; set; }
 
         public decimal? MyProperty4 { get; set; }
 

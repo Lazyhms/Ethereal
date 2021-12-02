@@ -5,7 +5,7 @@ using Ethereal.NETCore;
 namespace System.ComponentModel.DataAnnotations
 {
     /// <summary>
-    /// Validate IDCard
+    /// Validates an IDCard.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
     public sealed class IDCardAttribute : DataTypeAttribute
