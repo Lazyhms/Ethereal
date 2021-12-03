@@ -23,8 +23,8 @@ namespace System.Text.Json.Serialization
             => _dateFormatString = string.IsNullOrWhiteSpace(dateFormatString) ? _dateFormatString : dateFormatString;
 
         /// <inheritdoc/>
-        public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
-            reader.GetDateTime();
+        public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            => reader.GetDateTime();
 
         /// <inheritdoc/>
         public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)

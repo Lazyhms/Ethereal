@@ -24,13 +24,7 @@ namespace System.Text.Json.Serialization
 
         /// <inheritdoc/>
         public override Guid Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            if (reader.TryGetGuid(out var value) || Guid.TryParse(reader.GetString(), out value))
-            {
-                return value;
-            }
-            return default;
-        }
+            => reader.TryGetGuid(out var value) || Guid.TryParse(reader.GetString(), out value) ? value : default;
 
         /// <inheritdoc/>
         public override void Write(Utf8JsonWriter writer, Guid value, JsonSerializerOptions options)

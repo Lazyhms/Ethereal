@@ -19,11 +19,9 @@ namespace System.Text.Json.Serialization
             Check.NotNull(converters, nameof(converters));
 
             converters.Add(new JsonGuidConverter());
-
             converters.Add(new JsonStringConverter());
-
             converters.Add(new JsonDateTimeConverter());
-            converters.Add(new JsonDateTimeOffsetConverter(DateTimeOffsetConverterOptions.AllowString));
+            converters.Add(new JsonDateTimeOffsetConverter());
 
             return converters;
         }
