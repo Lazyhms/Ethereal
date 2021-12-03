@@ -120,7 +120,7 @@ namespace Ethereal.Json.Tests
         }
 
         [Fact]
-        public void StringBuilder()
+        public void StringBuilder_Tests()
         {
             var t1 = new StringBuilder()
                         .Append(1 == 1, "www")
@@ -134,6 +134,13 @@ namespace Ethereal.Json.Tests
                         });
 
             Assert.Equal("www2eee", t1.ToString());
+        }
+
+        [Fact]
+        public void String_Tests()
+        {
+            var str = "17302751413".Desensitize();
+            var str1 = "321323199107103315".Desensitize();
         }
     }
 

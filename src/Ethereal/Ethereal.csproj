@@ -4,6 +4,7 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<AssemblyName>Ethereal</AssemblyName>
 		<RootNamespace>System</RootNamespace>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 
 	<ItemGroup>
