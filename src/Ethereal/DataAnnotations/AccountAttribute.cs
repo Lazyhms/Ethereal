@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
 namespace System.ComponentModel.DataAnnotations
