@@ -47,8 +47,8 @@ namespace System.IO
             Check.NotNull(stream, "stream");
 
             var bytes = new byte[stream.Length];
-            stream.Read(bytes, 0, bytes.Length);
-            stream.Seek(0, SeekOrigin.Begin);
+            stream.Read(bytes);
+            stream.Seek(0L, SeekOrigin.Begin);
 
             if (close)
             {
@@ -68,8 +68,8 @@ namespace System.IO
             Check.NotNull(stream, "stream");
 
             var bytes = new byte[stream.Length];
-            await stream.ReadAsync(bytes, 0, bytes.Length);
-            stream.Seek(0, SeekOrigin.Begin);
+            await stream.ReadAsync(bytes);
+            stream.Seek(0L, SeekOrigin.Begin);
 
             if (close)
             {
