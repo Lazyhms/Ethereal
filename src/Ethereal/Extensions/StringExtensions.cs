@@ -64,6 +64,11 @@ namespace System
             int startLength = 3,
             int endLength = 4)
         {
+            if (string.IsNullOrWhiteSpace(source))
+            {
+                return source;
+            }
+
             var sourceSpan = source.AsSpan();
             var leftSpan = sourceSpan.Slice(0, startLength);
             Span<char> centerSpan;
