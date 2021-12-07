@@ -142,7 +142,6 @@ namespace Ethereal.App
                 options.InputFormatters.Add(new TextPlainInputFormatter());
             }).AddJsonOptions(options =>
             {
-                options.UseDefaultJsonOptions();
             }).ConfigureApiBehaviorOptions(options =>
             {
                 options.InvalidModelStateResponseFactory = context =>

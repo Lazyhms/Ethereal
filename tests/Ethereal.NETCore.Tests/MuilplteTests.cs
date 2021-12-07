@@ -2,9 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Ethereal.Json.Tests
@@ -32,13 +35,8 @@ namespace Ethereal.Json.Tests
         [Fact]
         public void Json_Tests()
         {
-            var options = new JsonSerializerOptions
-            {
-                NumberHandling = JsonNumberHandling.AllowNamedFloatingPointLiterals
-            };
-            options.Converters.UseDefaultConverter();
-            var j = JsonSerializer.Serialize(new T { }, options);
-            var t = JsonSerializer.Deserialize<T>(j, options);
+            var j = JsonSerializer.Serialize(new T { }, JsonOptions.DefaultSerializerOptions);
+            var t = JsonSerializer.Deserialize<T>(j, JsonOptions.DefaultSerializerOptions);
         }
 
         [Fact]
@@ -141,6 +139,12 @@ namespace Ethereal.Json.Tests
         {
             var str = "17302751413".Desensitize();
             var str1 = "321323199107103315".Desensitize();
+        }
+
+        [Fact]
+        public async Task HttpContent_Test()
+        {
+            var t = await new HttpClient().PostAsJsonAsync("https://www.baidu.com", new { id = 1 });
         }
     }
 
