@@ -28,8 +28,5 @@ namespace Microsoft.AspNetCore.Mvc.Formatters
             var data = await streamReader.ReadToEndAsync();
             return InputFormatterResult.Success(data);
         }
-
-        /// <inheritdoc/>
-        protected override bool CanReadType(Type type) => type == typeof(string);
     }
 }

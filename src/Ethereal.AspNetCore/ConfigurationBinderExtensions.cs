@@ -17,7 +17,7 @@ namespace Microsoft.Extensions.Configuration
         {
             Check.NotNull(configuration, nameof(configuration));
 
-            var objectinstac = new T();
+            var objectinstac = Activator.CreateInstance<T>();
             configuration.Bind(objectinstac);
             return objectinstac;
         }
@@ -31,7 +31,7 @@ namespace Microsoft.Extensions.Configuration
         {
             Check.NotNull(configuration, nameof(configuration));
 
-            var objectinstac = new T();
+            var objectinstac = Activator.CreateInstance<T>();
             configuration.Bind(key, objectinstac);
             return objectinstac;
         }

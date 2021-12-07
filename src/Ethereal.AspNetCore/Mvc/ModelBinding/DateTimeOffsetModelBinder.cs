@@ -38,9 +38,8 @@ namespace Microsoft.AspNetCore.Mvc.ModelBinding
             if (valueProviderResult == ValueProviderResult.None)
             {
                 _logger.FoundNoValueInRequest(bindingContext);
-
-                // no entry
                 _logger.DoneAttemptingToBindModel(bindingContext);
+
                 return;
             }
 
@@ -59,7 +58,7 @@ namespace Microsoft.AspNetCore.Mvc.ModelBinding
                 {
                     model = null;
                 }
-                else if (type == typeof(DateTimeOffset))
+                else if (typeof(DateTimeOffset) == type)
                 {
                     if (DateTimeOffset.TryParse(value, valueProviderResult.Culture, DateTimeStyles.None | DateTimeStyles.AllowWhiteSpaces, out var actValue))
                     {

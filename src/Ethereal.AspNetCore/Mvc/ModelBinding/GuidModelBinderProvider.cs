@@ -17,7 +17,7 @@ namespace Microsoft.AspNetCore.Mvc.ModelBinding.Binders
             Check.NotNull(context, nameof(context));
 
             var modelType = context.Metadata.UnderlyingOrModelType;
-            if (modelType == typeof(Guid))
+            if (typeof(Guid) == modelType)
             {
                 var loggerFactory = context.Services.GetRequiredService<ILoggerFactory>();
                 return new GuidModelBinder(loggerFactory);

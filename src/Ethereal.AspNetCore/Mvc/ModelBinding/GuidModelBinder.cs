@@ -31,9 +31,8 @@ namespace Microsoft.AspNetCore.Mvc.ModelBinding
             if (valueProviderResult == ValueProviderResult.None)
             {
                 _logger.FoundNoValueInRequest(bindingContext);
-
-                // no entry
                 _logger.DoneAttemptingToBindModel(bindingContext);
+
                 return;
             }
 
@@ -52,7 +51,7 @@ namespace Microsoft.AspNetCore.Mvc.ModelBinding
                 {
                     model = null;
                 }
-                else if (type == typeof(Guid))
+                else if (typeof(Guid) == type)
                 {
                     Guid.TryParse(value, out var actValue);
                     model = actValue;

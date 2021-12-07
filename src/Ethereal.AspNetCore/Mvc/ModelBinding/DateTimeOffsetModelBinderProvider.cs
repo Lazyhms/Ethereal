@@ -25,7 +25,7 @@ namespace Microsoft.AspNetCore.Mvc.ModelBinding
             Check.NotNull(context, nameof(context));
 
             var modelType = context.Metadata.UnderlyingOrModelType;
-            if (modelType == typeof(DateTimeOffset))
+            if (typeof(DateTimeOffset) == modelType)
             {
                 var loggerFactory = context.Services.GetRequiredService<ILoggerFactory>();
                 return new DateTimeOffsetModelBinder(_dateTimeOffsetBinderOptions, loggerFactory);
