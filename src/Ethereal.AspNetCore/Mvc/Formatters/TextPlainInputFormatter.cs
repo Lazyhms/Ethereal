@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-using System;
 using System.Text;
 using System.Threading.Tasks;
 
