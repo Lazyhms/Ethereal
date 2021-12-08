@@ -13,12 +13,8 @@ namespace System.ComponentModel.DataAnnotations
         /// <summary>
         /// Initializes a new instance of the <see cref="LifetimeDescriptorAttribute"/> class.
         /// </summary>
-        public LifetimeDescriptorAttribute(ServiceLifetime serviceLifetime) => ServiceLifetime = serviceLifetime;
-
-        /// <summary>
-        /// ServiceDescriptor
-        /// </summary>
-        public object? ServiceDescriptor { get; set; } = null;
+        public LifetimeDescriptorAttribute(ServiceLifetime serviceLifetime) 
+            => ServiceLifetime = serviceLifetime;
 
         /// <summary>
         /// ServiceLifetime

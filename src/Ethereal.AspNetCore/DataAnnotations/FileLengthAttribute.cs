@@ -2,10 +2,8 @@
 
 using Ethereal.AspNetCore;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.ComponentModel.DataAnnotations;
 
-namespace Ethereal.ComponentModel.DataAnnotations
+namespace System.ComponentModel.DataAnnotations
 {
     /// <summary>
     /// Specifies the maximum length of IFormFile or IFormFileCollection data allowed in a property.
