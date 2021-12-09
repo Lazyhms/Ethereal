@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
-namespace Microsoft.EntityFrameworkCore.Infrastructure.Internal
+namespace Microsoft.EntityFrameworkCore.Infrastructure
 {
     /// <summary>
     /// Options

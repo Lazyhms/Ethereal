@@ -105,7 +105,7 @@ namespace System.Linq.Expressions
             return Expression.Lambda<T>(expression, first.Parameters);
         }
 
-        private class ParameterVisitor : ExpressionVisitor
+        private sealed class ParameterVisitor : ExpressionVisitor
         {
             private readonly ReadOnlyCollection<ParameterExpression> _parameters;
 
