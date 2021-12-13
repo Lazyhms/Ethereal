@@ -69,7 +69,7 @@ namespace System
                 return source;
             }
 
-            var sourceSpan = source.AsSpan();
+            ReadOnlySpan<char> sourceSpan = source;
             var leftSpan = sourceSpan.Slice(0, startLength);
             Span<char> centerSpan;
             {
@@ -85,5 +85,32 @@ namespace System
                 .Append(rightSpan)
                 .ToString();
         }
+
+        /// <summary>
+        /// Appends a string to this string
+        /// </summary>
+        public static string? Concat(
+            this string? str0,
+            bool condition,
+            object? arg0)
+            => condition ? string.Concat(str0, arg0) : str0;
+
+        /// <summary>
+        /// Appends a string to this string
+        /// </summary>
+        public static string? Concat(
+            this string? str0,
+            bool condition,
+            string? str1)
+            => condition ? string.Concat(str0, str1) : str0;
+
+        /// <summary>
+        /// Appends a string to this string
+        /// </summary>
+        public static string? Concat(
+            this string? str0,
+            bool condition,
+            ReadOnlySpan<char> str1)
+            => condition ? string.Concat(str0, str1) : str0;
     }
 }
