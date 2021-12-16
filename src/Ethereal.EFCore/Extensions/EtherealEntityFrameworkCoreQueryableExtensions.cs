@@ -16,6 +16,49 @@ namespace Microsoft.EntityFrameworkCore
     public static class EtherealEntityFrameworkCoreQueryableExtensions
     {
         /// <summary>
+        /// Asynchronously determines whether a sequence contains any elements.
+        /// </summary>
+        public static Task<bool> AnyAsync<TSource>(
+            this IQueryable<TSource> source,
+            bool condition,
+            Expression<Func<TSource, bool>> predicate,
+            CancellationToken cancellationToken = default)
+            => condition ? source.AnyAsync(predicate, cancellationToken) : source.AnyAsync(cancellationToken);
+
+        /// <summary>
+        /// Asynchronously returns the number of elements in a sequence.
+        /// </summary>
+        public static Task<int> CountAsync<TSource>(
+            this IQueryable<TSource> source,
+            bool condition,
+            Expression<Func<TSource, bool>> predicate,
+            CancellationToken cancellationToken = default)
+            => condition ? source.CountAsync(predicate, cancellationToken) : source.CountAsync(cancellationToken);
+
+        /// <summary>
+        /// Asynchronously returns the only element of a sequence that satisfies a specified
+        /// condition or a default value if no such element exists; this method throws an
+        /// exception if more than one element satisfies the condition.
+        /// </summary>
+        public static Task<TSource?> SingleOrDefaultAsync<TSource>(
+        this IQueryable<TSource> source,
+        bool condition,
+        Expression<Func<TSource, bool>> predicate,
+        CancellationToken cancellationToken = default)
+        => condition ? source.SingleOrDefaultAsync(predicate, cancellationToken) : source.SingleOrDefaultAsync(cancellationToken);
+
+        /// <summary>
+        /// Asynchronously returns the first element of a sequence that satisfies a specified 
+        /// condition or a default value if no such element is found.
+        /// </summary>
+        public static Task<TSource?> FirstOrDefaultAsync<TSource>(
+            this IQueryable<TSource> source,
+            bool condition,
+            Expression<Func<TSource, bool>> predicate,
+            CancellationToken cancellationToken = default)
+            => condition ? source.FirstOrDefaultAsync(predicate, cancellationToken) : source.FirstOrDefaultAsync(cancellationToken);
+
+        /// <summary>
         /// Creates a<see cref="PagedList{T}" /> from an<see cref="IQueryable{T}" /> by enumerating it.
         /// </summary>
         public static PagedList<TSource> ToPagedList<TSource>(
