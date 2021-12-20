@@ -37,6 +37,17 @@ namespace Microsoft.EntityFrameworkCore
 
         /// <summary>
         /// Asynchronously returns the only element of a sequence that satisfies a specified
+        /// condition, and throws an exception if more than one such element exists.
+        /// </summary>
+        public static Task<TSource> SingleAsync<TSource>(
+        this IQueryable<TSource> source,
+        bool condition,
+        Expression<Func<TSource, bool>> predicate,
+        CancellationToken cancellationToken = default)
+        => condition ? source.SingleAsync(predicate, cancellationToken) : source.SingleAsync(cancellationToken);
+
+        /// <summary>
+        /// Asynchronously returns the only element of a sequence that satisfies a specified
         /// condition or a default value if no such element exists; this method throws an
         /// exception if more than one element satisfies the condition.
         /// </summary>
@@ -46,6 +57,17 @@ namespace Microsoft.EntityFrameworkCore
         Expression<Func<TSource, bool>> predicate,
         CancellationToken cancellationToken = default)
         => condition ? source.SingleOrDefaultAsync(predicate, cancellationToken) : source.SingleOrDefaultAsync(cancellationToken);
+
+        /// <summary>
+        /// Asynchronously returns the first element of a sequence that satisfies a specified
+        /// condition.
+        /// </summary>
+        public static Task<TSource> FirstAsync<TSource>(
+            this IQueryable<TSource> source,
+            bool condition,
+            Expression<Func<TSource, bool>> predicate,
+            CancellationToken cancellationToken = default)
+            => condition ? source.FirstAsync(predicate, cancellationToken) : source.FirstAsync(cancellationToken);
 
         /// <summary>
         /// Asynchronously returns the first element of a sequence that satisfies a specified 
