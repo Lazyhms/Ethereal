@@ -105,16 +105,43 @@ namespace Ethereal.Json.Tests
                 new ST
                 {
                      Id = 1L,
-                     ParentId=0L
+                     ParentId=0L,
+                     Name="菜单"
                 },
                 new ST
                 {
                     Id = 2L,
-                    ParentId = 1L
+                    ParentId = 1L,
+                    Name="菜单一",
+                },
+                new ST
+                {
+                    Id=3L,
+                    ParentId=2L,
+                    Name="菜单一一",
+                },
+                new ST
+                {
+                     Id = 4L,
+                     ParentId=0L,
+                     Name="菜单"
+                },
+                new ST
+                {
+                    Id = 5L,
+                    ParentId = 4L,
+                    Name="菜单二",
+                },
+                new ST
+                {
+                    Id=6L,
+                    ParentId=5L,
+                    Name="菜单二一",
                 }
             }.ToTreeNode(s => s.Id, s => s.ParentId, 0L).ToList();
 
-            var t = JsonSerializer.Serialize(lists);
+            var t = lists.FilterNode(s => s.Name.Contains("一")).ToList();
+            var t1 = lists.FilterNode(s => s.Name.Contains("二")).ToList();
         }
 
         [Fact]
@@ -159,6 +186,8 @@ namespace Ethereal.Json.Tests
         public long Id { get; set; }
 
         public long ParentId { get; set; }
+
+        public string? Name { get; set; }
     }
 
     internal class T

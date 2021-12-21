@@ -481,5 +481,29 @@ namespace System.Linq
 
             return dic.Values.Where(p => Equals(relationKeySelector(p), rootValue));
         }
+
+        /// <summary>
+        /// Filter this tree node
+        /// </summary>
+        public static IEnumerable<TSource> FilterNode<TSource>(
+            this IEnumerable<TSource> source,
+            Func<TSource, bool> predicate) where TSource : TreeNode<TSource>
+        {
+            return source.Where(element => _(element));
+
+            bool _(TSource element)
+            {
+                var finded = false;
+                if (predicate(element))
+                {
+                    finded = true;
+                }
+                if (element.Children != null && element.Children.Any())
+                {
+                    return element.Children.Any(celement => _(celement));
+                }
+                return finded;
+            }
+        }
     }
 }
