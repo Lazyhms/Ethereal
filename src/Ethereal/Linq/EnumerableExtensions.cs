@@ -493,16 +493,16 @@ namespace System.Linq
 
             bool _(TSource element)
             {
-                var finded = false;
+                var found = false;
                 if (predicate(element))
                 {
-                    finded = true;
+                    found = true;
                 }
                 if (element.Children != null && element.Children.Any())
                 {
                     return element.Children.Any(celement => _(celement));
                 }
-                return finded;
+                return found;
             }
         }
     }
