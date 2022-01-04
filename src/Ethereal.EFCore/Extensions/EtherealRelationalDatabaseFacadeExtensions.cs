@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.EntityFrameworkCore
@@ -39,7 +40,8 @@ namespace Microsoft.EntityFrameworkCore
         /// </summary>
         public static async Task<IEnumerable<IReadOnlyDictionary<string, object>>> ExecuteSqlReaderInterpolatedAsync(
             this DatabaseFacade databaseFacade,
-            FormattableString sql)
+            FormattableString sql,
+            CancellationToken cancellationToken = default)
             => await ExecuteSqlReaderAsync(databaseFacade, sql.Format, sql.GetArguments()!, resultSelector =>
              {
                  var result = new Dictionary<string, object>();
@@ -50,7 +52,7 @@ namespace Microsoft.EntityFrameworkCore
                  }
 
                  return result;
-             });
+             }, cancellationToken);
 
         /// <summary>
         /// ExecuteReader
@@ -79,7 +81,8 @@ namespace Microsoft.EntityFrameworkCore
         /// </summary>
         public static async Task<IEnumerable<T>> ExecuteSqlReaderInterpolatedAsync<T>(
             this DatabaseFacade databaseFacade,
-            FormattableString sql) where T : class
+            FormattableString sql,
+            CancellationToken cancellationToken = default) where T : class
             => await ExecuteSqlReaderAsync(databaseFacade, sql.Format, sql.GetArguments()!, resultSelector =>
              {
                  var result = Activator.CreateInstance<T>();
@@ -94,7 +97,7 @@ namespace Microsoft.EntityFrameworkCore
                  }
 
                  return result;
-             });
+             }, cancellationToken);
 
         /// <summary>
         /// ExecuteReader
@@ -111,8 +114,9 @@ namespace Microsoft.EntityFrameworkCore
         public static async Task<IEnumerable<T>> ExecuteSqlReaderInterpolatedAsync<T>(
             this DatabaseFacade databaseFacade,
             FormattableString sql,
-            Func<IDataRecord, T> resultSelector)
-            => await ExecuteSqlReaderAsync(databaseFacade, sql.Format, sql.GetArguments()!, resultSelector);
+            Func<IDataRecord, T> resultSelector,
+            CancellationToken cancellationToken = default)
+            => await ExecuteSqlReaderAsync(databaseFacade, sql.Format, sql.GetArguments()!, resultSelector, cancellationToken);
 
         /// <summary>
         /// ExecuteReader
@@ -162,7 +166,8 @@ namespace Microsoft.EntityFrameworkCore
         public static async Task<IEnumerable<IReadOnlyDictionary<string, object>>> ExecuteSqlReaderAsync(
             this DatabaseFacade databaseFacade,
             string sql,
-            IEnumerable<object>? parameters = default)
+            IEnumerable<object>? parameters = default,
+            CancellationToken cancellationToken = default)
             => await ExecuteSqlReaderAsync(databaseFacade, sql, parameters, resultSelector =>
              {
                  var result = new Dictionary<string, object>();
@@ -173,7 +178,7 @@ namespace Microsoft.EntityFrameworkCore
                  }
 
                  return result;
-             });
+             }, cancellationToken);
 
         /// <summary>
         /// ExecuteReader
@@ -181,7 +186,8 @@ namespace Microsoft.EntityFrameworkCore
         public static async Task<IEnumerable<T>> ExecuteSqlReaderAsync<T>(
             this DatabaseFacade databaseFacade,
             string sql,
-            IEnumerable<object>? parameters = default) where T : class
+            IEnumerable<object>? parameters = default,
+            CancellationToken cancellationToken = default) where T : class
             => await ExecuteSqlReaderAsync(databaseFacade, sql, parameters, resultSelector =>
             {
                 var result = Activator.CreateInstance<T>();
@@ -196,7 +202,7 @@ namespace Microsoft.EntityFrameworkCore
                 }
 
                 return result;
-            });
+            }, cancellationToken);
 
         /// <summary>
         /// ExecuteReader
@@ -245,7 +251,8 @@ namespace Microsoft.EntityFrameworkCore
             this DatabaseFacade databaseFacade,
             string sql,
             IEnumerable<object>? parameters,
-            Func<IDataRecord, T> resultSelector)
+            Func<IDataRecord, T> resultSelector,
+            CancellationToken cancellationToken = default)
         {
             var facadeDependencies = GetFacadeDependencies(databaseFacade);
             var concurrencyDetector = facadeDependencies.CoreOptions.AreThreadSafetyChecksEnabled
@@ -268,7 +275,7 @@ namespace Microsoft.EntityFrameworkCore
                            rawSqlCommand.ParameterValues,
                            null,
                            ((IDatabaseFacadeDependenciesAccessor)databaseFacade).Context,
-                           logger, CommandSource.ExecuteSqlRaw));
+                           logger, CommandSource.ExecuteSqlRaw), cancellationToken);
 
                 return relationalDataReader.DbDataReader.Cast<IDataRecord>().Select(resultSelector);
             }
