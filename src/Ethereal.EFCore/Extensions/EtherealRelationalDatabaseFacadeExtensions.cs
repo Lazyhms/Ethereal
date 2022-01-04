@@ -220,7 +220,7 @@ namespace Microsoft.EntityFrameworkCore
                 var rawSqlCommand = facadeDependencies.RawSqlCommandBuilder
                     .Build(sql, parameters ?? Enumerable.Empty<object>());
 
-                var reader = rawSqlCommand
+                var relationalDataReader = rawSqlCommand
                     .RelationalCommand
                     .ExecuteReader(
                         new RelationalCommandParameterObject(
@@ -229,7 +229,7 @@ namespace Microsoft.EntityFrameworkCore
                             null,
                             ((IDatabaseFacadeDependenciesAccessor)databaseFacade).Context,
                             logger, CommandSource.ExecuteSqlRaw));
-                return reader.DbDataReader.Cast<IDataRecord>().Select(resultSelector);
+                return relationalDataReader.DbDataReader.Cast<IDataRecord>().Select(resultSelector);
             }
             finally
             {
