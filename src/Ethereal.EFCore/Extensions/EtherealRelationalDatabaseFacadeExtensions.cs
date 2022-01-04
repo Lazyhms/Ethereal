@@ -229,6 +229,7 @@ namespace Microsoft.EntityFrameworkCore
                             null,
                             ((IDatabaseFacadeDependenciesAccessor)databaseFacade).Context,
                             logger, CommandSource.ExecuteSqlRaw));
+
                 return relationalDataReader.DbDataReader.Cast<IDataRecord>().Select(resultSelector);
             }
             finally
@@ -268,6 +269,7 @@ namespace Microsoft.EntityFrameworkCore
                            null,
                            ((IDatabaseFacadeDependenciesAccessor)databaseFacade).Context,
                            logger, CommandSource.ExecuteSqlRaw));
+
                 return relationalDataReader.DbDataReader.Cast<IDataRecord>().Select(resultSelector);
             }
             finally
