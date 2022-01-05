@@ -54,13 +54,11 @@ namespace Microsoft.EntityFrameworkCore.Metadata.Conventions
 
                 foreach (var property in declaringEntityType.GetProperties())
                 {
-                    foreach (var store in from storeObjectType in StoreObjectTypes
-                                          let store = StoreObjectIdentifier.Create(property.DeclaringEntityType, storeObjectType)
-                                          where store is not null
-                                          select store)
-                    {
-                        property.Builder.HasColumnName(RewriteNamingCase(property.GetColumnName(store.GetValueOrDefault())));
-                    }
+                    var storeObjectIdentifier = StoreObjectTypes
+                        .Select(storeObjectType => StoreObjectIdentifier.Create(property.DeclaringEntityType, storeObjectType))
+                        .FirstOrDefault(storeObjectIdentifier => storeObjectIdentifier is not null);
+
+                    property.Builder.HasColumnName(RewriteNamingCase(property.GetColumnName(storeObjectIdentifier.GetValueOrDefault())));
                 }
             }
         }
@@ -102,13 +100,11 @@ namespace Microsoft.EntityFrameworkCore.Metadata.Conventions
             IConventionPropertyBuilder propertyBuilder,
             IConventionContext<IConventionPropertyBuilder> context)
         {
-            foreach (var store in from storeObjectType in StoreObjectTypes
-                                  let store = StoreObjectIdentifier.Create(propertyBuilder.Metadata.DeclaringEntityType, storeObjectType)
-                                  where store is not null
-                                  select store)
-            {
-                propertyBuilder.HasColumnName(RewriteNamingCase(propertyBuilder.Metadata.GetColumnName(store.GetValueOrDefault())), true);
-            }
+            var storeObjectIdentifier = StoreObjectTypes
+                .Select(storeObjectType => StoreObjectIdentifier.Create(propertyBuilder.Metadata.DeclaringEntityType, storeObjectType))
+                .FirstOrDefault(storeObjectIdentifier => storeObjectIdentifier is not null);
+
+            propertyBuilder.HasColumnName(RewriteNamingCase(propertyBuilder.Metadata.GetColumnName(storeObjectIdentifier.GetValueOrDefault())), true);
         }
 
         /// <inheritdoc/>
@@ -172,13 +168,11 @@ namespace Microsoft.EntityFrameworkCore.Metadata.Conventions
         {
             if (newFieldInfo is null)
             {
-                foreach (var store in from storeObjectType in StoreObjectTypes
-                                      let store = StoreObjectIdentifier.Create(propertyBuilder.Metadata.DeclaringEntityType, storeObjectType)
-                                      where store is not null
-                                      select store)
-                {
-                    propertyBuilder.HasColumnName(RewriteNamingCase(propertyBuilder.Metadata.GetColumnName(store.GetValueOrDefault())));
-                }
+                var storeObjectIdentifier = StoreObjectTypes
+                    .Select(storeObjectType => StoreObjectIdentifier.Create(propertyBuilder.Metadata.DeclaringEntityType, storeObjectType))
+                    .FirstOrDefault(storeObjectIdentifier => storeObjectIdentifier is not null);
+
+                propertyBuilder.HasColumnName(RewriteNamingCase(propertyBuilder.Metadata.GetColumnName(storeObjectIdentifier.GetValueOrDefault())));
             }
         }
 
