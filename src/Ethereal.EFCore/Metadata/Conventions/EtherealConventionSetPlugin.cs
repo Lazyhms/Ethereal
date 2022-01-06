@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Ethereal. All rights reserved.
 
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions.Infrastructure;
@@ -54,7 +55,7 @@ namespace Ethereal.EntityFrameworkCore.Metadata.Conventions
             conventionSet.PropertyAddedConventions.Add(etherealColumnInsertIgnoreConvention);
             conventionSet.PropertyFieldChangedConventions.Add(etherealColumnInsertIgnoreConvention);
 
-            if (EtherealOptions.NamingPolicy != Microsoft.EntityFrameworkCore.NamingPolicy.None)
+            if (EtherealOptions.NamingPolicy != NamingPolicy.None)
             {
                 var etherealNamingPolicyConvention = new EtherealNamingPolicyConvention(EtherealOptions.NamingPolicy);
                 conventionSet.EntityTypeAddedConventions.Add(etherealNamingPolicyConvention);

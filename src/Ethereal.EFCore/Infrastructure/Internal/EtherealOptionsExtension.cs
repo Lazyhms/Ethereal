@@ -15,26 +15,25 @@ namespace Ethereal.EntityFrameworkCore.Infrastructure.Internal
         private DbContextOptionsExtensionInfo? _info;
 
         /// <summary>
+        /// NamingPolicy
+        /// </summary>
+        internal NamingPolicy NamingPolicy { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="EtherealOptionsExtension"/> class.
         /// </summary>
         public EtherealOptionsExtension()
-        {
-        }
+            => NamingPolicy = NamingPolicy.None;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EtherealOptionsExtension"/> class.
         /// </summary>
         public EtherealOptionsExtension(EtherealOptionsExtension copyFrom)
-        {
-        }
+            => NamingPolicy = copyFrom.NamingPolicy;
 
         /// <inheritdoc/>
-        public DbContextOptionsExtensionInfo Info => _info ??= new ExtensionInfo(this);
-
-        /// <summary>
-        /// Naming policy
-        /// </summary>
-        public NamingPolicy NamingPolicy { get; internal set; }
+        public DbContextOptionsExtensionInfo Info
+            => _info ??= new ExtensionInfo(this);
 
         /// <inheritdoc/>
         public void ApplyServices(IServiceCollection services)
@@ -46,7 +45,13 @@ namespace Ethereal.EntityFrameworkCore.Infrastructure.Internal
         }
 
         /// <summary>
-        /// WithServerVersion
+        /// clone
+        /// </summary>
+        protected EtherealOptionsExtension Clone()
+            => new(this);
+
+        /// <summary>
+        /// WithNamingPolicy
         /// </summary>
         public virtual EtherealOptionsExtension WithNamingPolicy(NamingPolicy namingPolicy)
         {
@@ -54,11 +59,6 @@ namespace Ethereal.EntityFrameworkCore.Infrastructure.Internal
             clone.NamingPolicy = namingPolicy;
             return clone;
         }
-
-        /// <summary>
-        /// clone
-        /// </summary>
-        protected EtherealOptionsExtension Clone() => new(this);
 
         private sealed class ExtensionInfo : DbContextOptionsExtensionInfo
         {
@@ -80,7 +80,7 @@ namespace Ethereal.EntityFrameworkCore.Infrastructure.Internal
                 => 0;
 
             public override void PopulateDebugInfo(IDictionary<string, string> debugInfo)
-                => debugInfo["Ethereal"] = "0";
+                => debugInfo["Ethereal:" + nameof(EtherealDbContextOptionsExtensions.UseEthereal)] = "1";
 
             public override bool ShouldUseSameServiceProvider(DbContextOptionsExtensionInfo other)
                 => other is ExtensionInfo;
