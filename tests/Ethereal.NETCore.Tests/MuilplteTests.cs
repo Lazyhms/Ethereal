@@ -140,8 +140,8 @@ namespace Ethereal.Json.Tests
                 }
             }.ToTreeNode(s => s.Id, s => s.ParentId, 0L).ToList();
 
-            var t = lists.FilterNode(s => s.Name.Contains("一")).ToList();
-            var t1 = lists.FilterNode(s => s.Name.Contains("二")).ToList();
+            var t = lists.FilterNode(s => s.Name!.Contains('一')).ToList();
+            var t1 = lists.FilterNode(s => s.Name!.Contains('二')).ToList();
         }
 
         [Fact]

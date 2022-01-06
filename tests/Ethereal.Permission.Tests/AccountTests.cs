@@ -1,5 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -29,6 +33,26 @@ namespace Ethereal.Permission.Tests
             var t2 = await dbContext.Account.OrderBy("Id").ThenBy(nameof(account.Modified)).ToListAsync();
 
             var t3 = await dbContext.Account.OrderByDescending("Id").ThenByDescending(nameof(account.Modified)).ToListAsync();
+
+            FormattableString sql = $" select {22} as ID, {22} as UNIONID, 1 AS IS_DELETED";
+            IQueryable<object> q = dbContext.Account.FromSqlInterpolated(sql).Select(s => new { Id = s.Id, UnionId = s.UnionId });
+            var t4 = await dbContext.Account.AsNoTracking().Select(s => new { Id = s.Id, UnionId = s.UnionId })
+                                .Union(q).ToListAsync();
+
+            var t5 = dbContext.Model.FindRuntimeEntityType(typeof(Account));
+
+#pragma warning disable EF1001 // Internal EF Core API usage.
+            var sqleu = new FromSqlQueryRootExpression(t5, sql.Format, Expression.Constant(sql.GetArguments()));
+#pragma warning restore EF1001 // Internal EF Core API usage.
+
+            var t6 = ((IQueryable)dbContext.Set<Account>()).Provider.CreateQuery<Account>(sqleu).Select(s => new { s.Id }).ToList();
+
+            var t7 = await dbContext.Account.FromConstantAll(new List<Account> { new Account { Id = 22L, UnionId = 22L }, new Account { Id = 33L, UnionId = 33L } })
+                .Concat(dbContext.Account.AsNoTracking()).Select(s => new
+                {
+                    s.Id,
+                    s.Certificate
+                }).ToListAsync();
         }
 
         [Fact]

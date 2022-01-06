@@ -52,12 +52,11 @@ namespace Microsoft.EntityFrameworkCore.Metadata.Conventions
                 declaringEntityType.Builder.HasNoAnnotation(RelationalAnnotationNames.Schema);
                 declaringEntityType.FindPrimaryKey()?.Builder.HasNoAnnotation(RelationalAnnotationNames.Name);
 
+                var storeObjectIdentifier = StoreObjectTypes.Select(storeObjectType => StoreObjectIdentifier.Create(declaringEntityType, storeObjectType))
+                    .FirstOrDefault(storeObjectIdentifier => storeObjectIdentifier is not null);
+
                 foreach (var property in declaringEntityType.GetProperties())
                 {
-                    var storeObjectIdentifier = StoreObjectTypes
-                        .Select(storeObjectType => StoreObjectIdentifier.Create(property.DeclaringEntityType, storeObjectType))
-                        .FirstOrDefault(storeObjectIdentifier => storeObjectIdentifier is not null);
-
                     property.Builder.HasColumnName(RewriteNamingCase(property.GetColumnName(storeObjectIdentifier.GetValueOrDefault())));
                 }
             }
@@ -100,8 +99,7 @@ namespace Microsoft.EntityFrameworkCore.Metadata.Conventions
             IConventionPropertyBuilder propertyBuilder,
             IConventionContext<IConventionPropertyBuilder> context)
         {
-            var storeObjectIdentifier = StoreObjectTypes
-                .Select(storeObjectType => StoreObjectIdentifier.Create(propertyBuilder.Metadata.DeclaringEntityType, storeObjectType))
+            var storeObjectIdentifier = StoreObjectTypes.Select(storeObjectType => StoreObjectIdentifier.Create(propertyBuilder.Metadata.DeclaringEntityType, storeObjectType))
                 .FirstOrDefault(storeObjectIdentifier => storeObjectIdentifier is not null);
 
             propertyBuilder.HasColumnName(RewriteNamingCase(propertyBuilder.Metadata.GetColumnName(storeObjectIdentifier.GetValueOrDefault())), true);
@@ -168,8 +166,7 @@ namespace Microsoft.EntityFrameworkCore.Metadata.Conventions
         {
             if (newFieldInfo is null)
             {
-                var storeObjectIdentifier = StoreObjectTypes
-                    .Select(storeObjectType => StoreObjectIdentifier.Create(propertyBuilder.Metadata.DeclaringEntityType, storeObjectType))
+                var storeObjectIdentifier = StoreObjectTypes.Select(storeObjectType => StoreObjectIdentifier.Create(propertyBuilder.Metadata.DeclaringEntityType, storeObjectType))
                     .FirstOrDefault(storeObjectIdentifier => storeObjectIdentifier is not null);
 
                 propertyBuilder.HasColumnName(RewriteNamingCase(propertyBuilder.Metadata.GetColumnName(storeObjectIdentifier.GetValueOrDefault())));
