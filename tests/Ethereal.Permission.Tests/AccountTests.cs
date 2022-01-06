@@ -56,7 +56,7 @@ namespace Ethereal.Permission.Tests
         }
 
         [Fact]
-        public async void ExecutDa()
+        public async Task ExecuteSqlReader()
         {
             var dataBase = AppDbContextTest.GetDbContext().Database;
 

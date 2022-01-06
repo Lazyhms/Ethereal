@@ -164,8 +164,8 @@ namespace Ethereal.Json.Tests
         [Fact]
         public void String_Tests()
         {
-            var str = "17302751413".Desensitize();
-            var str1 = "321323199107103315".Desensitize();
+            var str = "17367891413".Desensitize();
+            var str1 = "32132319870820321X".Desensitize();
         }
 
         [Fact]
