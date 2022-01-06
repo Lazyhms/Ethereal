@@ -45,12 +45,10 @@ namespace Microsoft.EntityFrameworkCore
             => await ExecuteSqlReaderAsync(databaseFacade, sql.Format, sql.GetArguments()!, resultSelector =>
              {
                  var result = new Dictionary<string, object>();
-
                  for (var i = 0; i < resultSelector.FieldCount; i++)
                  {
                      result.TryAdd(resultSelector.GetName(i), resultSelector.GetValue(i));
                  }
-
                  return result;
              }, cancellationToken);
 
@@ -86,7 +84,6 @@ namespace Microsoft.EntityFrameworkCore
             => await ExecuteSqlReaderAsync(databaseFacade, sql.Format, sql.GetArguments()!, resultSelector =>
              {
                  var result = Activator.CreateInstance<T>();
-
                  for (var i = 0; i < resultSelector.FieldCount; i++)
                  {
                      var fieldName = resultSelector.GetName(i);
@@ -95,7 +92,6 @@ namespace Microsoft.EntityFrameworkCore
                          typeof(T).GetProperty(fieldName)?.SetValue(result, resultSelector[fieldName]);
                      }
                  }
-
                  return result;
              }, cancellationToken);
 
@@ -171,12 +167,10 @@ namespace Microsoft.EntityFrameworkCore
             => await ExecuteSqlReaderAsync(databaseFacade, sql, parameters, resultSelector =>
              {
                  var result = new Dictionary<string, object>();
-
                  for (var i = 0; i < resultSelector.FieldCount; i++)
                  {
                      result.TryAdd(resultSelector.GetName(i), resultSelector.GetValue(i));
                  }
-
                  return result;
              }, cancellationToken);
 
@@ -191,7 +185,6 @@ namespace Microsoft.EntityFrameworkCore
             => await ExecuteSqlReaderAsync(databaseFacade, sql, parameters, resultSelector =>
             {
                 var result = Activator.CreateInstance<T>();
-
                 for (var i = 0; i < resultSelector.FieldCount; i++)
                 {
                     var fieldName = resultSelector.GetName(i);
@@ -200,7 +193,6 @@ namespace Microsoft.EntityFrameworkCore
                         typeof(T).GetProperty(fieldName)?.SetValue(result, resultSelector[fieldName]);
                     }
                 }
-
                 return result;
             }, cancellationToken);
 

@@ -29,7 +29,6 @@ namespace Microsoft.EntityFrameworkCore
             return source.FromSqlRaw(sqlBuilder.ToString(), parameters.ToArray()!);
         }
 
-
         /// <summary>
         /// Query the output variable of a given entity property and contain with 'UNION'.
         /// </summary>

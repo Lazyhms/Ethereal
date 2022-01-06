@@ -21,7 +21,7 @@ namespace Ethereal.EntityFrameworkCore.Infrastructure
         /// <summary>
         /// WithServerVersion
         /// </summary>
-        public virtual EtherealDbContextOptionsBuilder WithNamingPolicy(NamingPolicy namingPolicy)
+        public virtual EtherealDbContextOptionsBuilder WithNamingPolicy(NamingPolicy namingPolicy = NamingPolicy.None)
             => WithOption(o => o.WithNamingPolicy(namingPolicy));
 
         /// <summary>

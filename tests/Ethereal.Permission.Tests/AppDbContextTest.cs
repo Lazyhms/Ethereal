@@ -37,7 +37,7 @@ namespace Ethereal.Permission.Tests
                 {
                 }).UseEthereal(opts =>
                 {
-                    opts.WithNamingPolicy(NamingPolicy.UpperCase);
+                    opts.WithNamingPolicy();
                 });
             });
             return serviceDescriptors.BuildServiceProvider().GetService<AppDbContextTest>();

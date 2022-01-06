@@ -29,7 +29,6 @@ namespace Microsoft.EntityFrameworkCore.Internal
         /// <inheritdoc/>
         public void Validate(IDbContextOptions options)
         {
-            var etherealOptionsExtension = options.FindExtension<EtherealOptionsExtension>() ?? new EtherealOptionsExtension();
         }
     }
 }
