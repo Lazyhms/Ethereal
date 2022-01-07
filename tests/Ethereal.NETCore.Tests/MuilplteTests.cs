@@ -164,8 +164,9 @@ namespace Ethereal.Json.Tests
         [Fact]
         public void String_Tests()
         {
-            var str = "17367891413".Desensitize();
-            var str1 = "32132319870820321X".Desensitize();
+            var str1 = "asdadfvsxv".Similarity("dasffdsvf");
+            var str2 = "17367891413".Desensitize();
+            var str3 = "32132319870820321X".Desensitize();
         }
 
         [Fact]

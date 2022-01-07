@@ -25,8 +25,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Ethereal.AspNetCore.Extensions\Ethereal.AspNetCore.Extensions.csproj" />
-		<ProjectReference Include="..\..\src\Ethereal.AspNetCore\Ethereal.AspNetCore.csproj" />
-		<ProjectReference Include="..\..\src\Ethereal.EFCore\Ethereal.EFCore.Relational.csproj" />
+		<ProjectReference Include="..\..\src\Ethereal.EFCore.Relational\Ethereal.EFCore.Relational.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

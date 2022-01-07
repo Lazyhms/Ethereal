@@ -7,7 +7,6 @@ namespace Ethereal.Permission
     [Table("role", Schema = "permission")]
     public class Role : EntityBase
     {
-        [Column(TypeName = "nvarchar(50)")]
         [Comment("role name")]
         public string Name { get; set; }
     }

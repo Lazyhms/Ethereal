@@ -17,14 +17,14 @@ namespace Ethereal.Permission
         /// create_time
         /// </summary>
         [UpdateIgnore, Comment("gmt_create")]
-        [Column("gmt_create", TypeName = "datetime")]
-        public DateTime Created { get; private set; } = DateTime.Now;
+        [Column("gmt_create")]
+        public DateTime Created { get; private set; } = DateTime.UtcNow;
 
         /// <summary>
         /// update_time
         /// </summary>
         [AddIgnore, Comment("gmt_modified")]
-        [Column("gmt_modified", TypeName = "datetime")]
-        public DateTime? Modified { get; private set; } = DateTime.Now;
+        [Column("gmt_modified")]
+        public DateTime? Modified { get; private set; } = DateTime.UtcNow;
     }
 }
