@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Ethereal.App.Models
 {
@@ -31,5 +32,7 @@ namespace Ethereal.App.Models
 
         [ModelBinder()]
         public DateTimeOffset? Timestamp { get; set; }
+
+        public string Name => "sss";
     }
 }

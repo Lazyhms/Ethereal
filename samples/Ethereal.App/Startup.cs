@@ -75,7 +75,6 @@ namespace Ethereal.App
             app.UseSwaggerUI(opts =>
             {
                 opts.RoutePrefix = string.Empty;
-
                 opts.SwaggerEndpoint(Configuration, "SwaggerDoc");
             });
 
@@ -86,6 +85,7 @@ namespace Ethereal.App
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers().RequireAuthorization();
+                endpoints.MapSwagger();
             });
         }
 

@@ -3,16 +3,15 @@
 namespace System.ComponentModel.DataAnnotations
 {
     /// <summary>
-    /// Validates an account.
+    /// s
     /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
-    public class AccountAttribute : RegularExpressionAttribute
+    public class WeakPasswordAttribute : RegularExpressionAttribute
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AccountAttribute"/> class.
+        /// Initializes a new instance of the <see cref="WeakPasswordAttribute"/> class.
         /// </summary>
-        public AccountAttribute() 
-            : base("^[a-zA-Z][a-zA-Z0-9_]{4,15}$")
+        public WeakPasswordAttribute() : base(@"^[a-zA-Z]\w{5,17}$")
         {
         }
     }

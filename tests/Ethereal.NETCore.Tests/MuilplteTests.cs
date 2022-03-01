@@ -64,6 +64,14 @@ namespace Ethereal.Json.Tests
             var sss = Enumerable.Repeat(new T { IDCard = "132132131" }, 10);
             var sss1 = Enumerable.Repeat(new T { IDCard = "1321321312" }, 10);
 
+            var ttss = sss.IsNullOrEmpty();
+
+            List<int> ss222 = new List<int>();
+
+            var ttss11 = ss222.IsNullOrEmpty();
+
+            var tts = sss.Replace(2, new T { IDCard = "222222" }).ToList();
+
             var ttp1 = sss.Concat(sss1).ToPagedList(1, 3);
 
             var t1 = JsonSerializer.Serialize(ttp1);
@@ -158,7 +166,16 @@ namespace Ethereal.Json.Tests
                              .Append(EE.B == t1, "bbb");
                         });
 
+            var t2 = new StringBuilder().AppendLine("2222").AppendLine("33333");
+
             Assert.Equal("www2eee", t1.ToString());
+
+
+            var t = new
+            {
+                [RequiredAttribute]
+                Name = ""
+            };
         }
 
         [Fact]

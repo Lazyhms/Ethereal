@@ -10,6 +10,14 @@ namespace System.Linq
     public static class EnumerableExtensions
     {
         /// <summary>
+        /// t
+        /// </summary>
+        public static bool IsNullOrEmpty<TSource>(this IEnumerable<TSource> source)
+        {
+            return source == null || !source.Any();
+        }
+
+        /// <summary>
         /// Contains
         /// </summary>
         public static bool Contains<TSource>(
@@ -264,7 +272,7 @@ namespace System.Linq
         {
             Check.NotNull(source, nameof(source));
 
-            var i = -1;
+            var i = 0;
             foreach (var element in source)
             {
                 if (i == index)
@@ -275,6 +283,7 @@ namespace System.Linq
                 {
                     yield return element;
                 }
+                i++;
             }
         }
 

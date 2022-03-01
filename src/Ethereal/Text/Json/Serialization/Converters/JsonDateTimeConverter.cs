@@ -29,5 +29,6 @@ namespace System.Text.Json.Serialization
         /// <inheritdoc/>
         public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
             => writer.WriteStringValue(value.ToString(_dateFormatString));
+
     }
 }

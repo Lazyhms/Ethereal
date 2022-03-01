@@ -23,8 +23,13 @@ namespace Ethereal.Permission.Tests
                 Certificate = string.Empty,
                 IdentityType = 1
             };
-            dbContext.Account.Add(account);
-            dbContext.SaveChanges();
+            //dbContext.Account.Add(account);
+            //dbContext.SaveChanges();
+
+
+            var ss = new List<long>() { 1, 23, 4 };
+
+            var tt = await dbContext.Account.Where(w => ss.Contains(w.Id)).ToListAsync();
 
             var t0 = await dbContext.Account.Where(1 == 1, s => s.Id > 3).ToListAsync();
 

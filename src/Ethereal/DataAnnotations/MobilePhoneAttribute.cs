@@ -3,16 +3,15 @@
 namespace System.ComponentModel.DataAnnotations
 {
     /// <summary>
-    /// Validates an account.
+    /// Validates a phonenumber.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
-    public class AccountAttribute : RegularExpressionAttribute
+    public class MobilePhoneAttribute : RegularExpressionAttribute
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AccountAttribute"/> class.
+        /// Initializes a new instance of the <see cref="MobilePhoneAttribute"/> class.
         /// </summary>
-        public AccountAttribute() 
-            : base("^[a-zA-Z][a-zA-Z0-9_]{4,15}$")
+        public MobilePhoneAttribute() : base("/^[1][3,5,7,8][0-9]{9}$/")
         {
         }
     }
