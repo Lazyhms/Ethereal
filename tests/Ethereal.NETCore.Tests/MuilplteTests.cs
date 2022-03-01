@@ -169,13 +169,6 @@ namespace Ethereal.Json.Tests
             var t2 = new StringBuilder().AppendLine("2222").AppendLine("33333");
 
             Assert.Equal("www2eee", t1.ToString());
-
-
-            var t = new
-            {
-                [RequiredAttribute]
-                Name = ""
-            };
         }
 
         [Fact]
@@ -223,7 +216,7 @@ namespace Ethereal.Json.Tests
         [Account]
         public string? Account { get; set; }
 
-        [Password]
+        [StrongPassword]
         public string? Password { get; set; }
 
         public decimal? MyProperty4 { get; set; }
