@@ -11,7 +11,7 @@ namespace System.ComponentModel.DataAnnotations
         /// <summary>
         /// Initializes a new instance of the <see cref="AccountAttribute"/> class.
         /// </summary>
-        public AccountAttribute() 
+        public AccountAttribute()
             : base("^[a-zA-Z][a-zA-Z0-9_]{4,15}$")
         {
         }

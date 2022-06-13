@@ -11,7 +11,7 @@ namespace System.ComponentModel.DataAnnotations
         /// <summary>
         /// Initializes a new instance of the <see cref="MobilePhoneAttribute"/> class.
         /// </summary>
-        public MobilePhoneAttribute() : base("/^[1][3,5,7,8][0-9]{9}$/")
+        public MobilePhoneAttribute() : base("^1[34578]\\d{9}$")
         {
         }
     }
