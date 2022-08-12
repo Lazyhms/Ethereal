@@ -1,7 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<IsPackable>false</IsPackable>
 	</PropertyGroup>
@@ -17,16 +18,10 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\..\src\Ethereal\Ethereal.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Update="7946170535396804.jpg">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
+		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="6.0.0" />
+		<ProjectReference Include="..\..\src\Ethereal.EFCore.PostgreSQL\Ethereal.EFCore.PostgreSQL.csproj" />
+		<ProjectReference Include="..\..\src\Ethereal.EFCore.Relational\Ethereal.EFCore.Relational.csproj" />
 	</ItemGroup>
 
 </Project>

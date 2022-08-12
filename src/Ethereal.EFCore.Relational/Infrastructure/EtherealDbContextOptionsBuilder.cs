@@ -19,7 +19,7 @@ namespace Ethereal.EntityFrameworkCore.Infrastructure
         }
 
         /// <summary>
-        /// WithServerVersion
+        /// WithNamingPolicy
         /// </summary>
         public virtual EtherealDbContextOptionsBuilder WithNamingPolicy(NamingPolicy namingPolicy = NamingPolicy.None)
             => WithOption(o => o.WithNamingPolicy(namingPolicy));

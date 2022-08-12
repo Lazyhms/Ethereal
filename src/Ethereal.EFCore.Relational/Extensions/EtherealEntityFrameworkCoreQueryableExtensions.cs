@@ -44,7 +44,7 @@ namespace Microsoft.EntityFrameworkCore
         bool condition,
         Expression<Func<TSource, bool>> predicate,
         CancellationToken cancellationToken = default)
-        => condition ? source.SingleAsync(predicate, cancellationToken) : source.SingleAsync(cancellationToken);
+            => condition ? source.SingleAsync(predicate, cancellationToken) : source.SingleAsync(cancellationToken);
 
         /// <summary>
         /// Asynchronously returns the only element of a sequence that satisfies a specified
@@ -56,7 +56,7 @@ namespace Microsoft.EntityFrameworkCore
         bool condition,
         Expression<Func<TSource, bool>> predicate,
         CancellationToken cancellationToken = default)
-        => condition ? source.SingleOrDefaultAsync(predicate, cancellationToken) : source.SingleOrDefaultAsync(cancellationToken);
+            => condition ? source.SingleOrDefaultAsync(predicate, cancellationToken) : source.SingleOrDefaultAsync(cancellationToken);
 
         /// <summary>
         /// Asynchronously returns the first element of a sequence that satisfies a specified
