@@ -85,6 +85,17 @@ namespace Ethereal.Json.Tests
         }
 
         [Fact]
+        public void T_Test()
+        {
+            var ss = new List<int>() { 0, 1 };
+            ss.ForEach((t, i) =>
+            {
+                Assert.True(t == i);
+            });
+        }
+
+
+        [Fact]
         public void Vaild_Tests()
         {
             var t = new T() { IDCard = "321323199107103315", SocialCreditCode = "913201004258014876", Account = "Hu122", Password = "Az12234567" };

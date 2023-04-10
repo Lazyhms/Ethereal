@@ -498,7 +498,7 @@ namespace System.Linq
             this IEnumerable<TSource> source,
             Func<TSource, bool> predicate) where TSource : TreeNode<TSource>
         {
-            return source.Where(element => _(element));
+            return source.Where(_);
 
             bool _(TSource element)
             {
@@ -512,6 +512,30 @@ namespace System.Linq
                     return element.Children.Any(celement => _(celement));
                 }
                 return found;
+            }
+        }
+
+        /// <summary>
+        /// 1
+        /// </summary>
+        public static void ForEach<TSource>(this IEnumerable<TSource> source, Action<TSource> action)
+        {
+            foreach (var item in source)
+            {
+                action(item);
+            }
+        }
+
+        /// <summary>
+        /// 1
+        /// </summary>
+        public static void ForEach<TSource>(this IEnumerable<TSource> source, Action<TSource, int> action)
+        {
+            var index = -1;
+            foreach (var item in source)
+            {
+                checked { index++; }
+                action(item, index);
             }
         }
     }
