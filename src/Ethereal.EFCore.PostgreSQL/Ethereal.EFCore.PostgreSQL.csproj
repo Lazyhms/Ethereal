@@ -15,7 +15,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.6" />
+		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Update="Microsoft.CodeAnalysis.CSharp" Version="4.5.0" />
+	  <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.1" />
 	</ItemGroup>
 
 </Project>

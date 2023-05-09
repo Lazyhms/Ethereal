@@ -87,13 +87,41 @@ namespace Ethereal.Json.Tests
         [Fact]
         public void T_Test()
         {
-            var ss = new List<int>() { 0, 1 };
-            ss.ForEach((t, i) =>
+            var ss = new List<TTT>() { new TTT { N = 10 }, new TTT { N = 10 }, new TTT { N = 25 }, new TTT { N = 20 } };
+            int total = 50, limt = 0;
+            foreach (var item in ss)
             {
-                Assert.True(t == i);
-            });
+                var temp = total - limt;
+                if (temp == 0)
+                {
+                    break;
+                }
+                if (temp < 0)
+                {
+                    temp = limt - total;
+                }
+
+                if (temp >= item.N)
+                {
+                    //sss.Add(item);
+                    limt += item.N;
+                }
+                else
+                {
+                    item.N -= temp;
+                    //ss.Add(new TTT { N = temp });
+                    limt += temp;
+                }
+
+            }
+
+            var t1 = ss;
         }
 
+        private class TTT
+        {
+            public int N { get; set; }
+        }
 
         [Fact]
         public void Vaild_Tests()
