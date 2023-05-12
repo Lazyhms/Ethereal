@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -75,7 +76,7 @@ namespace Ethereal.App
             app.UseSwaggerUI(opts =>
             {
                 opts.RoutePrefix = string.Empty;
-                opts.SwaggerEndpoint(Configuration, "SwaggerDoc");
+                opts.SwaggerEndpoint(Configuration, "Swagger:SwaggerDoc");
             });
 
             app.UseHangfireDashboard(options: new DashboardOptions
@@ -140,6 +141,13 @@ namespace Ethereal.App
                 options.Filters.Add<HttpGlobalExceptionFilter>();
                 options.ModelBinderProviders.UseDefaultModelBinderProviders();
                 options.InputFormatters.Add(new TextPlainInputFormatter());
+
+                options.ModelBindingMessageProvider.SetValueIsInvalidAccessor(value => "{0}不能为空");
+                options.ModelBindingMessageProvider.SetMissingBindRequiredValueAccessor(value => "{0}不能为空");
+                options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(value => "{0}不能为空");
+                options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor((s, t) => "{0}不能为空");
+
+                options.ModelMetadataDetailsProviders.Add(new ValidationMetadataProvider());
             }).AddJsonOptions(options =>
             {
             }).ConfigureApiBehaviorOptions(options =>
@@ -153,7 +161,7 @@ namespace Ethereal.App
 
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc(Configuration, "SwaggerDoc");
+                options.SwaggerDoc(Configuration, "Swagger:SwaggerDoc");
 
                 options
                     .DocInclusionGroupName("KOKO");

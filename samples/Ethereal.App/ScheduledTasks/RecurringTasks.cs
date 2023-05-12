@@ -17,7 +17,7 @@ namespace Ethereal.App.ScheduledTasks
             //注册任务
             _hostApplicationLifetime.ApplicationStarted.Register(async () =>
             {
-                RecurringJob.AddOrUpdate<IValueService>("测试", c => c.Write(), Cron.Minutely(), TimeZoneInfo.Local);
+                RecurringJob.AddOrUpdate<IValueService>("测试", c => c.Write(), Cron.Minutely());
 
                 await Task.CompletedTask;
             });

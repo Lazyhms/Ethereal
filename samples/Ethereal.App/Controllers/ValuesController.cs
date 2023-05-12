@@ -10,6 +10,7 @@ namespace Ethereal.App.Controllers
     [Route("api/[Controller]")]
     [ApiController]
     [AllowAnonymous]
+    [ApiExplorerSettings(GroupName = "KOKO")]
     public class ValuesController : ControllerBase
     {
         private readonly IValueService ValueService;

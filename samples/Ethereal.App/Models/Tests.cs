@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 namespace Ethereal.App.Models
 {
@@ -21,10 +20,13 @@ namespace Ethereal.App.Models
         [Required]
         public Guid Id { get; set; }
 
-        [IDCard]
+        /// <summary>
+        /// 控制
+        /// </summary>
+        [Required, IDCard]
         public string IDCard { get; set; }
 
-        [Required(ErrorMessage = "字段是必须的")]
+        [Required]
         public IEnumerable<int> IEnumerableLength { get; set; }
 
         [SocialCreditCode]
